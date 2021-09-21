@@ -1,0 +1,780 @@
+object AcctData: TAcctData
+  OldCreateOrder = False
+  Left = 299
+  Top = 183
+  Height = 509
+  Width = 840
+  object myconnection1: TMyConnection
+    Database = 'zanecobudget'
+    Username = 'root'
+    Password = 'blaise'
+    Server = 'server'
+    LoginPrompt = False
+    Left = 728
+    Top = 192
+  end
+  object Chart: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'select '
+      ' c.*, '
+      
+        ' ifnull((Select Sum(ifnull(credit,0)) from Journal where account' +
+        'code = c.accountcode and documentdate between :MCDF and :MCDT),0' +
+        ') as SpentMonth,'
+      
+        ' ifnull((Select Sum(ifnull(credit,0)) from Journal where account' +
+        'code = c.accountcode and documentdate between :YCDF and :YCDT),0' +
+        ') as SpentYear'
+      
+        'from chart c where accountname like :name and cutoffdate = :pDat' +
+        'e'
+      'order by c.accountcode')
+    BeforeInsert = ChartBeforeInsert
+    BeforeEdit = ChartBeforeEdit
+    OnCalcFields = ChartCalcFields
+    Left = 48
+    Top = 24
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'MCDF'
+        Value = '2010-09-01'
+      end
+      item
+        DataType = ftString
+        Name = 'MCDT'
+        Value = '2010-09-30'
+      end
+      item
+        DataType = ftString
+        Name = 'YCDF'
+        Value = '2010-01-01'
+      end
+      item
+        DataType = ftString
+        Name = 'YCDT'
+        Value = '2010-12-30'
+      end
+      item
+        DataType = ftString
+        Name = 'name'
+        Value = '%'
+      end
+      item
+        DataType = ftUnknown
+        Name = 'pDate'
+      end>
+    object Chartaccountcode: TStringField
+      FieldName = 'accountcode'
+      Origin = 'chart.accountcode'
+    end
+    object Chartaccountname: TStringField
+      FieldName = 'accountname'
+      Origin = 'chart.accountname'
+      Size = 70
+    end
+    object Chartaccounttype: TStringField
+      FieldName = 'accounttype'
+      Origin = 'chart.accounttype'
+      Size = 10
+    end
+    object ChartBalAsOf: TFloatField
+      FieldName = 'BalAsOf'
+      Origin = 'chart.BalAsOf'
+      currency = True
+    end
+    object ChartBalPeriodCovered: TFloatField
+      FieldName = 'BalPeriodCovered'
+      Origin = 'chart.BalPeriodCovered'
+      currency = True
+    end
+    object ChartIndent: TLargeintField
+      FieldName = 'Indent'
+      Origin = 'chart.Indent'
+    end
+    object Chartdisplaytitle: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'displaytitle'
+      Size = 100
+      Calculated = True
+    end
+    object Chartaccountledgertype: TStringField
+      FieldName = 'accountledgertype'
+      Origin = 'chart.accountledgertype'
+      Size = 5
+    end
+    object ChartAllocAmount: TFloatField
+      FieldName = 'AllocAmount'
+      Origin = 'chart.AllocAmount'
+    end
+    object ChartRBalance: TCurrencyField
+      FieldKind = fkCalculated
+      FieldName = 'RBalance'
+      Calculated = True
+    end
+    object Chartidchart: TLargeintField
+      FieldName = 'idchart'
+    end
+    object ChartSpentMonth: TFloatField
+      FieldName = 'SpentMonth'
+    end
+    object ChartSpentYear: TFloatField
+      FieldName = 'SpentYear'
+      currency = True
+    end
+    object Chartmasteracc: TStringField
+      FieldName = 'masteracc'
+      Size = 45
+    end
+    object Chartmastername: TStringField
+      FieldName = 'mastername'
+      Size = 45
+    end
+    object ChartMastertype: TStringField
+      FieldName = 'Mastertype'
+      Size = 10
+    end
+    object Chartcutoffdate: TDateField
+      FieldName = 'cutoffdate'
+    end
+  end
+  object dsChart: TDataSource
+    DataSet = Chart
+    Left = 45
+    Top = 99
+  end
+  object Journal: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'select * from journal')
+    Left = 160
+    Top = 24
+    object Journalidjournal: TLargeintField
+      AutoGenerateValue = arAutoInc
+      FieldName = 'idjournal'
+      Origin = 'journal.idjournal'
+    end
+    object Journalaccountcode: TStringField
+      FieldName = 'accountcode'
+      Origin = 'journal.accountcode'
+    end
+    object Journaldocumentdate: TDateField
+      FieldName = 'documentdate'
+      Origin = 'journal.documentdate'
+    end
+    object Journaldocumenttype: TStringField
+      FieldName = 'documenttype'
+      Origin = 'journal.documenttype'
+      Size = 10
+    end
+    object Journaldocumentnumber: TStringField
+      FieldName = 'documentnumber'
+      Origin = 'journal.documentnumber'
+    end
+    object Journaldebit: TFloatField
+      FieldName = 'debit'
+      Origin = 'journal.debit'
+      currency = True
+    end
+    object Journalcredit: TFloatField
+      FieldName = 'credit'
+      Origin = 'journal.credit'
+      currency = True
+    end
+    object Journalbalance: TFloatField
+      FieldName = 'balance'
+      Origin = 'journal.balance'
+      currency = True
+    end
+    object Journalaccountname: TStringField
+      FieldName = 'accountname'
+      Origin = 'journal.accountname'
+      Size = 50
+    end
+  end
+  object dsJournal: TDataSource
+    DataSet = Journal
+    Left = 160
+    Top = 99
+  end
+  object Users: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'select * from users')
+    Left = 496
+    Top = 24
+    object UsersUserPassWord: TStringField
+      FieldName = 'UserPassWord'
+      Origin = 'users.UserPassWord'
+      Size = 10
+    end
+    object UsersUserName: TStringField
+      FieldName = 'UserName'
+      Origin = 'users.UserName'
+      Size = 30
+    end
+    object UsersUserID: TStringField
+      FieldName = 'UserID'
+      Origin = 'users.UserID'
+      Size = 30
+    end
+    object UsersUserPic: TBlobField
+      FieldName = 'UserPic'
+      Origin = 'users.UserPic'
+    end
+    object UsersPosition: TStringField
+      FieldName = 'Position'
+      Origin = 'users.Position'
+      Size = 30
+    end
+    object UsersUserRestriction: TStringField
+      FieldName = 'UserRestriction'
+      Origin = 'users.UserRestriction'
+    end
+  end
+  object dsUsers: TDataSource
+    DataSet = Users
+    Left = 496
+    Top = 99
+  end
+  object ScheduleMaster: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'select * from schedulemaster'
+      'where description like :description')
+    Left = 272
+    Top = 24
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'description'
+      end>
+    object ScheduleMasteridScheduleMaster: TLargeintField
+      AutoGenerateValue = arAutoInc
+      FieldName = 'idScheduleMaster'
+      Origin = 'schedulemaster.idScheduleMaster'
+    end
+    object ScheduleMasterDescription: TStringField
+      FieldName = 'Description'
+      Origin = 'schedulemaster.Description'
+      Size = 50
+    end
+  end
+  object dsScheduleMaster: TDataSource
+    DataSet = ScheduleMaster
+    Left = 269
+    Top = 97
+  end
+  object ScheduleDetail: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'select * from scheduledetail')
+    MasterSource = dsScheduleMaster
+    MasterFields = 'idScheduleMaster'
+    DetailFields = 'idschedulemaster'
+    Left = 384
+    Top = 24
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'idScheduleMaster'
+      end>
+    object ScheduleDetailidscheduledetail: TLargeintField
+      FieldName = 'idscheduledetail'
+    end
+    object ScheduleDetailidschedulemaster: TFloatField
+      FieldName = 'idschedulemaster'
+    end
+    object ScheduleDetailaccountcode: TStringField
+      FieldName = 'accountcode'
+    end
+    object ScheduleDetailaccountname: TStringField
+      FieldName = 'accountname'
+      Size = 70
+    end
+  end
+  object dsScheduleDetail: TDataSource
+    DataSet = ScheduleDetail
+    Left = 381
+    Top = 97
+  end
+  object requisition: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'select * from requisition'
+      'where rvdate between :datefrom and :dateto and'
+      '      rvname like :name &filter1 &filter2 &filter3'
+      'order by idrequisition')
+    Options.AutoRefresh = True
+    Left = 607
+    Top = 23
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'datefrom'
+      end
+      item
+        DataType = ftUnknown
+        Name = 'dateto'
+      end
+      item
+        DataType = ftUnknown
+        Name = 'name'
+      end>
+    MacroData = <
+      item
+        Name = 'filter1'
+        Value = 'and Status =  '#39'APPROVED'#39
+        Active = False
+      end
+      item
+        Name = 'filter2'
+        Value = 'and Status =  '#39'DISAPPROVED'#39
+        Active = False
+      end
+      item
+        Name = 'filter3'
+        Value = 'and (Status is null or Status = '#39#39')'
+        Active = False
+      end>
+    object requisitionidrequisition: TLargeintField
+      FieldName = 'idrequisition'
+    end
+    object requisitionrvDate: TDateField
+      FieldName = 'rvDate'
+    end
+    object requisitionrvPCode: TStringField
+      FieldName = 'rvPCode'
+      Size = 15
+    end
+    object requisitionrvName: TStringField
+      FieldName = 'rvName'
+      Size = 50
+    end
+    object requisitionrvNumber: TStringField
+      FieldName = 'rvNumber'
+      Size = 15
+    end
+    object requisitionamount: TFloatField
+      FieldName = 'amount'
+    end
+    object requisitionstatus: TStringField
+      FieldName = 'status'
+      Size = 30
+    end
+    object requisitionrequester: TStringField
+      FieldName = 'requester'
+      Size = 45
+    end
+    object requisitionuserid: TLargeintField
+      FieldName = 'userid'
+    end
+    object requisitioncheckboxstatus: TLargeintField
+      FieldName = 'checkboxstatus'
+    end
+    object requisitionrvdescription: TMemoField
+      FieldName = 'rvdescription'
+      OnGetText = requisitionrvdescriptionGetText
+      BlobType = ftMemo
+    end
+    object requisitionDenyDescription: TStringField
+      FieldName = 'DenyDescription'
+      Size = 200
+    end
+    object requisitionallocation: TStringField
+      FieldName = 'allocation'
+      Size = 100
+    end
+    object requisitionallowprint: TBooleanField
+      FieldName = 'allowprint'
+    end
+    object requisitiondateApproved: TDateField
+      FieldName = 'dateApproved'
+    end
+  end
+  object dsrequisition: TDataSource
+    DataSet = requisition
+    Left = 607
+    Top = 98
+  end
+  object Company: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'select * from company')
+    Left = 728
+    Top = 23
+    object Companyidcompany: TLargeintField
+      AutoGenerateValue = arAutoInc
+      FieldName = 'idcompany'
+      Origin = 'company.idcompany'
+    end
+    object Companycompanyname: TStringField
+      FieldName = 'companyname'
+      Origin = 'company.companyname'
+      Size = 50
+    end
+    object Companyaddress: TStringField
+      FieldName = 'address'
+      Origin = 'company.address'
+      Size = 50
+    end
+    object Companylogo: TBlobField
+      FieldName = 'logo'
+      Origin = 'company.logo'
+    end
+    object Companyfilename: TStringField
+      FieldName = 'filename'
+      Origin = 'company.filename'
+      Size = 50
+    end
+    object Companycompanyacro: TStringField
+      FieldName = 'companyacro'
+      Origin = 'company.companyacro'
+      Size = 30
+    end
+  end
+  object dsCompany: TDataSource
+    DataSet = Company
+    Left = 728
+    Top = 98
+  end
+  object Payee: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'select * from zanecoacctg.payee'
+      'where name like :name'
+      'order by name')
+    Left = 46
+    Top = 192
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'name'
+      end>
+    object Payeeidpayee: TLargeintField
+      FieldName = 'idpayee'
+    end
+    object PayeePCode: TStringField
+      FieldName = 'PCode'
+      Size = 15
+    end
+    object PayeeName: TStringField
+      FieldName = 'Name'
+      Size = 50
+    end
+    object Payeeexpenseaccount: TStringField
+      FieldName = 'expenseaccount'
+      Size = 45
+    end
+    object Payeeaccountname: TStringField
+      FieldName = 'accountname'
+      Size = 45
+    end
+    object Payeerefpayee: TStringField
+      FieldName = 'refpayee'
+      Size = 45
+    end
+  end
+  object dsPayee: TDataSource
+    DataSet = Payee
+    Left = 48
+    Top = 288
+  end
+  object RequisitionDetail: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'Select * from RequisitionDetail where idrequisition like :rv')
+    Left = 376
+    Top = 192
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'rv'
+      end>
+    object RequisitionDetailidrequisitiondetail: TLargeintField
+      FieldName = 'idrequisitiondetail'
+    end
+    object RequisitionDetailidrequisition: TFloatField
+      FieldName = 'idrequisition'
+    end
+    object RequisitionDetailrdqty: TFloatField
+      FieldName = 'rdqty'
+    end
+    object RequisitionDetailrddescription: TStringField
+      FieldName = 'rddescription'
+      Size = 50
+    end
+    object RequisitionDetailrdcost: TFloatField
+      FieldName = 'rdcost'
+    end
+    object RequisitionDetailrdamount: TFloatField
+      FieldName = 'rdamount'
+    end
+    object RequisitionDetailrdunit: TStringField
+      FieldName = 'rdunit'
+      Size = 45
+    end
+  end
+  object dsRequistionDetail: TMyDataSource
+    DataSet = RequisitionDetail
+    Left = 376
+    Top = 272
+  end
+  object requisitionA: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'SELECT *'
+      
+        'FROM requisition r left join journal j on j.documentnumber = r.r' +
+        'vnumber'
+      'where r.rvdate between :datefrom and :dateto and rvname like :RN'
+      'and status = '#39'APPROVED'#39' and (isgl = 0 or isgl is null)'
+      'group by j.documentnumber,r.rvnumber '
+      'order by r.rvdate desc')
+    Left = 504
+    Top = 192
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'Datefrom'
+        Value = '2010-11-01'
+      end
+      item
+        DataType = ftString
+        Name = 'dateto'
+        Value = '2010-11-30'
+      end
+      item
+        DataType = ftString
+        Name = 'RN'
+        Value = '%'
+      end>
+    object requisitionAidrequisition: TLargeintField
+      FieldName = 'idrequisition'
+    end
+    object requisitionArvDate: TDateField
+      FieldName = 'rvDate'
+    end
+    object requisitionArvPCode: TStringField
+      FieldName = 'rvPCode'
+      Size = 15
+    end
+    object requisitionArvName: TStringField
+      FieldName = 'rvName'
+      Size = 50
+    end
+    object requisitionArvNumber: TStringField
+      FieldName = 'rvNumber'
+    end
+    object requisitionAamount: TFloatField
+      FieldName = 'amount'
+    end
+    object requisitionAstatus: TStringField
+      FieldName = 'status'
+      Size = 30
+    end
+    object requisitionArequester: TStringField
+      FieldName = 'requester'
+      Size = 45
+    end
+    object requisitionAuserid: TLargeintField
+      FieldName = 'userid'
+    end
+    object requisitionAcheckboxstatus: TLargeintField
+      FieldName = 'checkboxstatus'
+    end
+    object requisitionArvdescription: TMemoField
+      FieldName = 'rvdescription'
+      OnGetText = requisitionArvdescriptionGetText
+      BlobType = ftMemo
+    end
+    object requisitionAacctgstatus: TStringField
+      FieldName = 'acctgstatus'
+      Size = 5
+    end
+    object requisitionAcanvasser: TStringField
+      FieldName = 'canvasser'
+      Size = 45
+    end
+    object requisitionAaddress: TStringField
+      FieldName = 'address'
+      Size = 100
+    end
+    object requisitionAdenydescription: TStringField
+      FieldName = 'denydescription'
+      Size = 200
+    end
+    object requisitionAidjournal: TLargeintField
+      FieldName = 'idjournal'
+    end
+    object requisitionAaccountcode: TStringField
+      FieldName = 'accountcode'
+    end
+    object requisitionAaccountname: TStringField
+      FieldName = 'accountname'
+      Size = 50
+    end
+    object requisitionAdocumentdate: TDateField
+      FieldName = 'documentdate'
+    end
+    object requisitionAdocumenttype: TStringField
+      FieldName = 'documenttype'
+      Size = 10
+    end
+    object requisitionAdocumentnumber: TStringField
+      FieldName = 'documentnumber'
+    end
+    object requisitionAdebit: TFloatField
+      FieldName = 'debit'
+    end
+    object requisitionAcredit: TFloatField
+      FieldName = 'credit'
+    end
+    object requisitionAbalance: TFloatField
+      FieldName = 'balance'
+    end
+  end
+  object dsrequisitionA: TMyDataSource
+    DataSet = requisitionA
+    Left = 504
+    Top = 272
+  end
+  object signatories: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'select * from cvsign')
+    Left = 168
+    Top = 188
+  end
+  object dsSignatories: TMyDataSource
+    DataSet = signatories
+    Left = 168
+    Top = 272
+  end
+  object requisitionb: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      
+        'select * from requisition r inner join journal j on j.documentnu' +
+        'mber = r.rvnumber')
+    Left = 608
+    Top = 192
+    object requisitionbidrequisition: TLargeintField
+      FieldName = 'idrequisition'
+    end
+    object requisitionbrvDate: TDateField
+      FieldName = 'rvDate'
+    end
+    object requisitionbrvPCode: TStringField
+      FieldName = 'rvPCode'
+      Size = 15
+    end
+    object requisitionbrvName: TStringField
+      FieldName = 'rvName'
+      Size = 50
+    end
+    object requisitionbrvNumber: TStringField
+      FieldName = 'rvNumber'
+      Size = 15
+    end
+    object requisitionbamount: TFloatField
+      FieldName = 'amount'
+    end
+    object requisitionbstatus: TStringField
+      FieldName = 'status'
+      Size = 30
+    end
+    object requisitionbrequester: TStringField
+      FieldName = 'requester'
+      Size = 45
+    end
+    object requisitionbuserid: TLargeintField
+      FieldName = 'userid'
+    end
+    object requisitionbcheckboxstatus: TLargeintField
+      FieldName = 'checkboxstatus'
+    end
+    object requisitionbrvdescription: TMemoField
+      FieldName = 'rvdescription'
+      OnGetText = requisitionbrvdescriptionGetText
+      BlobType = ftMemo
+    end
+    object requisitionbidjournal: TLargeintField
+      FieldName = 'idjournal'
+    end
+    object requisitionbaccountcode: TStringField
+      FieldName = 'accountcode'
+    end
+    object requisitionbaccountname: TStringField
+      FieldName = 'accountname'
+      Size = 50
+    end
+    object requisitionbdocumentdate: TDateField
+      FieldName = 'documentdate'
+    end
+    object requisitionbdocumenttype: TStringField
+      FieldName = 'documenttype'
+      Size = 10
+    end
+    object requisitionbdocumentnumber: TStringField
+      FieldName = 'documentnumber'
+    end
+    object requisitionbdebit: TFloatField
+      FieldName = 'debit'
+    end
+    object requisitionbcredit: TFloatField
+      FieldName = 'credit'
+    end
+    object requisitionbbalance: TFloatField
+      FieldName = 'balance'
+    end
+  end
+  object dsrequisitionb: TMyDataSource
+    DataSet = requisitionb
+    Left = 608
+    Top = 264
+  end
+  object Payee2: TMyQuery
+    Connection = myconnection1
+    SQL.Strings = (
+      'select * from zanecoacctg.payee'
+      'where name like :name'
+      'order by name')
+    Left = 102
+    Top = 192
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'name'
+      end>
+    object Payee2idpayee: TLargeintField
+      FieldName = 'idpayee'
+    end
+    object Payee2PCode: TStringField
+      FieldName = 'PCode'
+      Size = 30
+    end
+    object Payee2Name: TStringField
+      FieldName = 'Name'
+      Size = 50
+    end
+    object Payee2expenseaccount: TStringField
+      FieldName = 'expenseaccount'
+      Size = 45
+    end
+    object Payee2accountname: TStringField
+      FieldName = 'accountname'
+      Size = 45
+    end
+    object Payee2refpayee: TStringField
+      FieldName = 'refpayee'
+      Size = 45
+    end
+  end
+  object dspayee2: TDataSource
+    DataSet = Payee2
+    Left = 104
+    Top = 288
+  end
+end

@@ -1,0 +1,2223 @@
+unit FlexMenu;
+
+interface
+
+uses
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  Menus,
+  StdCtrls,
+  ExtCtrls,
+  DBCtrls,
+  NxToolBox,
+  NxCollection,
+  NxPageControl,
+  DsFancyButton,
+  Mask,
+  NxFocus,
+  NxEdit,
+  ExtDlgs,
+  DB,
+  MemDS,
+  DBAccess,
+  MyAccess,
+  NxColumns,
+  NxDBColumns,
+  NxScrollControl,
+  NxCustomGridControl,
+  NxCustomGrid,
+  NxDBGrid,
+  PDJButton,
+  ImgList,
+  QRCtrls,
+  QuickRpt,
+  ComCtrls,
+  jpeg,
+  Grids,
+  DBGrids,
+  CRGrid;
+
+type
+  TFlexAccountMainMenuForm = class(TForm)
+    Timer1: TTimer;
+    MyNoteBook: TNxNotebook;
+    TabHome: TNxTabSheet;
+    TabCompany: TNxTabSheet;
+    NxHeaderPanel1: TNxHeaderPanel;
+    OpenPictureDialog1: TOpenPictureDialog;
+    TabUsers: TNxTabSheet;
+    NxHeaderPanel2: TNxHeaderPanel;
+    MyUsers: TMyQuery;
+    MyUsersUserPassWord: TStringField;
+    MyUsersUserName: TStringField;
+    MyUsersUserID: TStringField;
+    MyUsersUserPic: TBlobField;
+    MyUsersPosition: TStringField;
+    MyUsersUserRestriction: TStringField;
+    MyUsersIdUsers: TLargeintField;
+    dsMyUsers: TMyDataSource;
+    ImageList1: TImageList;
+    DBText1: TDBText;
+    DBText2: TDBText;
+    DBText3: TDBText;
+    Image2: TImage;
+    DateStr: TNxLabel;
+    NxLabel1: TNxLabel;
+    Image1: TImage;
+    NxLabel2: TNxLabel;
+    Label13: TLabel;
+    DBImage1: TDBImage;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    LoadLogo: TNxLinkLabel;
+    DBEdit1: TDBEdit;
+    DBEdit2: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBImage3: TDBImage;
+    NxFlipContainer2: TNxFlipContainer;
+    UserListPanel: TNxFlipPanel;
+    NextDBGrid1: TNextDBGrid;
+    TNxDBTextColumn2: TNxDBTextColumn;
+    TNxDBTextColumn5: TNxDBTextColumn;
+    TNxDBTextColumn6: TNxDBTextColumn;
+    SearchUser: TNxButtonEdit;
+    EditButton: TNxLinkLabel;
+    AddLink: TNxLinkLabel;
+    DeleteLink: TNxLinkLabel;
+    UserMaintenancePanel: TNxFlipPanel;
+    Label10: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    EditConfirmPassword: TNxEdit;
+    NxLinkLabel1: TNxLinkLabel;
+    SaveUser: TNxLinkLabel;
+    CancelUser: TNxLinkLabel;
+    DBEdit4: TDBEdit;
+    DBEdit5: TDBEdit;
+    DBEdit6: TDBEdit;
+    DBEdit7: TDBEdit;
+    DBEdit8: TDBEdit;
+    DBImage4: TDBImage;
+    tabChart: TNxTabSheet;
+    ChartLedger: TMyQuery;
+    dsChartLedger: TMyDataSource;
+    ChartLedgeridjournal: TLargeintField;
+    ChartLedgeraccountcode: TStringField;
+    ChartLedgeraccountname: TStringField;
+    ChartLedgerdocumentdate: TDateField;
+    ChartLedgerdocumenttype: TStringField;
+    ChartLedgerdocumentnumber: TStringField;
+    ChartLedgerdebit: TFloatField;
+    ChartLedgercredit: TFloatField;
+    ChartLedgerbalance: TFloatField;
+    ComputeChartBalances: TMyQuery;
+    LedgerEntry: TMyQuery;
+    LedgerEntryidjournal: TLargeintField;
+    LedgerEntryaccountcode: TStringField;
+    LedgerEntryaccountname: TStringField;
+    LedgerEntrydocumentdate: TDateField;
+    LedgerEntrydocumenttype: TStringField;
+    LedgerEntrydocumentnumber: TStringField;
+    LedgerEntrydebit: TFloatField;
+    LedgerEntrycredit: TFloatField;
+    LedgerEntrybalance: TFloatField;
+    dsLedgerEntry: TMyDataSource;
+    TabJournalVoucher: TNxTabSheet;
+    MyChart: TMyQuery;
+    dsMyChart: TMyDataSource;
+    MyChartaccountcode: TStringField;
+    MyChartaccountname: TStringField;
+    MyChartaccounttype: TStringField;
+    Recap: TMyQuery;
+    RegisterJournal: TMyTable;
+    RegisterJournalidjournal: TLargeintField;
+    RegisterJournalaccountcode: TStringField;
+    RegisterJournalaccountname: TStringField;
+    RegisterJournaldocumentdate: TDateField;
+    RegisterJournaldocumenttype: TStringField;
+    RegisterJournaldocumentnumber: TStringField;
+    RegisterJournaldebit: TFloatField;
+    RegisterJournalcredit: TFloatField;
+    RegisterJournalbalance: TFloatField;
+    Recapaccountcode: TStringField;
+    Recapaccountname: TStringField;
+    Recapdebit: TFloatField;
+    Recapcredit: TFloatField;
+    Image3: TImage;
+    DBImage6: TDBImage;
+    ACRONYM: TNxLabel;
+    TrialBalance: TMyQuery;
+    TrialBalanceaccountcode: TStringField;
+    TrialBalanceaccountname: TStringField;
+    TrialBalanceGLDebit: TFloatField;
+    TrialBalanceGLCredit: TFloatField;
+    TrialBalanceSLDebit: TFloatField;
+    TrialBalanceSLCredit: TFloatField;
+    TabSchedule: TNxTabSheet;
+    printschedule: TMyQuery;
+    MyQuery1: TMyQuery;
+    Panel2: TPanel;
+    NxOutlookBar1: TNxOutlookBar;
+    printscheduleidscheduledetail: TLargeintField;
+    printscheduleidschedulemaster: TFloatField;
+    printscheduleaccountcode: TStringField;
+    printscheduleaccountname: TStringField;
+    printscheduleallocamount: TFloatField;
+    printschedulebalance: TCurrencyField;
+    NxHeaderPanel4: TNxHeaderPanel;
+    NxLabel4: TNxLabel;
+    NxLabel5: TNxLabel;
+    NxLinkLabel20: TNxLinkLabel;
+    JVPeriodCovered: TNxLinkLabel;
+    JVDateFrom: TNxDatePicker;
+    JVDateTo: TNxDatePicker;
+    tabReqDetail: TNxTabSheet;
+    RequisitionDetail: TMyQuery;
+    dsrequisitionDetail: TMyDataSource;
+    JVSearch: TNxButtonEdit;
+    Panel1: TPanel;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    QuickRep1: TQuickRep;
+    QRBand35: TQRBand;
+    QRBand36: TQRBand;
+    QRDBImage12: TQRDBImage;
+    QRDBText128: TQRDBText;
+    QRDBText129: TQRDBText;
+    QRDBText130: TQRDBText;
+    QRLabel105: TQRLabel;
+    QRSysData12: TQRSysData;
+    QRDBText1: TQRDBText;
+    QRDBText2: TQRDBText;
+    QRBand37: TQRBand;
+    QRLabel108: TQRLabel;
+    QRLabel109: TQRLabel;
+    QRLabel111: TQRLabel;
+    TabSheet2: TTabSheet;
+    QuickRep2: TQuickRep;
+    QRBand1: TQRBand;
+    QRDBText3: TQRDBText;
+    QRDBText4: TQRDBText;
+    QRDBText5: TQRDBText;
+    QRDBText6: TQRDBText;
+    QRDBText10: TQRDBText;
+    QRBand2: TQRBand;
+    QRLabel1: TQRLabel;
+    QRSysData1: TQRSysData;
+    QRDBImage1: TQRDBImage;
+    QRDBText7: TQRDBText;
+    QRDBText8: TQRDBText;
+    QRDBText9: TQRDBText;
+    QRBand3: TQRBand;
+    QRLabel3: TQRLabel;
+    QRLabel4: TQRLabel;
+    QRLabel5: TQRLabel;
+    QRLabel6: TQRLabel;
+    QRLabel2: TQRLabel;
+    TabSheet5: TTabSheet;
+    QuickRep5: TQuickRep;
+    QRBand4: TQRBand;
+    QRDBText33: TQRDBText;
+    QRDBText35: TQRDBText;
+    QRDBText36: TQRDBText;
+    QRDBText37: TQRDBText;
+    QRBand7: TQRBand;
+    RecapTitle: TQRLabel;
+    QRSysData4: TQRSysData;
+    RecapPeriod: TQRLabel;
+    QRDBImage3: TQRDBImage;
+    QRDBText39: TQRDBText;
+    QRDBText40: TQRDBText;
+    QRDBText41: TQRDBText;
+    QRBand8: TQRBand;
+    QRLabel15: TQRLabel;
+    QRLabel16: TQRLabel;
+    QRLabel17: TQRLabel;
+    QRLabel18: TQRLabel;
+    SummaryBand3: TQRBand;
+    QRLabel14: TQRLabel;
+    QRExpr3: TQRExpr;
+    QRExpr4: TQRExpr;
+    TabSheet7: TTabSheet;
+    QuickRep7: TQuickRep;
+    QRBand10: TQRBand;
+    QRLabel20: TQRLabel;
+    QRSysData6: TQRSysData;
+    JVQrPeriod: TQRLabel;
+    QRDBImage4: TQRDBImage;
+    QRDBText45: TQRDBText;
+    QRDBText49: TQRDBText;
+    QRDBText50: TQRDBText;
+    QRBand12: TQRBand;
+    QRLabel23: TQRLabel;
+    QRLabel24: TQRLabel;
+    QRLabel26: TQRLabel;
+    QRLabel9: TQRLabel;
+    QRLabel10: TQRLabel;
+    QRBand13: TQRBand;
+    QRDBText51: TQRDBText;
+    QRDBText52: TQRDBText;
+    QRDBText53: TQRDBText;
+    QRDBText13: TQRDBText;
+    QRDBText14: TQRDBText;
+    QRSubDetail2: TQRSubDetail;
+    QRDBText57: TQRDBText;
+    QRDBText58: TQRDBText;
+    QRDBText60: TQRDBText;
+    TabSheet13: TTabSheet;
+    QuickRep13: TQuickRep;
+    QRBand41: TQRBand;
+    QRDBText113: TQRDBText;
+    QRDBText114: TQRDBText;
+    QRDBText116: TQRDBText;
+    QRDBText11: TQRDBText;
+    QRDBText12: TQRDBText;
+    QRBand42: TQRBand;
+    QRLabel68: TQRLabel;
+    QRSysData13: TQRSysData;
+    QRDBImage10: TQRDBImage;
+    QRDBText118: TQRDBText;
+    QRDBText119: TQRDBText;
+    QRDBText120: TQRDBText;
+    ScheduleTitle: TQRLabel;
+    QRBand43: TQRBand;
+    QRLabel70: TQRLabel;
+    QRLabel71: TQRLabel;
+    QRLabel73: TQRLabel;
+    QRLabel7: TQRLabel;
+    QRLabel8: TQRLabel;
+    SummaryBand5: TQRBand;
+    QRLabel69: TQRLabel;
+    QRExpr21: TQRExpr;
+    QRExpr1: TQRExpr;
+    QRExpr2: TQRExpr;
+    TabSheet3: TTabSheet;
+    RequisitionDetailidrequisitiondetail: TLargeintField;
+    RequisitionDetailidrequisition: TFloatField;
+    RequisitionDetailrdqty: TFloatField;
+    RequisitionDetailrddescription: TStringField;
+    RequisitionDetailrdcost: TFloatField;
+    RequisitionDetailrdamount: TFloatField;
+    dsrequisition: TMyDataSource;
+    QuickRep3: TQuickRep;
+    QRBand5: TQRBand;
+    QRLabel11: TQRLabel;
+    QRSysData2: TQRSysData;
+    qrlPeriodCover: TQRLabel;
+    QRDBImage2: TQRDBImage;
+    QRDBText15: TQRDBText;
+    QRDBText16: TQRDBText;
+    QRDBText17: TQRDBText;
+    QRSysData3: TQRSysData;
+    QRBand6: TQRBand;
+    QRLabel12: TQRLabel;
+    QRLabel13: TQRLabel;
+    QRLabel19: TQRLabel;
+    QRLabel21: TQRLabel;
+    QRLabel22: TQRLabel;
+    QRLabel25: TQRLabel;
+    QRBand9: TQRBand;
+    qrRequisition: TMyQuery;
+    qrRequisitionidrequisition: TLargeintField;
+    qrRequisitionrvDate: TDateField;
+    qrRequisitionrvPCode: TStringField;
+    qrRequisitionrvName: TStringField;
+    qrRequisitionrvdescription: TStringField;
+    qrRequisitionrvNumber: TStringField;
+    qrRequisitionamount: TFloatField;
+    qrRequisitionstatus: TStringField;
+    qrRequisitionidrequisitiondetail: TLargeintField;
+    qrRequisitionidrequisition_1: TFloatField;
+    qrRequisitionrdqty: TFloatField;
+    qrRequisitionrddescription: TStringField;
+    qrRequisitionrdcost: TFloatField;
+    qrRequisitionrdamount: TFloatField;
+    QRBand56: TQRBand;
+    QRLabel205: TQRLabel;
+    QRLabel219: TQRLabel;
+    QRLabel222: TQRLabel;
+    QRDBText228: TQRDBText;
+    QRDBText230: TQRDBText;
+    QRDBText231: TQRDBText;
+    QRDBText232: TQRDBText;
+    QRLabel223: TQRLabel;
+    QRDBText233: TQRDBText;
+    QRDBText234: TQRDBText;
+    QRDBText239: TQRDBText;
+    QRDBText240: TQRDBText;
+    QRLabel224: TQRLabel;
+    QRDBText229: TQRDBText;
+    QRDBText235: TQRDBText;
+    QRLabel203: TQRLabel;
+    QRExpr5: TQRExpr;
+    QRLabel29: TQRLabel;
+    QRLabel28: TQRLabel;
+    QRLabel27: TQRLabel;
+    QRLabel31: TQRLabel;
+    QRLabel30: TQRLabel;
+    QRDBText18: TQRDBText;
+    QRDBText19: TQRDBText;
+    QRDBText20: TQRDBText;
+    QRDBText22: TQRDBText;
+    QRDBText21: TQRDBText;
+    QRDBText23: TQRDBText;
+    QRDBText27: TQRDBText;
+    QRDBText26: TQRDBText;
+    QRDBText25: TQRDBText;
+    QRDBText24: TQRDBText;
+    NxHeaderPanel5: TNxHeaderPanel;
+    NxLabel6: TNxLabel;
+    NxLabel7: TNxLabel;
+    RCPanel: TNxHeaderPanel;
+    Label51: TLabel;
+    NxLinkLabel29: TNxLinkLabel;
+    NxLinkLabel30: TNxLinkLabel;
+    DBComboBox1: TDBComboBox;
+    JVSearch2: TNxButtonEdit;
+    NxLinkLabel15: TNxLinkLabel;
+    NxLinkLabel16: TNxLinkLabel;
+    JVDateFrom2: TNxDatePicker;
+    JvDateTo2: TNxDatePicker;
+    RCEdit: TNxLinkLabel;
+    RCDelete: TNxLinkLabel;
+    updatecalcel: TMyQuery;
+    RequisitionDetailrdunit: TStringField;
+    QuickRep4: TQuickRep;
+    QRBand11: TQRBand;
+    QRDBText28: TQRDBText;
+    QRDBText29: TQRDBText;
+    QRDBText30: TQRDBText;
+    QRDBText31: TQRDBText;
+    QRDBText32: TQRDBText;
+    QRDBText34: TQRDBText;
+    QRBand14: TQRBand;
+    QRLabel32: TQRLabel;
+    QRSysData5: TQRSysData;
+    QRDBImage5: TQRDBImage;
+    QRDBText38: TQRDBText;
+    QRDBText42: TQRDBText;
+    QRDBText43: TQRDBText;
+    QRBand15: TQRBand;
+    QRLabel33: TQRLabel;
+    QRLabel34: TQRLabel;
+    QRLabel35: TQRLabel;
+    QRLabel36: TQRLabel;
+    qrlYearLabel: TQRLabel;
+    qrlMonthLabel: TQRLabel;
+    QRLabel37: TQRLabel;
+    QRLabel38: TQRLabel;
+    printschedulebalperiodcovered: TFloatField;
+    sched: TMyQuery;
+    LargeintField1: TLargeintField;
+    DateField1: TDateField;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    StringField4: TStringField;
+    FloatField1: TFloatField;
+    StringField5: TStringField;
+    LargeintField2: TLargeintField;
+    FloatField2: TFloatField;
+    FloatField3: TFloatField;
+    StringField6: TStringField;
+    FloatField4: TFloatField;
+    FloatField5: TFloatField;
+    dssched: TMyDataSource;
+    RefreshRecord: TNxLinkLabel;
+    EditLink: TNxLinkLabel;
+    SaveLink: TNxLinkLabel;
+    CancelLink: TNxLinkLabel;
+    CRDBGrid2: TCRDBGrid;
+    CRDBGrid3: TCRDBGrid;
+    Chart2: TMyQuery;
+    dsChart2: TDataSource;
+    ledger2: TMyQuery;
+    dsledge2: TMyDataSource;
+    ledger2idjournal: TLargeintField;
+    ledger2accountcode: TStringField;
+    ledger2accountname: TStringField;
+    ledger2documentdate: TDateField;
+    ledger2documenttype: TStringField;
+    ledger2documentnumber: TStringField;
+    ledger2debit: TFloatField;
+    ledger2credit: TFloatField;
+    ledger2balance: TFloatField;
+    Chart2idchart: TLargeintField;
+    Chart2accountcode: TStringField;
+    Chart2accountname: TStringField;
+    Chart2accounttype: TStringField;
+    Chart2accountledgertype: TStringField;
+    Chart2BalAsOf: TFloatField;
+    Chart2BalPeriodCovered: TFloatField;
+    Chart2Indent: TLargeintField;
+    Chart2AllocAmount: TFloatField;
+    Chart2masteracc: TStringField;
+    Chart2mastername: TStringField;
+    NxHeaderPanel3: TNxHeaderPanel;
+    NxLabel8: TNxLabel;
+    CRDBGrid1: TCRDBGrid;
+    AcctSearch: TNxButtonEdit;
+    AcctEdit: TNxLinkLabel;
+    AcctAdd: TNxLinkLabel;
+    AcctDelete: TNxLinkLabel;
+    NxLinkLabel4: TNxLinkLabel;
+    NxLinkLabel13: TNxLinkLabel;
+    ChartLedgerPanel: TNxHeaderPanel;
+    Label14: TLabel;
+    Label15: TLabel;
+    DBEdit11: TDBEdit;
+    DBEdit12: TDBEdit;
+    NxLinkLabel8: TNxLinkLabel;
+    NxLinkLabel12: TNxLinkLabel;
+    ComputeChartPanel: TNxHeaderPanel;
+    NxLabel3: TNxLabel;
+    ComputeCutoffDate: TNxDatePicker;
+    NxButton1: TNxButton;
+    NxButton2: TNxButton;
+    ChartPanel: TNxHeaderPanel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label22: TLabel;
+    Label49: TLabel;
+    Label50: TLabel;
+    NxLinkLabel2: TNxLinkLabel;
+    NxLinkLabel3: TNxLinkLabel;
+    DBEdit9: TDBEdit;
+    DBEdit10: TDBEdit;
+    DBEdit18: TDBEdit;
+    DBEdit35: TDBEdit;
+    DBEdit39: TDBEdit;
+    NextDBGrid2: TNextDBGrid;
+    NxDBTextColumn8: TNxDBTextColumn;
+    NxDBTextColumn7: TNxDBTextColumn;
+    ChartCutOff: TNxDatePicker;
+    NxHeaderPanel6: TNxHeaderPanel;
+    CRDBGrid4: TCRDBGrid;
+    ChartGA: TMyQuery;
+    dschartGA: TDataSource;
+    ChartTotalLink: TNxLinkLabel;
+    ChartGAidchart: TLargeintField;
+    ChartGAaccountcode: TStringField;
+    ChartGAaccountname: TStringField;
+    ChartGAaccounttype: TStringField;
+    ChartGAaccountledgertype: TStringField;
+    ChartGABalAsOf: TFloatField;
+    ChartGABalPeriodCovered: TFloatField;
+    ChartGAIndent: TLargeintField;
+    ChartGAAllocAmount: TFloatField;
+    ChartGAmasteracc: TStringField;
+    ChartGAmastername: TStringField;
+    Chart2Mastertype: TStringField;
+    ChartGAMastertype: TStringField;
+    ChartSA: TMyQuery;
+    dsSa: TDataSource;
+    ChartSAaccountcode: TStringField;
+    ChartSAaccountname: TStringField;
+    ChartSAAllocamount: TFloatField;
+    NextDBGrid4: TNextDBGrid;
+    NxDBTextColumn9: TNxDBTextColumn;
+    NxDBTextColumn10: TNxDBTextColumn;
+    NxDBNumberColumn1: TNxDBNumberColumn;
+    NxLabel9: TNxLabel;
+    NxLabel10: TNxLabel;
+    linkclose: TNxLinkLabel;
+    ReqDelete: TMyQuery;
+    StringField7: TStringField;
+    StringField8: TStringField;
+    FloatField6: TFloatField;
+    DataSource1: TDataSource;
+    GAsummarylink: TNxLinkLabel;
+    GAsummary: TTabSheet;
+    QuickRep6: TQuickRep;
+    QRBand16: TQRBand;
+    QRLabel39: TQRLabel;
+    QRSysData7: TQRSysData;
+    QRDBImage6: TQRDBImage;
+    QRDBText44: TQRDBText;
+    QRDBText46: TQRDBText;
+    QRDBText47: TQRDBText;
+    QRSysData8: TQRSysData;
+    QRBand17: TQRBand;
+    QRLabel40: TQRLabel;
+    QRLabel41: TQRLabel;
+    QRLabel42: TQRLabel;
+    QRLabel43: TQRLabel;
+    QRLabel44: TQRLabel;
+    QRBand18: TQRBand;
+    QRDBText48: TQRDBText;
+    QRDBText54: TQRDBText;
+    QRDBText55: TQRDBText;
+    QRDBText56: TQRDBText;
+    QRDBText59: TQRDBText;
+    GaSum: TMyQuery;
+    GaSumaccountcode: TStringField;
+    GaSumaccountname: TStringField;
+    GaSumaccounttype: TStringField;
+    GaSumBalAsOf: TFloatField;
+    GaSumBalPeriodCovered: TFloatField;
+    GaSumIndent: TLargeintField;
+    GaSumdisplaytitle: TStringField;
+    GaSumaccountledgertype: TStringField;
+    GaSumAllocAmount: TFloatField;
+    GaSumRBalance: TCurrencyField;
+    GaSumidchart: TLargeintField;
+    GaSumSpentMonth: TFloatField;
+    GaSumSpentYear: TFloatField;
+    GaSummasteracc: TStringField;
+    GaSummastername: TStringField;
+    GaSumMastertype: TStringField;
+    dsGaSum: TDataSource;
+    GroupBox1: TGroupBox;
+    Label30: TLabel;
+    Label31: TLabel;
+    Label32: TLabel;
+    Label33: TLabel;
+    Label34: TLabel;
+    Label35: TLabel;
+    Label41: TLabel;
+    Label47: TLabel;
+    DBEdit29: TDBEdit;
+    DBEdit30: TDBEdit;
+    DBEdit31: TDBEdit;
+    DBEdit32: TDBEdit;
+    DBEdit33: TDBEdit;
+    DBEdit37: TDBEdit;
+    DBEdit43: TDBEdit;
+    DBEdit44: TDBEdit;
+    QRBand19: TQRBand;
+    QRLabel45: TQRLabel;
+    QRLabel46: TQRLabel;
+    QRLabel47: TQRLabel;
+    QRLabel48: TQRLabel;
+    QRLabel49: TQRLabel;
+    QRLabel50: TQRLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    DBEdit45: TDBEdit;
+    DBEdit46: TDBEdit;
+    QRDBText61: TQRDBText;
+    QRDBText62: TQRDBText;
+    QRDBText63: TQRDBText;
+    QRDBText64: TQRDBText;
+    QRDBText65: TQRDBText;
+    QRDBText66: TQRDBText;
+    QRDBText67: TQRDBText;
+    QRDBText68: TQRDBText;
+    QRDBText69: TQRDBText;
+    QRDBText70: TQRDBText;
+    QRDBText71: TQRDBText;
+    QRDBText72: TQRDBText;
+    QRBand20: TQRBand;
+    QRLabel51: TQRLabel;
+    QRLabel53: TQRLabel;
+    QRLabel54: TQRLabel;
+    QRLabel55: TQRLabel;
+    QRLabel56: TQRLabel;
+    QRDBText73: TQRDBText;
+    QRDBText74: TQRDBText;
+    QRDBText75: TQRDBText;
+    QRDBText76: TQRDBText;
+    QRDBText77: TQRDBText;
+    QRDBText78: TQRDBText;
+    QRDBText79: TQRDBText;
+    QRDBText80: TQRDBText;
+    QRDBText81: TQRDBText;
+    QRDBText82: TQRDBText;
+    NxHeaderPanel11: TNxHeaderPanel;
+    SMSearch: TNxButtonEdit;
+    smedit: TNxLinkLabel;
+    smadd: TNxLinkLabel;
+    smdelete: TNxLinkLabel;
+    NextDBGrid25: TNextDBGrid;
+    TNxDBTextColumn22: TNxDBTextColumn;
+    smpanel: TNxHeaderPanel;
+    Label115: TLabel;
+    NxLinkLabel78: TNxLinkLabel;
+    NxLinkLabel79: TNxLinkLabel;
+    DBEdit111: TDBEdit;
+    NxLinkLabel80: TNxLinkLabel;
+    NxLinkLabel81: TNxLinkLabel;
+    smdetailpanel: TNxHeaderPanel;
+    Label116: TLabel;
+    NxLinkLabel74: TNxLinkLabel;
+    NextDBGrid26: TNextDBGrid;
+    NxDBTextColumn31: TNxDBTextColumn;
+    NxDBTextColumn32: TNxDBTextColumn;
+    NxLinkLabel75: TNxLinkLabel;
+    NxLinkLabel76: TNxLinkLabel;
+    smdetaileditpanel: TNxHeaderPanel;
+    Label121: TLabel;
+    Label122: TLabel;
+    NxLinkLabel77: TNxLinkLabel;
+    NxLinkLabel82: TNxLinkLabel;
+    DBEdit112: TDBEdit;
+    DBEdit115: TDBEdit;
+    NxButton12: TNxButton;
+    NextDBGrid27: TNextDBGrid;
+    NxDBTextColumn33: TNxDBTextColumn;
+    NxDBTextColumn34: TNxDBTextColumn;
+    NxDBTextColumn35: TNxDBTextColumn;
+    DBEdit116: TDBEdit;
+    NxHeaderPanel7: TNxHeaderPanel;
+    Label40: TLabel;
+    Label1: TLabel;
+    Label21: TLabel;
+    Label24: TLabel;
+    Label25: TLabel;
+    CRDBGrid5: TCRDBGrid;
+    DBEdit19: TDBEdit;
+    DBEdit21: TDBEdit;
+    DBEdit52: TDBEdit;
+    DBEdit53: TDBEdit;
+    DBMemo4: TDBMemo;
+    NxLinkLabel14: TNxLinkLabel;
+    QRBand21: TQRBand;
+    QRDBText86: TQRDBText;
+    QRDBText87: TQRDBText;
+    QRDBText88: TQRDBText;
+    QRExpr6: TQRExpr;
+    QRCompositeReport1: TQRCompositeReport;
+    TabPayee: TNxTabSheet;
+    NxHeaderPanel12: TNxHeaderPanel;
+    PayeeSearch: TNxButtonEdit;
+    PayeeAdd: TNxLinkLabel;
+    PayeeEdit: TNxLinkLabel;
+    PayeeDelete: TNxLinkLabel;
+    NextDBGrid6: TNextDBGrid;
+    TNxDBTextColumn31: TNxDBTextColumn;
+    TNxDBTextColumn32: TNxDBTextColumn;
+    PayeePanel: TNxHeaderPanel;
+    Label118: TLabel;
+    Label119: TLabel;
+    Label141: TLabel;
+    Label142: TLabel;
+    NxLinkLabel17: TNxLinkLabel;
+    NxLinkLabel18: TNxLinkLabel;
+    DBEdit114: TDBEdit;
+    DBEdit22: TDBEdit;
+    DBEdit138: TDBEdit;
+    VolgaDBEdit1: TDBEdit;
+    NxDBTextColumn2: TNxDBTextColumn;
+    DBMemo2: TDBMemo;
+    Label26: TLabel;
+    Label27: TLabel;
+    NxLinkLabel48: TNxLinkLabel;
+    NxLinkLabel49: TNxLinkLabel;
+    DBCheckBox1: TDBCheckBox;
+    UpdateJournal: TMyQuery;
+    MyDataSource1: TMyDataSource;
+    UpdateChart: TMyQuery;
+    CRDBGrid6: TCRDBGrid;
+    InsertChartCutoffdate: TMyQuery;
+    StringField9: TStringField;
+    StringField10: TStringField;
+    StringField11: TStringField;
+    FloatField7: TFloatField;
+    FloatField8: TFloatField;
+    LargeintField3: TLargeintField;
+    StringField12: TStringField;
+    NxLinkLabel11: TNxLinkLabel;
+    NxHeaderPanel8: TNxHeaderPanel;
+    NxLabel11: TNxLabel;
+    NxDatePicker1: TNxDatePicker;
+    NxButton3: TNxButton;
+    NxButton4: TNxButton;
+    dschart3: TDataSource;
+    Chart3: TMyQuery;
+    Chart3accountcode: TStringField;
+    Chart3accountname: TStringField;
+    Chart3accounttype: TStringField;
+    Chart3BalAsOf: TFloatField;
+    Chart3BalPeriodCovered: TFloatField;
+    Chart3Indent: TLargeintField;
+    Chart3displaytitle: TStringField;
+    Chart3accountledgertype: TStringField;
+    Chart3AllocAmount: TFloatField;
+    Chart3RBalance: TCurrencyField;
+    Chart3idchart: TLargeintField;
+    Chart3SpentMonth: TFloatField;
+    Chart3SpentYear: TFloatField;
+    Chart3masteracc: TStringField;
+    Chart3mastername: TStringField;
+    Chart3Mastertype: TStringField;
+    Chart3cutoffdate: TDateField;
+    ChartLedgerrvPCode: TStringField;
+    ChartLedgerrvName: TStringField;
+    ChartLedgerrequester: TStringField;
+    ChartLedgerrvdescription: TMemoField;
+    JVDetailPanel: TNxPanel;
+    Label42: TLabel;
+    Label43: TLabel;
+    Label44: TLabel;
+    Label28: TLabel;
+    Label29: TLabel;
+    NextDBGrid8: TNextDBGrid;
+    NxDBTextColumn1: TNxDBTextColumn;
+    NxDBTextColumn5: TNxDBTextColumn;
+    NxDBNumberColumn3: TNxDBNumberColumn;
+    JVAddDetail: TNxLinkLabel;
+    JVDeleteDetail: TNxLinkLabel;
+    DBEdit38: TDBEdit;
+    DBEdit40: TDBEdit;
+    NxLinkLabel65: TNxLinkLabel;
+    DBEdit26: TDBEdit;
+    DBEdit27: TDBEdit;
+    DBMemo1: TDBMemo;
+    NextDBGrid5: TNextDBGrid;
+    NxDBTextColumn11: TNxDBTextColumn;
+    NxDBTextColumn19: TNxDBTextColumn;
+    NxDBTextColumn20: TNxDBTextColumn;
+    JVDetailEditPanel: TNxHeaderPanel;
+    Label45: TLabel;
+    Label46: TLabel;
+    Label48: TLabel;
+    NxLinkLabel25: TNxLinkLabel;
+    NxLinkLabel26: TNxLinkLabel;
+    DBEdit42: TDBEdit;
+    DBEdit41: TDBEdit;
+    DBEdit28: TDBEdit;
+    NxGroupHeader1: TNxGroupHeader;
+    QRLabel52: TQRLabel;
+    QRDBText83: TQRDBText;
+    Panel3: TPanel;
+    NxComboBox1: TNxComboBox;
+    NxLabel12: TNxLabel;
+    Label16: TLabel;
+    NxComboBox2: TNxComboBox;
+    MyChartSpentMonth: TFloatField;
+    MyChartSpentYear: TFloatField;
+    MyChartcurrentbal: TFloatField;
+    MyChartAllocAmount: TFloatField;
+    DBCheckBox2: TDBCheckBox;
+    NxLinkLabel5: TNxLinkLabel;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure Exit1Click(Sender: TObject);
+    procedure NxOutlookBar1Select(Sender: TObject);
+    procedure EditLinkClick(Sender: TObject);
+    procedure CompanyNameEditKeyPress(Sender: TObject; var Key: Char);
+    procedure SaveLinkClick(Sender: TObject);
+    procedure CancelLinkClick(Sender: TObject);
+    procedure LoadLogoClick(Sender: TObject);
+    procedure SearchUserButtonClick(Sender: TObject);
+    procedure SearchUserEnter(Sender: TObject);
+    procedure SaveUserClick(Sender: TObject);
+    procedure CancelUserClick(Sender: TObject);
+    procedure NxLinkLabel1Click(Sender: TObject);
+    procedure AddLinkClick(Sender: TObject);
+    procedure EditButtonClick(Sender: TObject);
+    procedure DeleteLinkClick(Sender: TObject);
+    procedure AcctSearchButtonClick(Sender: TObject);
+    procedure AcctEditClick(Sender: TObject);
+    procedure AcctDeleteClick(Sender: TObject);
+    procedure NxLinkLabel2Click(Sender: TObject);
+    procedure NxLinkLabel3Click(Sender: TObject);
+    procedure NxLinkLabel8Click(Sender: TObject);
+    procedure NxLinkLabel12Click(Sender: TObject);
+    procedure NxButton2Click(Sender: TObject);
+    procedure NxButton1Click(Sender: TObject);
+    procedure NxLinkLabel4Click(Sender: TObject);
+    procedure NxLinkLabel13Click(Sender: TObject);
+    procedure JVSearchButtonClick(Sender: TObject);
+    procedure JVPeriodCoveredClick(Sender: TObject);
+    procedure JVDeleteClick(Sender: TObject);
+    procedure NxLinkLabel20Click(Sender: TObject);
+    procedure JVAddDetailClick(Sender: TObject);
+    procedure NxLinkLabel65Click(Sender: TObject);
+    procedure NxLinkLabel25Click(Sender: TObject);
+    procedure NxLinkLabel26Click(Sender: TObject);
+    procedure NxButton4Click(Sender: TObject);
+    procedure NextDBGrid9DblClick(Sender: TObject);
+    procedure MRTDeleteDetailClick(Sender: TObject);
+    procedure SMSearchButtonClick(Sender: TObject);
+    procedure smeditClick(Sender: TObject);
+    procedure smdeleteClick(Sender: TObject);
+    procedure NxLinkLabel78Click(Sender: TObject);
+    procedure NxLinkLabel79Click(Sender: TObject);
+    procedure NxLinkLabel75Click(Sender: TObject);
+    procedure NxButton12Click(Sender: TObject);
+    procedure NextDBGrid27DblClick(Sender: TObject);
+    procedure NextDBGrid27Exit(Sender: TObject);
+    procedure NxLinkLabel77Click(Sender: TObject);
+    procedure NxLinkLabel82Click(Sender: TObject);
+    procedure NxLinkLabel76Click(Sender: TObject);
+    procedure NxLinkLabel74Click(Sender: TObject);
+    procedure NxLinkLabel80Click(Sender: TObject);
+    procedure NxLinkLabel81Click(Sender: TObject);
+    procedure printscheduleCalcFields(DataSet: TDataSet);
+    procedure JVSearch2ButtonClick(Sender: TObject);
+    procedure RCEditClick(Sender: TObject);
+    procedure RCdelete2Click(Sender: TObject);
+    procedure NxLinkLabel14Click(Sender: TObject);
+    procedure NxLinkLabel29Click(Sender: TObject);
+    procedure NxLinkLabel30Click(Sender: TObject);
+    procedure JVDeleteDetailClick(Sender: TObject);
+    procedure RefreshRecordClick(Sender: TObject);
+    procedure DBEdit41Change(Sender: TObject);
+    procedure DBEdit41KeyPress(Sender: TObject; var Key: Char);
+    procedure JVDetailEditPanelClick(Sender: TObject);
+    procedure DBEdit35Change(Sender: TObject);
+    procedure NextDBGrid2KeyPress(Sender: TObject; var Key: Char);
+    procedure NextDBGrid2MouseLeave(Sender: TObject);
+    procedure ChartTotalLinkClick(Sender: TObject);
+    procedure linkcloseClick(Sender: TObject);
+    procedure CRDBGrid4CellClick(Column: TColumn);
+    procedure GAsummarylinkClick(Sender: TObject);
+    procedure GaSumCalcFields(DataSet: TDataSet);
+    procedure ChartCutOffChange(Sender: TObject);
+    procedure DBEdit42KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit28KeyPress(Sender: TObject; var Key: Char);
+    procedure NextDBGrid5KeyPress(Sender: TObject; var Key: Char);
+    procedure smaddClick(Sender: TObject);
+    procedure NxLinkLabel15Click(Sender: TObject);
+    procedure JVDateToChange(Sender: TObject);
+    procedure JVDateFrom2Change(Sender: TObject);
+    procedure JVDateFromChange(Sender: TObject);
+    procedure NxLinkLabel17Click(Sender: TObject);
+    procedure PayeeAddClick(Sender: TObject);
+    procedure PayeeEditClick(Sender: TObject);
+    procedure PayeeDeleteClick(Sender: TObject);
+    procedure NxLinkLabel18Click(Sender: TObject);
+    procedure PayeePanelEnter(Sender: TObject);
+    procedure AcctAddClick(Sender: TObject);
+    procedure NxLinkLabel48Click(Sender: TObject);
+    procedure NxLinkLabel49Click(Sender: TObject);
+    procedure QRDBText30Print(sender: TObject; var Value: String);
+    procedure NxButton3Click(Sender: TObject);
+    procedure NxLinkLabel11Click(Sender: TObject);
+    procedure ChartLedgerrvdescriptionGetText(Sender: TField;
+      var Text: String; DisplayText: Boolean);
+    procedure NxComboBox1Change(Sender: TObject);
+    procedure NxComboBox2Change(Sender: TObject);
+    procedure MyChartCalcFields(DataSet: TDataSet);
+    procedure NxLinkLabel5Click(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+   LogoFileName : String;
+  end;
+
+var
+  FlexAccountMainMenuForm: TFlexAccountMainMenuForm;
+
+implementation
+
+uses FlexAccountIntro, Data, DateUtils, ModTools, PayeeList,
+  InventoryReportsDownload, datatransfer, budgetform;
+
+{$R *.dfm}
+
+procedure TFlexAccountMainMenuForm.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   With AcctData do
+     begin
+       Users.close;
+       Company.Close;
+       Chart.Close;
+       Journal.Close;
+       requisition.Close;
+       ScheduleMaster.Close;
+       ScheduleDetail.Close;
+       requisitiondetail.close;
+
+
+     end;
+   IntroForm.Close;
+   AcctData.Destroy;
+   Action := caFree;
+   FlexAccountMainMenuForm := Nil;
+end;
+
+procedure TFlexAccountMainMenuForm.Timer1Timer(Sender: TObject);
+begin
+  DateStr.Caption := DateToStr(Now)+' '+TimeToStr(Now);
+end;
+
+procedure TFlexAccountMainMenuForm.FormShow(Sender: TObject);
+begin
+  FlexAccountMainMenuForm.WindowState := wsNormal;
+
+  With AcctData do
+    begin
+      Company.Open;
+      If not Company.IsEmpty then
+          ACRONYM.Caption := Companycompanyacro.Text
+        else
+          ACRONYM.Caption := 'Edit Company';
+    end;
+
+  MyNoteBook.ActivePage := tabhome;
+end;
+
+
+procedure TFlexAccountMainMenuForm.Exit1Click(Sender: TObject);
+begin
+  Close;
+end;
+
+
+procedure TFlexAccountMainMenuForm.NxOutlookBar1Select(Sender: TObject);
+begin
+
+  TabHome.Visible            := True;
+  TabCompany.Visible         := True;
+  TabUsers.Visible           := True;
+  tabChart.Visible           := True;
+  TabHome.Visible            := True;
+  TabJournalVoucher.Visible  := True;
+  TabSchedule.Visible        := True;
+  TabPayee.Visible           := true;
+
+  Case NxOutlookBar1.Selected.Index of
+   0 : MyNoteBook.ActivePage := TabHome;
+   1 : begin
+         With AcctData do
+         begin
+           Company.Open;
+
+           If not Company.IsEmpty then
+             begin
+               DBEdit1.ReadOnly := True;
+               DBEdit2.ReadOnly := True;
+               DBEdit3.ReadOnly := True;
+             end
+             else
+             begin
+               Company.AppendRecord([]);
+               DBEdit1.ReadOnly := True;
+               DBEdit2.ReadOnly := True;
+               DBEdit3.ReadOnly := True;
+             end;
+           MyNoteBook.ActivePage := TabCompany;
+         end;
+       end;
+   2 : begin
+         MyUsers.Close;
+         MyUsers.ParamByName('username').Text := '%';
+         MyUsers.Open;
+         MyNoteBook.ActivePage         := TabUsers;
+         UserListPanel.Expanded        := True;
+         UserMaintenancePanel.Expanded := False;
+       end;
+
+   3 : begin
+        With AcctData do
+          begin
+           Chart.Close;
+           ChartCutOff.Text := FormatDateTime('MM/DD/YYYY',now);
+           Chart.ParamByName('Name').Text := '%';
+           chart.ParamByName('pDate').AsDate := EndOfTheYear(ChartCutOff.AsDateTime);
+           Chart.Open;
+           crdbgrid1.Columns[3].Title.Caption := 'Spent - ' + FormatDateTime('YYYY-MM',ChartCutOff.AsDateTime);
+           crdbgrid1.Columns[4].Title.Caption := 'Spent - ' + FormatDateTime('YYYY',ChartCutOff.AsDateTime);
+           MyNoteBook.ActivePage := tabChart;
+         end;
+       end;
+   4 : begin
+
+
+
+        With AcctData do
+                  begin
+           JVDateFrom.AsDatetime := StartOfTheMonth(now);
+           JVDateTo.AsDateTime   := EndOfTheMonth(now);
+           requisitionA.Close;
+           Requisitiona.ParamByName('DateFrom').AsDate   := StartOfTheMonth(now);
+           Requisitiona.ParamByName('Dateto').AsDate     := EndOfTheMonth(now);
+           RequisitionA.ParamByName('RN').text           :=  '%';
+           requisitiona.Open;
+           requisitiona.Refresh;
+           MyNoteBook.ActivePage := TabJournalVoucher;
+
+           crdbgrid2.Enabled     := true;
+           ledgerentry.Cancel;
+           JVDetailPanel.Visible := false;
+         end;
+       end;
+
+     5 : begin
+
+        With AcctData do
+          begin
+
+           Requisition.Close;
+           Requisition.ParamByName('Name').Text         := '%';
+           Requisition.ParamByName('DateFrom').AsDate   := StartOfTheMonth(now);
+           Requisition.ParamByName('Dateto').AsDate     := EndOfTheMonth(Now);
+           Requisition.Open;
+           JVDateFrom.AsDateTime := StartOfTheMonth(now);
+           JVDateTo.AsDateTime   := EndOfTheMonth(now);
+           MyNoteBook.ActivePage := TabReqDetail;
+         end;
+       end;
+
+   6: begin
+        With AcctData do
+          begin
+           ScheduleMaster.Close;
+           ScheduleMaster.ParamByName('description').Text := '%';
+           ScheduleMaster.Open;
+           MyNoteBook.ActivePage := TabSchedule;
+           tabhome.Visible := true;
+           TabCompany.Visible := true;
+           TabUsers.Visible := true;
+           TabJournalVoucher.Visible := true;
+           tabChart.Visible := true;
+           tabReqDetail.visible := true;
+          end;
+       end;
+   7 : begin
+
+            acctdata.Payee.Close;
+            acctdata.Payee.ParamByName('name').Text := '%';
+            acctdata.Payee.Open;
+            MyNoteBook.ActivePage := TabPayee;
+      end;
+   8 : Close;
+  end;
+end;
+
+procedure TFlexAccountMainMenuForm.EditLinkClick(Sender: TObject);
+begin
+   DBEdit1.ReadOnly               := False;
+   DBEdit2.ReadOnly               := False;
+   DBEdit3.ReadOnly               := False;
+   DBEdit43.ReadOnly              := False;
+   DBEdit29.ReadOnly              := False;
+   DBEdit30.ReadOnly              := False;
+   DBEdit31.ReadOnly              := False;
+   DBEdit32.ReadOnly              := False;
+   DBEdit33.ReadOnly              := False;
+   DBEdit37.ReadOnly              := False;
+   DBEdit44.ReadOnly              := False;
+   DBEdit1.SetFocus;
+   EditLink.Visible               := False;
+   SaveLink.Visible               := True;
+   CancelLink.Visible             := True;
+   LoadLogo.Visible               := True;
+   acctdata.signatories.close;
+   acctdata.signatories.open;
+   acctdata.signatories.Edit;
+   AcctData.Company.Edit;
+end;
+
+procedure TFlexAccountMainMenuForm.CompanyNameEditKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  If Key = #13 then
+    begin
+      Key := #0;
+      Perform(CM_DIALOGKEY,VK_TAB,0);
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.SaveLinkClick(Sender: TObject);
+begin
+  With AcctData do
+    begin
+      Company.Post;
+      signatories.Post;
+      DBEdit1.ReadOnly   := True;
+      DBEdit2.ReadOnly   := True;
+      DBEdit3.ReadOnly   := True;
+      EditLink.Visible   := True;
+      SaveLink.Visible   := False;
+      CancelLink.Visible := False;
+      LoadLogo.Visible   := False;
+      
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.CancelLinkClick(Sender: TObject);
+begin
+  AcctData.Company.Cancel;
+  DBEdit1.ReadOnly   := True;
+  DBEdit2.ReadOnly   := True;
+  DBEdit3.ReadOnly   := True;
+  EditLink.Visible   := True;
+  SaveLink.Visible   := False;
+  CancelLink.Visible := False;
+  LoadLogo.Visible   := False;
+end;
+
+procedure TFlexAccountMainMenuForm.LoadLogoClick(Sender: TObject);
+begin
+   If OpenPictureDialog1.Execute then AcctData.Companylogo.LoadFromFile(OpenPictureDialog1.FileName);
+end;
+
+Procedure TFlexAccountMainMenuForm.SearchUserButtonClick(Sender: TObject);
+begin
+  MyUsers.Close;
+  MyUsers.ParamByName('username').Text := '%'+SearchUser.Text+'%';
+  MyUsers.Open;
+
+  If MyUsers.IsEmpty then
+    begin
+      MessageDlg('No users found....', mtInformation, [mbOK], 0);
+      MyUsers.Close;
+      MyUsers.ParamByName('username').Text := '%';
+      MyUsers.Open;
+      exit;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.SearchUserEnter(Sender: TObject);
+begin
+  SearchUser.Text := '';
+end;
+
+procedure TFlexAccountMainMenuForm.SaveUserClick(Sender: TObject);
+begin
+  If UpperCase(MyUsersUserPassWord.Text) <> UpperCase(EditConfirmPassword.Text) then
+    begin
+      MessageDlg('Password does not match...', mtError, [mbOK], 0);
+      DBEdit5.SetFocus;
+      exit;
+    end;
+
+  Try
+  MyUsers.Post;
+  MyUsers.RefreshRecord;
+
+  UserMaintenancePanel.Expanded := False;
+  UserMaintenancePanel.Visible  := False;
+  UserListPanel.Expanded        := True;
+
+  except
+  on E: Exception do
+  begin
+   MessageDlg('Error...'+E.Message, mtWarning, [mbOK], 0);
+   exit;
+  end;
+  end;
+end;
+
+procedure TFlexAccountMainMenuForm.CancelUserClick(Sender: TObject);
+begin
+  MyUsers.Cancel;
+  UserMaintenancePanel.Expanded := False;
+  UserMaintenancePanel.Visible  := False;
+  UserListPanel.Expanded        := True;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel1Click(Sender: TObject);
+begin
+  If OpenPictureDialog1.Execute then
+     MyUsersUserPic.LoadFromFile(OpenPictureDialog1.FileName);
+end;
+
+procedure TFlexAccountMainMenuForm.AddLinkClick(Sender: TObject);
+begin
+  userlistpanel.Expanded          := False;
+  UserMaintenancePanel.Visible    := True;
+  UserMaintenancePanel.Expanded   := True;
+  MyUsers.Append;
+  DBEdit4.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.EditButtonClick(Sender: TObject);
+begin
+  userlistpanel.Expanded          := False;
+  UserMaintenancePanel.Expanded   := True;
+  UserMaintenancePanel.Visible    := True;
+  MyUsers.Edit;
+  DBEdit4.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.DeleteLinkClick(Sender: TObject);
+begin
+  If MyUsers.IsEmpty then
+    begin
+      MessageDlg('No records to delete', mtError, [mbOK], 0);
+      exit;
+    end;
+
+  if (MessageDlg('Are you sure?', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+  MyUsers.Delete;
+end;
+
+procedure TFlexAccountMainMenuForm.AcctSearchButtonClick(Sender: TObject);
+begin
+  With AcctData do
+    begin
+      Chart.Close;
+      Chart.ParamByName('name').Text := '%'+AcctSearch.Text+'%';
+      Chart.Open;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.AcctEditClick(Sender: TObject);
+begin
+
+
+  AcctEdit.Visible   := False;
+  ChartPanel.Left     := 88;
+  ChartPanel.Top      := 96;
+  ChartPanel.Visible  := True;
+  ChartPanel.Caption  := 'EDIT ACCOUNT';
+
+  AcctData.Chart.Edit;
+  DBEdit10.SetFocus;
+  nextdbgrid2.Visible                := true;
+end;
+
+procedure TFlexAccountMainMenuForm.AcctDeleteClick(Sender: TObject);
+begin
+  If not ChartLedger.IsEmpty then
+    begin
+      MessageDlg('Cannot delete account with entries....', mtError, [mbOK], 0);
+      exit;
+    end;
+
+  AcctData.Chart.Delete;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel2Click(Sender: TObject);
+begin
+ if  ChartPanel.Caption  = 'EDIT ACCOUNT' then
+  begin
+   updatejournal.ParamByName('AC').Text       := dbedit9.Text;
+   updatejournal.ParamByName('AC2').Text      := acctdata.Chartaccountcode.Text;
+   updatejournal.ParamByName('DT').AsDateTime := endoftheyear(ChartCutOff.Date);
+   updatejournal.ParamByName('name').text     := acctdata.Chartaccountname.text;
+   updatejournal.Execute;
+
+
+   AcctData.Chart.Post;
+
+   ChartPanel.Visible := False;
+   AcctAdd.Visible    := True;
+   AcctEdit.Visible   := True;
+   AcctDelete.Visible := True;
+   acctdata.Chart.Refresh;
+end else begin
+
+  AcctData.Chartcutoffdate.AsDateTime := EndOfTheYear(now);
+  AcctData.Chart.Post;
+
+  ChartPanel.Visible := False;
+  AcctAdd.Visible    := True;
+  AcctEdit.Visible   := True;
+  AcctDelete.Visible := True;
+  acctdata.Chart.Refresh;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel3Click(Sender: TObject);
+begin
+  AcctData.Chart.Cancel;
+  ChartPanel.Visible := False;
+  AcctAdd.Visible    := True;
+  AcctEdit.Visible   := True;
+  AcctDelete.Visible := True;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel8Click(Sender: TObject);
+begin
+  ChartLedger.Close;
+  ChartLedgerPanel.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel12Click(Sender: TObject);
+begin
+ QuickRep1.PreviewHeight := Screen.Height;
+ QuickRep1.PreviewWidth  := Screen.Width;
+ QuickRep1.Preview;
+end;
+
+procedure TFlexAccountMainMenuForm.NxButton2Click(Sender: TObject);
+begin
+  ComputeChartPanel.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxButton1Click(Sender: TObject);
+begin
+  ComputeChartBalances.ParamByName('dateto').AsDate   := ComputeCutoffDate.AsDateTime;
+  ComputeChartBalances.Execute;
+  With AcctData do Chart.Refresh;
+
+  MessageDlg('Compute done....', mtInformation, [mbOK], 0);
+  ComputeChartPanel.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel4Click(Sender: TObject);
+begin
+  ChartLedgerPanel.Left    := 15;
+  ChartLedgerPanel.Top     := 36;
+  ChartLedgerPanel.Visible := True;
+  chartledger.close;
+  chartledger.ParamByName('DN').Text :=  acctdata.Chartaccountcode.Text;
+  chartledger.ParamByName('DF').AsDate := startofthemonth(ChartCutOff.AsDateTime);
+  chartledger.ParamByName('DT').asdate := endofthemonth(ChartCutOff.AsDateTime);
+  ChartLedger.Open;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel13Click(Sender: TObject);
+begin
+      qrlMonthLabel.Caption                         := 'Amount Spent.' + FormatDateTime('MMM. YYYY',ChartCutOff.AsDateTime);
+      qrlYearLabel.caption                          := 'Amount Spent.' +  FormatDateTime('YYYY',ChartCutOff.AsDateTime);
+
+      acctdata.Chart.Close;
+      acctdata.Chart.ParamByName('Name').Text       := '%' + acctsearch.Text + '%';
+      acctdata.Chart.Open;
+
+      acctdata.signatories.close;
+      acctdata.signatories.Open;
+
+  if acctdata.ChartRBalance.AsFloat < 0 then begin
+
+      qrdbtext30.Font.Color := clRed;
+  end else begin
+
+  QRDBText30.Font.Color := clblack;
+
+ end;
+
+ QuickRep4.PreviewHeight := Screen.Height;
+ QuickRep4.PreviewWidth  := Screen.Width;
+ QuickRep4.Preview;
+
+ end;
+
+procedure TFlexAccountMainMenuForm.JVSearchButtonClick(Sender: TObject);
+begin
+
+  With AcctData do
+    begin
+     RequisitionA.Close;
+     RequisitionA.ParamByName('datefrom').AsDate  := jvdatefrom.AsDateTime;
+     RequisitionA.ParamByName('dateto').AsDate    := jvdateto.AsDateTime;
+     RequisitionA.ParamByName('RN').text          := '%' + JVSearch.text + '%';
+     RequisitionA.Open;
+
+     case nxcombobox1.ItemIndex of
+     0: begin
+         requisitiona.FilterSQL := '';
+         requisitiona.FilterSQL := 'allocation is not null';
+        end;
+     1: begin
+         requisitiona.FilterSQL := '';
+         requisitiona.FilterSQL := '(allocation = '''' or allocation is null)';
+        end;
+     end;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.JVPeriodCoveredClick(Sender: TObject);
+begin
+  With AcctData do
+    begin
+      Requisition.Close;
+      Requisition.ParamByName('Description').Text := '%';
+      Requisition.ParamByName('datefrom').AsDate  := JVDateFrom.AsDateTime;
+      Requisition.ParamByName('dateto').AsDate    := JVDateTo.AsDateTime;
+      Requisition.Open;
+    end;
+
+end;
+
+procedure TFlexAccountMainMenuForm.JVDeleteClick(Sender: TObject);
+begin
+  If AcctData.Requisition.IsEmpty then
+    begin
+      MessageDlg('No records to delete....', mtError, [mbOK], 0);
+      exit;
+    end else
+    if acctdata.requisitionstatus.Text = 'APPROVED' then
+    begin
+    MessageDlg('Requisition is approved!', mtInformation, [mbOK], 0);
+    end else
+    begin
+    if (MessageDlg('Confirm delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+    begin
+
+  MyQuery1.SQL.Clear;
+  MyQuery1.SQL.Add('Delete from journal where docnumber = ' + QuotedStr(acctdata.requisitionrvNumber.text));
+  myquery1.Delete;
+
+  reqdelete.Close;
+  reqdelete.ParamByName('DN').text   := acctdata.requisitionrvNumber.Text;
+  reqdelete.Execute;
+  AcctData.Requisition.Delete;
+  acctdata.journal.open;
+    end;
+   end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel20Click(Sender: TObject);
+begin
+  If AcctData.RequisitionA.IsEmpty then
+    begin
+      MessageDlg('Requisition Voucher is Empty..', mtError, [mbOK], 0);
+      exit;
+    end else
+    begin
+
+  LedgerEntry.Close;
+  LedgerEntry.ParamByName('documentnumber').Text := acctdata.requisitionarvNumber.Text;
+  LedgerEntry.ParamByName('date').AsDate         := AcctData.requisitionArvDate.AsDateTime;
+  LedgerEntry.Open;
+
+  NextDBGrid5.Visible    := false;
+  JVDetailPanel.Visible  := True;
+  crdbgrid2.Enabled      := false;
+  NxGroupHeader1.caption := 'Add Allocation';
+  end;
+end;
+
+procedure TFlexAccountMainMenuForm.JVAddDetailClick(Sender: TObject);
+begin
+
+  JVDetailEditPanel.Visible := True;
+  NextDBGrid5.Visible       := false;
+  LedgerEntry.Append;
+  DBEdit41.SetFocus;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel65Click(Sender: TObject);
+begin
+   LedgerEntry.Close;
+   JVDetailPanel.Visible := False;
+   acctdata.requisitiona.Refresh;
+   crdbgrid2.Enabled     := true;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel25Click(Sender: TObject);
+begin
+ if dbedit28.text <> dbedit27.text then
+  begin
+   MessageDlg('Total amount is not equal to amount entered!', mtWarning, [mbOK], 0);
+   exit;
+  end;
+
+ if MyChartcurrentBal.AsCurrency < LedgerEntrydebit.AsCurrency then
+  begin
+   MessageDlg('Not enough allocation left for this account.', mtWarning, [mbOK], 0);
+   exit;
+  end;
+
+  LedgerEntrydocumentdate.AsDateTime  := AcctData.requisitionArvDate.AsDateTime;
+  LedgerEntrydocumenttype.Text        := 'RV';
+  LedgerEntrydocumentnumber.Text      := AcctData.requisitionArvNumber.Text;
+
+  ledger2.Close;
+  ledger2.Open;
+
+  chart2.Close;
+  chart2.ParamByName('CO').AsDate     := endoftheyear(AcctData.requisitionArvDate.AsDateTime);
+  chart2.ParamByName('AC').text       := DBEdit42.text;
+  chart2.Open;
+
+  ledger2.Append;
+  Ledger2documentdate.AsDateTime      := AcctData.requisitionArvDate.AsDateTime;
+  Ledger2documenttype.Text            := 'RV';
+  Ledger2documentnumber.Text          := AcctData.requisitionArvNumber.Text;
+  ledger2accountcode.text             := Chart2masteracc.Text;
+  ledger2accountname.text             := Chart2mastername.Text;
+  ledger2credit.text                  := dbedit28.Text;
+  Ledger2.Post;
+
+  myquery1.SQL.clear;
+  myquery1.SQL.Add('update requisition set allocation = ' + QuotedStr(dbedit41.text) + ' where rvnumber = ' + QuotedStr(acctdata.requisitionArvNumber.Text));
+  myquery1.execute;
+
+  LedgerEntry.Post;
+  ledgerentry.refresh;
+  acctdata.requisitiona.refresh;
+
+  myquery1.sql.clear;
+  myquery1.sql.Add('delete from journal where accountcode =' + quotedstr(''));
+  myquery1.Execute;
+  nextdbgrid5.Visible := false;
+
+  myquery1.sql.clear;
+  myquery1.sql.Add('update journal set isgl = 0 where accountcode not like ' + quotedstr('%-000%')+ ';');
+  myquery1.sql.Add('update journal set isgl = 1 where accountcode like ' + quotedstr('%-000%')+ ';');
+  myquery1.Execute;
+  jvdetaileditpanel.Visible := false;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel26Click(Sender: TObject);
+begin
+  LedgerEntry.Cancel;
+  NextDBGrid5.Visible                 := false;
+  JVDetailEditPanel.Visible           := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxButton4Click(Sender: TObject);
+begin
+nxheaderpanel8.Visible := false;
+end;
+
+procedure TFlexAccountMainMenuForm.NextDBGrid9DblClick(Sender: TObject);
+begin
+  LedgerEntryaccountcode.Text := MyChartaccountcode.Text;
+  LedgerEntryaccountname.Text := MyChartaccountname.Text;
+  NextDBGrid5.Visible         := False;
+  MyChart.Close;
+  DBEdit41.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.MRTDeleteDetailClick(Sender: TObject);
+begin
+  if (MessageDlg('Confirm Delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+  LedgerEntry.Delete;
+end;
+
+procedure TFlexAccountMainMenuForm.SMSearchButtonClick(Sender: TObject);
+begin
+  With AcctData do
+    begin
+      ScheduleMaster.Close;
+      ScheduleMaster.ParamByName('description').Text := '%'+SMSearch.text+'%';
+      ScheduleMaster.Open;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.smeditClick(Sender: TObject);
+begin
+  With AcctData do
+    begin
+      smpanel.Left     := 80;
+      smpanel.Top      := 104;
+      smpanel.Visible  := True;
+      smpanel.Caption  := 'Edit a Schedule';
+
+
+
+      ScheduleMaster.Edit;
+      DBEdit111.SetFocus;
+    end;
+
+end;
+
+procedure TFlexAccountMainMenuForm.smdeleteClick(Sender: TObject);
+begin
+  If AcctData.ScheduleMaster.IsEmpty then
+    begin
+      MessageDlg('No records to delete....', mtError, [mbOK], 0);
+      exit;
+    end;
+
+  if (MessageDlg('Confirm delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+
+  MyQuery1.SQL.Clear;
+  MyQuery1.SQL.Add('Delete from scheduledetail where idschedulemaster = :idschedulemaster');
+  MyQuery1.ParamByName('idschedulemaster').Text := AcctData.ScheduleMasteridScheduleMaster.Text;
+  MyQuery1.Execute;
+
+  AcctData.ScheduleMaster.Delete;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel78Click(Sender: TObject);
+begin
+  AcctData.ScheduleMaster.Post;
+  smpanel.Visible  := False;
+  smadd.Visible    := True;
+  smedit.Visible   := True;
+  smdelete.Visible := True;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel79Click(Sender: TObject);
+begin
+  AcctData.ScheduleMaster.cancel;
+  smpanel.Visible  := False;
+  smadd.Visible    := True;
+  smedit.Visible   := True;
+  smdelete.Visible := True;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel75Click(Sender: TObject);
+begin
+  smdetaileditpanel.Left    := 32;
+  smdetaileditpanel.Top     := 83;
+  smdetaileditpanel.Visible := True;
+  acctdata.ScheduleDetail.Append;
+  DBEdit115.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NxButton12Click(Sender: TObject);
+begin
+  MyChart.Close;
+  MyChart.ParamByName('accountname').Text := '%'+DBEdit115.Text+'%';
+  MyChart.Open;
+  NextDBGrid27.Left    := 166;
+  NextDBGrid27.Top     := 132;
+  NextDBGrid27.Visible := True;
+  NextDBGrid27.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NextDBGrid27DblClick(Sender: TObject);
+begin
+  mychart.close;
+  mychart.open;
+  acctdata.ScheduleDetailaccountcode.Text := MyChartaccountcode.Text;
+  acctdata.ScheduleDetailaccountname.Text := MyChartaccountname.Text;
+  NextDBGrid27.Visible        := False;
+
+  DBEdit112.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NextDBGrid27Exit(Sender: TObject);
+begin
+ NextDBGrid27.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel77Click(Sender: TObject);
+begin
+  acctdata.ScheduleDetail.Post;
+  smdetaileditpanel.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel82Click(Sender: TObject);
+begin
+  acctdata.ScheduleDetail.Post;
+  smdetaileditpanel.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel76Click(Sender: TObject);
+begin
+  if (MessageDlg('Confirm Delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+  AcctData.ScheduleDetail.Delete;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel74Click(Sender: TObject);
+begin
+ smdetailpanel.Visible := false;
+ AcctData.ScheduleDetail.Close;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel80Click(Sender: TObject);
+begin
+  acctdata.ScheduleDetail.Open;
+  smdetailpanel.Left    := 16;
+  smdetailpanel.top     := 32;
+  smdetailpanel.Visible := True;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel81Click(Sender: TObject);
+begin
+  printschedule.Close;
+  printschedule.ParamByName('idschedulemaster').Text := acctdata.ScheduleMasteridScheduleMaster.Text;
+  printschedule.Open;
+  ScheduleTitle.Caption := AcctData.ScheduleMasterDescription.Text;
+  QuickRep13.PreviewHeight := Screen.Height;
+  QuickRep13.PreviewWidth  := Screen.Width;
+  QuickRep13.Preview;
+  printschedule.close;
+end;
+
+procedure TFlexAccountMainMenuForm.printscheduleCalcFields(
+  DataSet: TDataSet);
+begin
+  printschedulebalance.AsCurrency := printscheduleallocamount.AsCurrency - printschedulebalperiodcovered.AsCurrency;
+end;
+
+procedure TFlexAccountMainMenuForm.JVSearch2ButtonClick(
+  Sender: TObject);
+begin
+  With AcctData do
+    begin
+      Requisition.Close;
+      Requisition.ParamByName('name').Text        := '%'+JVSearch2.text+'%';
+      Requisition.ParamByName('datefrom').AsDate  := StartOfThemonth(jvdatefrom2.date);
+      Requisition.ParamByName('dateto').AsDate    := EndOfTheYear(jvdateto2.Date);
+      Requisition.Open;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.RCEditClick(Sender: TObject);
+begin
+ With AcctData do
+  begin
+   RCPanel.Left            := 240;
+   RCPanel.Top             := 200;
+
+   RCPanel.Visible         := True;
+   RCPanel.Caption         := 'Approve / Deny Request';
+
+   RCDelete.Visible        := False;
+
+   requisition.Open;
+   Requisition.Edit;
+   requisitionrvDate.EditMask   := '!99/99/00;1;';
+
+   label51.Visible := True;
+   DBComboBox1.Visible := True;
+  end;
+  
+end;
+
+procedure TFlexAccountMainMenuForm.RCdelete2Click(Sender: TObject);
+begin
+   if (MessageDlg('Confirm delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+     requisitiondetail.Delete;
+     requisitiondetail.Refresh;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel14Click(Sender: TObject);
+begin
+NxHeaderPanel7.Visible := false;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel29Click(Sender: TObject);
+begin
+
+
+
+  case dbcombobox1.ItemIndex of
+   0: begin
+
+       RCPanel.caption                             := 'Canvasser Requisition Panel';
+       acctdata.requisitiondateApproved.AsDateTime := now;
+       AcctData.Requisition.Post;
+       acctdata.requisition.refresh;
+      end;
+
+   1: begin
+
+       updatecalcel.MacroByName('delete').Active := false;
+       updatecalcel.MacroByName('update').Active := true;
+       updatecalcel.ParamByName('docnum').Text   := acctdata.requisitionrvNumber.Text;
+       updatecalcel.Execute;
+
+       updatecalcel.MacroByName('delete').Active := true;
+       updatecalcel.MacroByName('update').Active := false;
+       updatecalcel.ParamByName('docnum').Text   := acctdata.requisitionrvNumber.Text;
+       updatecalcel.Execute;
+       AcctData.Requisition.Post;
+      end;
+   end;
+
+  Acctdata.requisition.Refresh;
+
+  RCPanel.Visible                           := False;
+  RCEdit.Visible                            := True;
+  RCDelete.Visible                          := True;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel30Click(Sender: TObject);
+begin
+  AcctData.Requisition.Cancel;
+  RCPanel.Visible := False;
+  RCEdit.Visible         := True;
+  RCDelete.Visible       := True;
+end;
+
+procedure TFlexAccountMainMenuForm.JVDeleteDetailClick(Sender: TObject);
+begin
+  if (MessageBox(0, 'Are you sure you want to delete this item?', '', MB_ICONQUESTION or MB_YESNO) = idYes) then
+     begin
+
+      ledgerentry.Delete;
+      acctdata.requisitiona.Refresh;
+     end; 
+end;
+
+procedure TFlexAccountMainMenuForm.RefreshRecordClick(Sender: TObject);
+begin
+acctdata.requisition.Refresh;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit41Change(Sender: TObject);
+begin
+
+  MyChart.Close;
+  myChart.ParamByName('YCDF').Text := FormatDateTime('YYYY-MM-DD',StartOfTheYear(jvdatefrom.Date));
+  mychart.ParamByName('MCDF').Text := FormatDateTime('YYYY-MM-DD',StartOfTheMonth(jvdatefrom.Date));
+  mychart.ParamByName('YCDT').Text := FormatDateTime('YYYY-MM-DD',endofthemonth(jvdatefrom.Date));
+  mychart.ParamByName('MCDT').Text := FormatDateTime('YYYY-MM-DD',Endofthemonth(jvdatefrom.Date));
+  MyChart.ParamByName('accountname').Text := '%'+DBEdit41.Text+'%';
+  mychart.ParamByName('CO').AsDate := endoftheyear(jvdateto.AsDateTime);
+  MyChart.Open;
+  NextDBGrid5.Visible := True;
+
+
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit41KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then
+  begin
+  dbedit42.SetFocus;
+  end;
+
+end;
+
+procedure TFlexAccountMainMenuForm.JVDetailEditPanelClick(Sender: TObject);
+begin
+nextdbgrid5.visible               := false;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit35Change(Sender: TObject);
+begin
+
+
+      Chart3.Close;
+      Chart3.ParamByName('Name').Text := '%' + dbedit35.text + '%';
+      chart3.ParamByName('pDate').AsDate := EndOfTheYear(ChartCutOff.AsDateTime);
+      Chart3.Open;
+      nextdbgrid2.Visible                := true;
+
+end;
+procedure TFlexAccountMainMenuForm.NextDBGrid2KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then
+begin
+  dbedit35.Text           := Chart3accountname.Text;
+  dbedit39.text           := Chart3accountcode.Text;
+  NextDBGrid2.Visible     := false;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.NextDBGrid2MouseLeave(Sender: TObject);
+begin
+NextDBGrid2.Visible       := false;
+end;
+procedure TFlexAccountMainMenuForm.ChartTotalLinkClick(Sender: TObject);
+begin
+
+ChartGA.Close;
+chartga.ParamByName('pDate').AsDate := EndOfTheYear(ChartCutOff.AsDateTime);
+ChartGA.open;
+NxHeaderPanel6.Visible  := true;
+NxHeaderPanel6.left  := 0;
+NxHeaderPanel6.top  := 0;
+
+end;
+
+procedure TFlexAccountMainMenuForm.linkcloseClick(Sender: TObject);
+begin
+NxHeaderPanel6.Visible    := false;
+end;
+
+procedure TFlexAccountMainMenuForm.CRDBGrid4CellClick(Column: TColumn);
+begin
+ChartSA.Close;
+ChartSA.ParamByName('name').text := ChartGAaccountcode.Text;
+ChartSA.ParamByName('pDate').AsDate := EndOfTheYear(ChartCutOff.AsDateTime);
+
+chartSA.Open;
+NextDBGrid4.CalculateFooter;
+end;
+
+procedure TFlexAccountMainMenuForm.GAsummarylinkClick(Sender: TObject);
+begin
+GAsum.Close;
+GASUM.ParamByName('YCDF').Text := FormatDateTime('YYYY-MM-DD',StartOfTheYear(ChartCutOff.AsDateTime));
+GASUM.ParamByName('YCDT').Text := FormatDateTime('YYYY-MM-DD',EndOfTheYear(ChartCutOff.AsDateTime));
+GASUM.ParamByName('MCDF').Text := FormatDateTime('YYYY-MM-DD',StartOfTheMonth(ChartCutOff.AsDateTime));
+GASUM.ParamByName('MCDT').Text := FormatDateTime('YYYY-MM-DD',endOfTheMonth(ChartCutOff.AsDateTime));
+Gasum.ParamByName('pDate').AsDate := EndOfTheYear(ChartCutOff.AsDateTime);
+GAsum.open;
+acctdata.signatories.Close;
+acctdata.signatories.Open;
+QuickRep6.PreviewWidth   := screen.Width;
+quickrep6.PreviewHeight  := screen.Height;
+QuickRep6.Preview;
+
+end;
+
+procedure TFlexAccountMainMenuForm.GaSumCalcFields(DataSet: TDataSet);
+begin
+ GasumRBalance.AsCurrency := GasumAllocAmount.AsCurrency - GAsumBalPeriodCovered.AsCurrency;
+end;
+
+procedure TFlexAccountMainMenuForm.ChartCutOffChange(Sender: TObject);
+begin
+ with AcctData do
+   begin
+     Chart.Close;
+     Chart.ParamByName('YCDF').Text := FormatDateTime('YYYY-MM-DD',StartOfTheYear(ChartCutOff.Date));
+     chart.ParamByName('MCDF').Text := FormatDateTime('YYYY-MM-DD',StartOfTheMonth(ChartCutOff.Date));
+     chart.ParamByName('YCDT').Text := FormatDateTime('YYYY-MM-DD',endofthemonth(ChartCutOff.Date));
+     chart.ParamByName('MCDT').Text := FormatDateTime('YYYY-MM-DD',Endofthemonth(ChartCutOff.Date));
+     chart.ParamByName('pdate').AsDate := EndOfTheYear(ChartCutOff.AsDateTime);
+     Chart.Open;
+     crdbgrid1.Columns[3].Title.Caption := 'Spent - ' + FormatDateTime('YYYY-MM',ChartCutOff.AsDateTime);
+     crdbgrid1.Columns[4].Title.Caption := 'Spent - ' + FormatDateTime('YYYY-MM',startoftheyear(ChartCutOff.AsDateTime)) + ' - ' + FormatDateTime('YYYY-MM',endofthemonth(ChartCutOff.AsDateTime));
+   end;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit42KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key =#13 then begin
+dbedit28.SetFocus;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit28KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then begin
+NxLinkLabel25Click(sender);
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.NextDBGrid5KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then
+ begin
+  if MyChartcurrentBal.AsCurrency < 0 then
+   begin
+    MessageDlg('Not enough allocation left for this account.', mtWarning, [mbOK], 0);
+    exit;
+   end;
+
+  LedgerEntryaccountcode.Text := MyChartaccountcode.Text;
+  LedgerEntryaccountname.Text := MyChartaccountname.Text;
+  NextDBGrid5.Visible         := False;
+  DBEdit41.SetFocus;
+ end;
+end;
+
+procedure TFlexAccountMainMenuForm.smaddClick(Sender: TObject);
+begin
+      smpanel.Left     := 80;
+      smpanel.Top      := 104;
+      smpanel.Visible  := True;
+      smpanel.Caption  := 'Add a Schedule';
+
+
+
+      acctdata.ScheduleMaster.Append;
+      DBEdit111.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel15Click(Sender: TObject);
+begin
+  If AcctData.Requisition.IsEmpty then
+    begin
+      MessageDlg('Requisition Voucher is Empty..', mtError, [mbOK], 0);
+      exit;
+    end;
+    
+  requisitiondetail.close;
+  requisitiondetail.ParamByName('DN').text := '%' + acctdata.requisitionrvNumber.Text  + '%';
+  RequisitionDetail.Open;
+
+  nxheaderpanel7.Left    := 112;
+  nxheaderpanel7.Top     := 104;
+  nxheaderpanel7.Visible := True;
+
+end;
+
+procedure TFlexAccountMainMenuForm.JVDateToChange(Sender: TObject);
+begin
+jvdatefrom.Date   := StartOfTheMonth(jvdateto.AsDateTime); 
+end;
+
+procedure TFlexAccountMainMenuForm.JVDateFrom2Change(Sender: TObject);
+begin
+jvdateto.Date  := EndOfTheMonth(jvdatefrom.AsDateTime);
+JVSearch2ButtonClick(sender);
+end;
+
+procedure TFlexAccountMainMenuForm.JVDateFromChange(Sender: TObject);
+begin
+JVSearchButtonClick(sender);
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel17Click(Sender: TObject);
+begin
+acctdata.Payee.Post;
+payeepanel.Visible := false;
+MessageDlg('Payee List Updated!', mtInformation, [mbOK], 0);
+end;
+
+procedure TFlexAccountMainMenuForm.PayeeAddClick(Sender: TObject);
+begin
+  PayeePanel.Left     := 88;
+  PayeePanel.Top      := 88;
+  PayeePanel.Visible  := True;
+  PayeePanel.Caption  := 'ADD PAYEE';
+
+  AcctData.Payee.Append;
+  DBEdit114.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.PayeeEditClick(Sender: TObject);
+begin
+  If AcctData.Payee.IsEmpty then
+    begin
+      MessageDlg('No record to edit....', mtError, [mbOK], 0);
+      exit;
+    end;
+
+
+  PayeePanel.Left     := 88;
+  PayeePanel.Top      := 88;
+  PayeePanel.Visible  := True;
+  PayeePanel.Caption  := 'Edit PAYEE';
+
+  AcctData.Payee.Edit;
+  DBEdit114.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.PayeeDeleteClick(Sender: TObject);
+begin
+  If AcctData.Payee.IsEmpty then
+    begin
+      MessageDlg('No records to delete....', mtError, [mbOK], 0);
+      exit;
+    end;
+
+  if (MessageDlg('Confirm delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+
+  AcctData.Payee.Delete;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel18Click(Sender: TObject);
+begin
+  AcctData.Payee.Cancel;
+  PayeePanel.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.PayeePanelEnter(Sender: TObject);
+begin
+  acctdata.Payee2.Close;
+  acctdata.payee2.ParamByName('name').text  := '%';
+  acctdata.Payee2.open;
+end;
+
+procedure TFlexAccountMainMenuForm.AcctAddClick(Sender: TObject);
+begin
+chartpanel.Visible := true;
+chartpanel.Caption := 'Add New Account';
+acctdata.Chart.Append;
+dbedit9.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel48Click(Sender: TObject);
+begin
+ If not Assigned(DataTransferForm) then
+      DataTransferForm := DataTransferForm.Create(Application);
+      DataTransferForm.Show;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel49Click(Sender: TObject);
+begin
+ If not Assigned(InvReportsDown) then
+      InvReportsDown := InvReportsDown.Create(Application);
+      InvReportsDown.Show;
+end;
+
+procedure TFlexAccountMainMenuForm.QRDBText30Print(sender: TObject;
+  var Value: String);
+begin
+ if acctdata.ChartRBalance.AsFloat < 0 then begin
+
+  qrdbtext30.Font.Color := clRed;
+
+ end else begin
+
+  QRDBText30.Font.Color := clblack;
+ end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxButton3Click(Sender: TObject);
+begin
+MyQuery1.SQL.Clear;
+myquery1.SQL.Add('select cutoffdate from chart where cutoffdate = ' + QuotedStr(FormatDateTime('YYYY-MM-DD',nxdatepicker1.AsDateTime)));
+myquery1.Execute;
+
+if not myquery1.IsEmpty then begin
+MessageDlg('Cutoff already exist!', mtWarning, [mbOK], 0);
+exit;
+end;
+
+InsertChartCutoffdate.ParamByName('CO').AsDate := NxDatePicker1.AsDateTime;
+InsertChartCutoffdate.Execute;
+MessageDlg('Cutoff Successfull!', mtInformation, [mbOK], 0);
+exit;
+nxheaderpanel8.Visible := false;
+end;
+
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel11Click(Sender: TObject);
+begin
+nxheaderpanel8.Visible := true;
+NxDatePicker1.AsDateTime := EndOfTheYear(Now);
+end;
+
+procedure TFlexAccountMainMenuForm.ChartLedgerrvdescriptionGetText(
+  Sender: TField; var Text: String; DisplayText: Boolean);
+begin
+  Text := Copy(ChartLedgerrvdescription.AsString, 1, 100);
+end;
+
+procedure TFlexAccountMainMenuForm.NxComboBox1Change(Sender: TObject);
+begin
+ JVSearchButtonClick(sender);
+end;
+
+procedure TFlexAccountMainMenuForm.NxComboBox2Change(Sender: TObject);
+begin
+ with acctdata do
+  begin
+   case nxcombobox2.ItemIndex of
+    0: begin
+        requisition.MacroByName('filter1').Active := true;
+        requisition.MacroByName('filter2').Active := false;
+        requisition.MacroByName('filter3').Active := false;
+        JVSearch2ButtonClick(sender);
+       end;
+    1: begin
+        requisition.MacroByName('filter1').Active := false;
+        requisition.MacroByName('filter2').Active := true;
+        requisition.MacroByName('filter3').Active := false;
+        JVSearch2ButtonClick(sender);
+       end;
+    2: begin
+        requisition.MacroByName('filter1').Active := false;
+        requisition.MacroByName('filter2').Active := false;
+        requisition.MacroByName('filter3').Active := true;
+        JVSearch2ButtonClick(sender);
+       end;
+    end;
+  end;
+end;
+
+procedure TFlexAccountMainMenuForm.MyChartCalcFields(DataSet: TDataSet);
+begin
+  MyChartcurrentBal.AsCurrency := MyChartAllocAmount.AsCurrency - MyChartSpentYear.AsCurrency;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel5Click(Sender: TObject);
+begin
+ If not Assigned(BudgetoptForm) then
+  BudgetoptForm := TBudgetoptForm.Create(Application);
+  BudgetoptForm.Show;
+
+  with BudgetoptForm do
+   begin
+    paytobudgetchart.Open;
+   end;
+end;
+
+end.
+
+
+

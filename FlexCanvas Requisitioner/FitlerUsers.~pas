@@ -1,0 +1,78 @@
+unit FitlerUsers;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DB, DBAccess, MyAccess, MemDS, Grids, DBGrids, CRGrid;
+
+type
+  TFrmFilterUser = class(TForm)
+    CRDBGrid1: TCRDBGrid;
+    FilterUser: TMyQuery;
+    dsFilterUser: TMyDataSource;
+    FilterUserusername: TStringField;
+    FilterUseridusers: TLargeintField;
+    procedure CRDBGrid1DblClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmFilterUser: TFrmFilterUser;
+
+implementation
+
+uses Data, FlexMenu,Modtools,DateUtils;
+
+{$R *.dfm}
+
+procedure TFrmFilterUser.CRDBGrid1DblClick(Sender: TObject);
+begin
+  with FlexAccountMainMenuForm,acctdata do
+   begin
+    UserAdministration := FilterUseridusers.AsInteger;
+
+  if nxcheckbox3.Checked = true then begin
+  NxCheckBox5.Checked := false;
+  With AcctData do
+    begin
+      Requisition.Close;
+      Requisition.ParamByName('Rv').Text          := '%'+JVSearch.text+'%';
+      Requisition.ParamByName('datefrom').AsDate  := StartOfTheMonth(JVdatefrom.AsDateTime);
+      Requisition.ParamByName('dateto').AsDate    := EndOfTheYear(jvdateto.AsDateTime);
+      Requisition.ParamByName('APP').Text         := 'APPROVED';
+      Requisition.ParamByName('ID').AsInteger     := UserAdministration;
+      requisition.FilterSQL  := 'allocation is not null';
+      Requisition.Open;
+    end;
+  end else if nxcheckbox5.Checked = true then
+    begin
+  NxCheckBox3.Checked := false;
+    with acctdata do begin
+      Requisition.Close;
+      Requisition.ParamByName('Rv').Text          := '%'+JVSearch.text+'%';
+      Requisition.ParamByName('datefrom').AsDate  := StartOfTheMonth(JVdatefrom.AsDateTime);
+      Requisition.ParamByName('dateto').AsDate    := EndOfTheYear(jvdateto.AsDateTime);
+      Requisition.ParamByName('APP').Text         := 'DISAPPROVED';
+      Requisition.ParamByName('ID').AsInteger     := UserAdministration;
+      Requisition.Open;
+      requisition.FilterSQL  := 'allocation is null';
+    end;
+  end;
+
+      CanvassData.Close;
+      CanvassData.ParamByName('Rv').Text          := '%';
+      CanvassData.ParamByName('datefrom').AsDate  := StartOfTheMonth(NxDatePicker1.AsDateTime);
+      CanvassData.ParamByName('dateto').AsDate    := EndOfTheMonth(NxDatePicker2.AsDateTime);
+      CanvassData.Open;
+      CanvassData.FilterSQL  := 'r.userid like' + QuotedStr('%' + IntToStr(UserAdministration) + '%');
+      CanvassData.Refresh;
+   end;
+
+   FrmFilterUser.Close;
+end;
+
+end.

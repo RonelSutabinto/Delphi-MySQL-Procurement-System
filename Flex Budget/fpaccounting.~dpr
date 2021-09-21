@@ -1,0 +1,17 @@
+program fpaccounting;
+
+uses
+  Forms,
+  FlexAccountIntro in 'FlexAccountIntro.pas' {IntroForm},
+  Data in 'Data.pas' {AcctData: TDataModule},
+  FlexMenu in 'FlexMenu.pas' {FlexAccountMainMenuForm},
+  ModTools in 'MODTOOLS.PAS';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TIntroForm, IntroForm);
+  Application.CreateForm(TAcctData, AcctData);
+  Application.Run;
+end.

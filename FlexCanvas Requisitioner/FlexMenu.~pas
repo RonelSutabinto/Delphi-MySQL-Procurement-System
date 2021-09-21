@@ -1,0 +1,3633 @@
+unit FlexMenu;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus, StdCtrls, ExtCtrls, DBCtrls, EffectUtils, AnimationEffect,
+  Win2kEffects, NxToolBox, NxCollection, NxPageControl, DsFancyButton, Mask,
+  NxFocus, NxEdit, ExtDlgs, DB, MemDS, DBAccess, MyAccess, NxColumns,
+  NxDBColumns, NxScrollControl, ImgList, QuickRpt, QRCtrls,
+  ComCtrls, VolDBEdit, NxCustomGridControl, NxCustomGrid, NxDBGrid, jpeg,
+  Grids, DBGrids, CRGrid;
+type
+  TFlexAccountMainMenuForm = class(TForm)
+    Timer1: TTimer;
+    MyNoteBook: TNxNotebook;
+    TabHome: TNxTabSheet;
+    TabCompany: TNxTabSheet;
+    NxHeaderPanel1: TNxHeaderPanel;
+    OpenPictureDialog1: TOpenPictureDialog;
+    TabUsers: TNxTabSheet;
+    NxHeaderPanel2: TNxHeaderPanel;
+    MyUsers: TMyQuery;
+    MyUsersUserPassWord: TStringField;
+    MyUsersUserName: TStringField;
+    MyUsersUserID: TStringField;
+    MyUsersUserPic: TBlobField;
+    MyUsersPosition: TStringField;
+    MyUsersUserRestriction: TStringField;
+    MyUsersIdUsers: TLargeintField;
+    dsMyUsers: TMyDataSource;
+    ImageList1: TImageList;
+    DBText1: TDBText;
+    DBText2: TDBText;
+    DBText3: TDBText;
+    Image2: TImage;
+    DateStr: TNxLabel;
+    NxLabel1: TNxLabel;
+    Image1: TImage;
+    NxLabel2: TNxLabel;
+    Label13: TLabel;
+    DBImage1: TDBImage;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    LoadLogo: TNxLinkLabel;
+    EditLink: TNxLinkLabel;
+    SaveLink: TNxLinkLabel;
+    CancelLink: TNxLinkLabel;
+    DBEdit1: TDBEdit;
+    DBEdit2: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBImage3: TDBImage;
+    NxFlipContainer2: TNxFlipContainer;
+    UserListPanel: TNxFlipPanel;
+    NextDBGrid1: TNextDBGrid;
+    TNxDBTextColumn2: TNxDBTextColumn;
+    TNxDBTextColumn5: TNxDBTextColumn;
+    TNxDBTextColumn6: TNxDBTextColumn;
+    SearchUser: TNxButtonEdit;
+    EditButton: TNxLinkLabel;
+    AddLink: TNxLinkLabel;
+    DeleteLink: TNxLinkLabel;
+    UserMaintenancePanel: TNxFlipPanel;
+    Label10: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    EditConfirmPassword: TNxEdit;
+    NxLinkLabel1: TNxLinkLabel;
+    SaveUser: TNxLinkLabel;
+    CancelUser: TNxLinkLabel;
+    DBEdit4: TDBEdit;
+    DBEdit5: TDBEdit;
+    DBEdit6: TVolgaDBEdit;
+    DBEdit7: TDBEdit;
+    DBEdit8: TDBEdit;
+    DBImage4: TDBImage;
+    ChartLedger: TMyQuery;
+    dsChartLedger: TMyDataSource;
+    ChartLedgeridjournal: TLargeintField;
+    ChartLedgeraccountcode: TStringField;
+    ChartLedgeraccountname: TStringField;
+    ChartLedgerdocumentdate: TDateField;
+    ChartLedgerdocumenttype: TStringField;
+    ChartLedgerdocumentnumber: TStringField;
+    ChartLedgerdebit: TFloatField;
+    ChartLedgercredit: TFloatField;
+    ChartLedgerbalance: TFloatField;
+    Panel1: TPanel;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    QuickRep1: TQuickRep;
+    QRBand35: TQRBand;
+    QRDBText123: TQRDBText;
+    QRDBText124: TQRDBText;
+    QRDBText125: TQRDBText;
+    QRDBText126: TQRDBText;
+    QRBand36: TQRBand;
+    QRDBImage12: TQRDBImage;
+    QRDBText128: TQRDBText;
+    QRDBText129: TQRDBText;
+    QRDBText130: TQRDBText;
+    QRLabel105: TQRLabel;
+    QRBand37: TQRBand;
+    QRLabel107: TQRLabel;
+    QRLabel108: TQRLabel;
+    QRLabel109: TQRLabel;
+    QRLabel111: TQRLabel;
+    QRDBText1: TQRDBText;
+    QRDBText2: TQRDBText;
+    ComputeChartBalances: TMyQuery;
+    TabSheet2: TTabSheet;
+    QuickRep2: TQuickRep;
+    QRBand1: TQRBand;
+    QRDBText3: TQRDBText;
+    QRDBText4: TQRDBText;
+    QRDBText5: TQRDBText;
+    QRDBText6: TQRDBText;
+    QRBand2: TQRBand;
+    QRLabel1: TQRLabel;
+    QRBand3: TQRBand;
+    QRLabel3: TQRLabel;
+    QRLabel4: TQRLabel;
+    QRLabel5: TQRLabel;
+    QRLabel6: TQRLabel;
+    LedgerEntry: TMyQuery;
+    LedgerEntryidjournal: TLargeintField;
+    LedgerEntryaccountcode: TStringField;
+    LedgerEntryaccountname: TStringField;
+    LedgerEntrydocumentdate: TDateField;
+    LedgerEntrydocumenttype: TStringField;
+    LedgerEntrydocumentnumber: TStringField;
+    LedgerEntrydebit: TFloatField;
+    LedgerEntrycredit: TFloatField;
+    LedgerEntrybalance: TFloatField;
+    dsLedgerEntry: TMyDataSource;
+    TabJournalVoucher: TNxTabSheet;
+    MyChart: TMyQuery;
+    dsMyChart: TMyDataSource;
+    MyChartaccountcode: TStringField;
+    MyChartaccountname: TStringField;
+    MyChartaccounttype: TStringField;
+    MyChartBalAsOf: TFloatField;
+    MyChartBalPeriodCovered: TFloatField;
+    MyChartIndent: TLargeintField;
+    Recap: TMyQuery;
+    RegisterJournal: TMyTable;
+    RegisterJournalidjournal: TLargeintField;
+    RegisterJournalaccountcode: TStringField;
+    RegisterJournalaccountname: TStringField;
+    RegisterJournaldocumentdate: TDateField;
+    RegisterJournaldocumenttype: TStringField;
+    RegisterJournaldocumentnumber: TStringField;
+    RegisterJournaldebit: TFloatField;
+    RegisterJournalcredit: TFloatField;
+    RegisterJournalbalance: TFloatField;
+    TabSheet5: TTabSheet;
+    QuickRep5: TQuickRep;
+    QRBand4: TQRBand;
+    QRDBText33: TQRDBText;
+    QRDBText35: TQRDBText;
+    QRDBText36: TQRDBText;
+    QRDBText37: TQRDBText;
+    QRBand7: TQRBand;
+    RecapTitle: TQRLabel;
+    QRSysData4: TQRSysData;
+    QRBand8: TQRBand;
+    QRLabel15: TQRLabel;
+    QRLabel16: TQRLabel;
+    QRLabel17: TQRLabel;
+    QRLabel18: TQRLabel;
+    RecapPeriod: TQRLabel;
+    SummaryBand3: TQRBand;
+    QRLabel14: TQRLabel;
+    QRExpr3: TQRExpr;
+    Recapaccountcode: TStringField;
+    Recapaccountname: TStringField;
+    Recapdebit: TFloatField;
+    Recapcredit: TFloatField;
+    QRExpr4: TQRExpr;
+    TabSheet7: TTabSheet;
+    QuickRep7: TQuickRep;
+    QRBand10: TQRBand;
+    QRLabel20: TQRLabel;
+    JVQrPeriod: TQRLabel;
+    QRBand12: TQRBand;
+    QRLabel23: TQRLabel;
+    QRLabel24: TQRLabel;
+    QRLabel26: TQRLabel;
+    QRBand13: TQRBand;
+    QRDBText51: TQRDBText;
+    QRDBText52: TQRDBText;
+    QRDBText53: TQRDBText;
+    QRSubDetail2: TQRSubDetail;
+    Image3: TImage;
+    MyChartaccountledgertype: TStringField;
+    DBImage6: TDBImage;
+    ACRONYM: TNxLabel;
+    TrialBalance: TMyQuery;
+    QRDBImage1: TQRDBImage;
+    QRDBText7: TQRDBText;
+    QRDBText8: TQRDBText;
+    QRDBText9: TQRDBText;
+    QRDBImage3: TQRDBImage;
+    QRDBText39: TQRDBText;
+    QRDBText40: TQRDBText;
+    QRDBText41: TQRDBText;
+    QRDBImage4: TQRDBImage;
+    QRDBText45: TQRDBText;
+    QRDBText49: TQRDBText;
+    QRDBText50: TQRDBText;
+    TrialBalanceaccountcode: TStringField;
+    TrialBalanceaccountname: TStringField;
+    TrialBalanceGLDebit: TFloatField;
+    TrialBalanceGLCredit: TFloatField;
+    TrialBalanceSLDebit: TFloatField;
+    TrialBalanceSLCredit: TFloatField;
+    QRDBText57: TQRDBText;
+    QRDBText58: TQRDBText;
+    QRDBText60: TQRDBText;
+    TabSchedule: TNxTabSheet;
+    NxHeaderPanel11: TNxHeaderPanel;
+    SMSearch: TNxButtonEdit;
+    smedit: TNxLinkLabel;
+    smadd: TNxLinkLabel;
+    smdelete: TNxLinkLabel;
+    NextDBGrid25: TNextDBGrid;
+    smpanel: TNxHeaderPanel;
+    NxLinkLabel78: TNxLinkLabel;
+    NxLinkLabel79: TNxLinkLabel;
+    NxLinkLabel80: TNxLinkLabel;
+    NxLinkLabel81: TNxLinkLabel;
+    TNxDBTextColumn22: TNxDBTextColumn;
+    Label115: TLabel;
+    DBEdit111: TDBEdit;
+    smdetailpanel: TNxHeaderPanel;
+    NxLinkLabel74: TNxLinkLabel;
+    NextDBGrid26: TNextDBGrid;
+    NxDBTextColumn31: TNxDBTextColumn;
+    NxDBTextColumn32: TNxDBTextColumn;
+    NxLinkLabel75: TNxLinkLabel;
+    NxLinkLabel76: TNxLinkLabel;
+    smdetaileditpanel: TNxHeaderPanel;
+    Label121: TLabel;
+    Label122: TLabel;
+    NxLinkLabel77: TNxLinkLabel;
+    NxLinkLabel82: TNxLinkLabel;
+    DBEdit112: TDBEdit;
+    DBEdit115: TDBEdit;
+    NxButton12: TNxButton;
+    NextDBGrid27: TNextDBGrid;
+    NxDBTextColumn33: TNxDBTextColumn;
+    NxDBTextColumn34: TNxDBTextColumn;
+    NxDBTextColumn35: TNxDBTextColumn;
+    Label116: TLabel;
+    DBEdit116: TDBEdit;
+    printschedule: TMyQuery;
+    TabSheet13: TTabSheet;
+    QuickRep13: TQuickRep;
+    QRBand41: TQRBand;
+    QRDBText113: TQRDBText;
+    QRDBText114: TQRDBText;
+    QRDBText116: TQRDBText;
+    QRBand42: TQRBand;
+    QRLabel68: TQRLabel;
+    QRDBImage10: TQRDBImage;
+    QRDBText118: TQRDBText;
+    QRDBText119: TQRDBText;
+    QRDBText120: TQRDBText;
+    QRBand43: TQRBand;
+    QRLabel70: TQRLabel;
+    QRLabel71: TQRLabel;
+    QRLabel73: TQRLabel;
+    ScheduleTitle: TQRLabel;
+    SummaryBand5: TQRBand;
+    QRLabel69: TQRLabel;
+    QRExpr21: TQRExpr;
+    MyQuery1: TMyQuery;
+    QRLabel2: TQRLabel;
+    QRDBText10: TQRDBText;
+    QRLabel7: TQRLabel;
+    QRLabel8: TQRLabel;
+    QRDBText11: TQRDBText;
+    QRDBText12: TQRDBText;
+    QRExpr1: TQRExpr;
+    QRExpr2: TQRExpr;
+    Panel2: TPanel;
+    NxOutlookBar1: TNxOutlookBar;
+    printscheduleidscheduledetail: TLargeintField;
+    printscheduleidschedulemaster: TFloatField;
+    printscheduleaccountcode: TStringField;
+    printscheduleaccountname: TStringField;
+    printschedulebalasof: TFloatField;
+    printscheduleallocamount: TFloatField;
+    printschedulebalance: TCurrencyField;
+    QRLabel9: TQRLabel;
+    QRDBText13: TQRDBText;
+    QRLabel10: TQRLabel;
+    QRDBText14: TQRDBText;
+    NxHeaderPanel4: TNxHeaderPanel;
+    NxLabel4: TNxLabel;
+    NxLabel5: TNxLabel;
+    NxLinkLabel20: TNxLinkLabel;
+    JVPeriodCovered: TNxLinkLabel;
+    JVDateFrom: TNxDatePicker;
+    JVDateTo: TNxDatePicker;
+    JVEdit: TNxLinkLabel;
+    JVDelete: TNxLinkLabel;
+    NxLinkLabel21: TNxLinkLabel;
+    JVDetailPanel: TNxHeaderPanel;
+    Label42: TLabel;
+    Label43: TLabel;
+    Label44: TLabel;
+    Label28: TLabel;
+    Label29: TLabel;
+    DBEdit38: TDBEdit;
+    NxLinkLabel65: TNxLinkLabel;
+    DBEdit26: TDBEdit;
+    DBEdit27: TDBEdit;
+    RequisitionDetail: TMyQuery;
+    dsrequisitionDetail: TMyDataSource;
+    qrRequisition: TMyQuery;
+    NxLinkLabel14: TNxLinkLabel;
+    RequisitionDetailidrequisitiondetail: TLargeintField;
+    RequisitionDetailidrequisition: TFloatField;
+    RequisitionDetailrdqty: TFloatField;
+    RequisitionDetailrddescription: TStringField;
+    RequisitionDetailrdcost: TFloatField;
+    RequisitionDetailrdamount: TFloatField;
+    signatories: TMyQuery;
+    signatoriesidcvsign: TLargeintField;
+    signatoriespreparedname: TStringField;
+    signatoriespreparedpos: TStringField;
+    signatoriesverifiedpos: TStringField;
+    signatoriescertifiedname: TStringField;
+    signatoriescertifiedpos: TStringField;
+    signatoriesrecommendname: TStringField;
+    signatoriesrecommendpos: TStringField;
+    signatoriesapprovedname: TStringField;
+    signatoriesapprovedpos: TStringField;
+    signatoriesverifiedname: TStringField;
+    RequisitionDetailrdunit: TStringField;
+    RefreshRecord: TNxLinkLabel;
+    CRDBGrid2: TCRDBGrid;
+    CRDBGrid1: TCRDBGrid;
+    DBMemo2: TDBMemo;
+    MyQuery2: TMyQuery;
+    Tabcanvass: TNxTabSheet;
+    NxHeaderPanel5: TNxHeaderPanel;
+    NxLabel6: TNxLabel;
+    NxLabel7: TNxLabel;
+    CRDBGrid3: TCRDBGrid;
+    NxButtonEdit1: TNxButtonEdit;
+    NxLinkLabel18: TNxLinkLabel;
+    NxDatePicker1: TNxDatePicker;
+    NxDatePicker2: TNxDatePicker;
+    NxLinkLabel19: TNxLinkLabel;
+    NxLinkLabel27: TNxLinkLabel;
+    NxLinkLabel28: TNxLinkLabel;
+    NxLinkLabel29: TNxLinkLabel;
+    CanvassPanel: TNxHeaderPanel;
+    Label33: TLabel;
+    Label36: TLabel;
+    Label39: TLabel;
+    NxLinkLabel31: TNxLinkLabel;
+    NxLinkLabel32: TNxLinkLabel;
+    DBEdit23: TDBEdit;
+    DBEdit37: TDBEdit;
+    DBEdit39: TDBEdit;
+    DBEdit43: TDBEdit;
+    DBMemo3: TDBMemo;
+    NxHeaderPanel7: TNxHeaderPanel;
+    Label40: TLabel;
+    Label41: TLabel;
+    Label47: TLabel;
+    Label49: TLabel;
+    Label50: TLabel;
+    CRDBGrid4: TCRDBGrid;
+    NxLinkLabel33: TNxLinkLabel;
+    NxLinkLabel34: TNxLinkLabel;
+    DBEdit45: TDBEdit;
+    DBEdit46: TDBEdit;
+    NxLinkLabel35: TNxLinkLabel;
+    DBEdit52: TDBEdit;
+    DBEdit53: TDBEdit;
+    DBMemo4: TDBMemo;
+    canvass: TTabSheet;
+    QuickRep4: TQuickRep;
+    QRBand11: TQRBand;
+    QRDBText32: TQRDBText;
+    QRDBText34: TQRDBText;
+    QRDBText43: TQRDBText;
+    Label56: TLabel;
+    DBEdit54: TDBEdit;
+    NxLinkLabel16: TNxLinkLabel;
+    qrRequisitionidrequisition: TLargeintField;
+    qrRequisitionrvDate: TDateField;
+    qrRequisitionrvPCode: TStringField;
+    qrRequisitionrvName: TStringField;
+    qrRequisitionrvNumber: TStringField;
+    qrRequisitionamount: TFloatField;
+    qrRequisitionstatus: TStringField;
+    qrRequisitionrequester: TStringField;
+    qrRequisitionuserid: TLargeintField;
+    qrRequisitioncheckboxstatus: TLargeintField;
+    qrRequisitionrvdescription: TMemoField;
+    qrRequisitionacctgstatus: TStringField;
+    qrRequisitioncanvasser: TStringField;
+    qrRequisitionidrequisitiondetail: TLargeintField;
+    qrRequisitionidrequisition_1: TFloatField;
+    qrRequisitionrdqty: TFloatField;
+    qrRequisitionrddescription: TStringField;
+    qrRequisitionrdcost: TFloatField;
+    qrRequisitionrdamount: TFloatField;
+    qrRequisitionrdunit: TStringField;
+    qrcanvass: TMyQuery;
+    qrcanvassidrequisition: TLargeintField;
+    qrcanvassrvDate: TDateField;
+    qrcanvassrvPCode: TStringField;
+    qrcanvassrvName: TStringField;
+    qrcanvassrvNumber: TStringField;
+    qrcanvassamount: TFloatField;
+    qrcanvassstatus: TStringField;
+    qrcanvassrequester: TStringField;
+    qrcanvassuserid: TLargeintField;
+    qrcanvasscheckboxstatus: TLargeintField;
+    qrcanvassrvdescription: TMemoField;
+    qrcanvassacctgstatus: TStringField;
+    qrcanvasscanvasser: TStringField;
+    qrcanvassidrequisitiondetail: TLargeintField;
+    qrcanvassidrequisition_1: TFloatField;
+    qrcanvassrdqty: TFloatField;
+    qrcanvassrddescription: TStringField;
+    qrcanvassrdcost: TFloatField;
+    qrcanvassrdamount: TFloatField;
+    qrcanvassrdunit: TStringField;
+    CanvasB: TTabSheet;
+    QuickRep6: TQuickRep;
+    QRBand16: TQRBand;
+    QRDBText30: TQRDBText;
+    QRDBText31: TQRDBText;
+    QRDBText38: TQRDBText;
+    NxLinkLabel38: TNxLinkLabel;
+    TabSheet3: TTabSheet;
+    quickrep8: TQuickRep;
+    QRBand18: TQRBand;
+    QRBand19: TQRBand;
+    QRDBText46: TQRDBText;
+    QRDBText48: TQRDBText;
+    QRDBText54: TQRDBText;
+    QRDBText55: TQRDBText;
+    QRDBText56: TQRDBText;
+    QRDBText59: TQRDBText;
+    QRDBText61: TQRDBText;
+    QRDBText62: TQRDBText;
+    QRDBText63: TQRDBText;
+    qrcanvassaddress: TStringField;
+    RequisitionDetailrdcost2: TFloatField;
+    RequisitionDetailrdamount2: TFloatField;
+    RequisitionDetailrdcost3: TFloatField;
+    RequisitionDetailrdamount3: TFloatField;
+    RequisitionDetailsupplier2: TStringField;
+    RequisitionDetailsupplier3: TStringField;
+    NxHeaderPanel6: TNxHeaderPanel;
+    Label57: TLabel;
+    Label58: TLabel;
+    Label59: TLabel;
+    Label60: TLabel;
+    Label61: TLabel;
+    CRDBGrid5: TCRDBGrid;
+    NxLinkLabel40: TNxLinkLabel;
+    DBEdit55: TDBEdit;
+    DBEdit56: TDBEdit;
+    NxLinkLabel42: TNxLinkLabel;
+    DBEdit62: TDBEdit;
+    DBEdit63: TDBEdit;
+    DBMemo5: TDBMemo;
+    NxLinkLabel39: TNxLinkLabel;
+    NxLinkLabel41: TNxLinkLabel;
+    NxHeaderPanel10: TNxHeaderPanel;
+    Label71: TLabel;
+    Label72: TLabel;
+    NxLinkLabel45: TNxLinkLabel;
+    NxLinkLabel46: TNxLinkLabel;
+    Asupplier: TMyQuery;
+    AsupplieridAsupplier: TLargeintField;
+    Asupplieridflag: TLargeintField;
+    Asuppliersupplier: TStringField;
+    QRPO: TMyQuery;
+    DBEdit64: TDBEdit;
+    Label67: TLabel;
+    Label68: TLabel;
+    DBEdit65: TDBEdit;
+    dsqrpo: TMyDataSource;
+    NxLinkLabel47: TNxLinkLabel;
+    Abstract: TTabSheet;
+    QuickRep9: TQuickRep;
+    QRBand24: TQRBand;
+    GroupBox2: TGroupBox;
+    Label137: TLabel;
+    Label139: TLabel;
+    Label133: TLabel;
+    DBEdit135: TDBEdit;
+    DBEdit130: TDBEdit;
+    DBEdit132: TDBEdit;
+    Label74: TLabel;
+    DBEdit68: TDBEdit;
+    Label75: TLabel;
+    DBEdit71: TDBEdit;
+    Label76: TLabel;
+    DBEdit72: TDBEdit;
+    Label78: TLabel;
+    DBEdit74: TDBEdit;
+    Label79: TLabel;
+    DBEdit75: TDBEdit;
+    dsSignatories: TMyDataSource;
+    signatoriesAGMName: TStringField;
+    signatoriesAGMpos: TStringField;
+    signatoriesCOMDName: TStringField;
+    signatoriesCOMDpos: TStringField;
+    signatoriesChairmanName: TStringField;
+    signatoriesChairmanPos: TStringField;
+    UpdateJournal: TMyQuery;
+    QuickRep10: TQuickRep;
+    QRBand25: TQRBand;
+    QRBand26: TQRBand;
+    QRDBText93: TQRDBText;
+    QRDBText94: TQRDBText;
+    QRDBText95: TQRDBText;
+    c: TQRDBText;
+    QRDBText99: TQRDBText;
+    QRBand28: TQRBand;
+    NxLinkLabel22: TNxLinkLabel;
+    RequisitionDetaildocnumber: TStringField;
+    NxLinkLabel48: TNxLinkLabel;
+    JVSearch: TNxButtonEdit;
+    NxLinkLabel49: TNxLinkLabel;
+    VolgaDBEdit1: TVolgaDBEdit;
+    Label82: TLabel;
+    MyUsersArea: TStringField;
+    RequisitionTotal: TMyQuery;
+    MyDataSource1: TMyDataSource;
+    RequisitionTotaltotal: TFloatField;
+    NxLinkLabel25: TNxLinkLabel;
+    NxLinkLabel26: TNxLinkLabel;
+    NxLinkLabel50: TNxLinkLabel;
+    NxHeaderPanel8: TNxHeaderPanel;
+    Label51: TLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    Label54: TLabel;
+    Label55: TLabel;
+    NxLinkLabel36: TNxLinkLabel;
+    NxLinkLabel37: TNxLinkLabel;
+    DBEdit47: TDBEdit;
+    DBEdit48: TDBEdit;
+    DBEdit49: TDBEdit;
+    DBEdit50: TDBEdit;
+    DBEdit51: TDBEdit;
+    NxHeaderPanel12: TNxHeaderPanel;
+    Label30: TLabel;
+    Label32: TLabel;
+    Label38: TLabel;
+    Label45: TLabel;
+    Label46: TLabel;
+    NxLinkLabel51: TNxLinkLabel;
+    NxLinkLabel52: TNxLinkLabel;
+    DBEdit21: TDBEdit;
+    DBEdit29: TDBEdit;
+    DBEdit32: TDBEdit;
+    DBEdit33: TDBEdit;
+    DBEdit36: TDBEdit;
+    NxCheckBox2: TNxCheckBox;
+    Acounter: TMyQuery;
+    dsacounter: TMyDataSource;
+    AcounterSA: TLargeintField;
+    AcounterUpdate: TMyQuery;
+    dsApcounterupdate: TMyDataSource;
+    RVcount: TMyQuery;
+    v: TMyDataSource;
+    RVcountrvcount: TLargeintField;
+    QRBand29: TQRBand;
+    QRDBImage5: TQRDBImage;
+    QRDBText101: TQRDBText;
+    QRDBText102: TQRDBText;
+    QRDBText103: TQRDBText;
+    QRLabel33: TQRLabel;
+    QRBand5: TQRBand;
+    QRDBImage6: TQRDBImage;
+    QRDBText104: TQRDBText;
+    QRDBText105: TQRDBText;
+    QRDBText106: TQRDBText;
+    QRLabel36: TQRLabel;
+    QRDBText90: TQRDBText;
+    QRDBText89: TQRDBText;
+    QRLabel37: TQRLabel;
+    QRLabel38: TQRLabel;
+    QRLabel39: TQRLabel;
+    QRLabel40: TQRLabel;
+    QRLabel41: TQRLabel;
+    QRLabel42: TQRLabel;
+    QRLabel43: TQRLabel;
+    QRLabel44: TQRLabel;
+    QRLabel47: TQRLabel;
+    QRSysData7: TQRSysData;
+    QRLabel45: TQRLabel;
+    QRLabel46: TQRLabel;
+    QRLabel48: TQRLabel;
+    QRLabel49: TQRLabel;
+    AcounteridAcounter: TLargeintField;
+    AcounterDMO: TLargeintField;
+    AcounterPAO: TLargeintField;
+    AcounterSAO: TLargeintField;
+    AcounterLAO: TLargeintField;
+    QRDBImage7: TQRDBImage;
+    QRDBText107: TQRDBText;
+    QRDBText108: TQRDBText;
+    QRDBText109: TQRDBText;
+    QRLabel62: TQRLabel;
+    QRShape10: TQRShape;
+    QRShape11: TQRShape;
+    QRShape12: TQRShape;
+    QRLabel63: TQRLabel;
+    QRDBText110: TQRDBText;
+    QRLabel64: TQRLabel;
+    QRLabel65: TQRLabel;
+    QRLabel66: TQRLabel;
+    QRLabel67: TQRLabel;
+    QRLabel72: TQRLabel;
+    QRLabel74: TQRLabel;
+    QRSysData9: TQRSysData;
+    QRDBImage8: TQRDBImage;
+    QRDBText111: TQRDBText;
+    QRDBText112: TQRDBText;
+    QRDBText115: TQRDBText;
+    QRLabel82: TQRLabel;
+    QRLabel83: TQRLabel;
+    QRLabel84: TQRLabel;
+    QRShape17: TQRShape;
+    QRLabel85: TQRLabel;
+    QRShape18: TQRShape;
+    QRShape19: TQRShape;
+    QRLabel86: TQRLabel;
+    QRLabel87: TQRLabel;
+    QRLabel88: TQRLabel;
+    QRShape21: TQRShape;
+    QRShape22: TQRShape;
+    QRLabel89: TQRLabel;
+    QRLabel90: TQRLabel;
+    QRLabel91: TQRLabel;
+    QRLabel92: TQRLabel;
+    QRLabel93: TQRLabel;
+    QRLabel94: TQRLabel;
+    QRLabel95: TQRLabel;
+    QRSysData11: TQRSysData;
+    QRBand21: TQRBand;
+    QRShape31: TQRShape;
+    QRShape30: TQRShape;
+    QRDBText67: TQRDBText;
+    QRDBText68: TQRDBText;
+    QRDBText69: TQRDBText;
+    QRDBImage9: TQRDBImage;
+    QRDBText117: TQRDBText;
+    QRDBText121: TQRDBText;
+    QRDBText122: TQRDBText;
+    QRLabel106: TQRLabel;
+    QRLabel110: TQRLabel;
+    QRShape29: TQRShape;
+    QRLabel112: TQRLabel;
+    QRLabel114: TQRLabel;
+    QRLabel113: TQRLabel;
+    QRLabel115: TQRLabel;
+    QRShape33: TQRShape;
+    QRBand22: TQRBand;
+    QRDBText65: TQRDBText;
+    QRDBText66: TQRDBText;
+    QRDBText70: TQRDBText;
+    QRDBText71: TQRDBText;
+    QRDBText72: TQRDBText;
+    QRDBText73: TQRDBText;
+    QRDBText74: TQRDBText;
+    QRDBText75: TQRDBText;
+    QRDBText77: TQRDBText;
+    QRDBText78: TQRDBText;
+    QRDBText79: TQRDBText;
+    QRShape32: TQRShape;
+    QRLabel116: TQRLabel;
+    QRShape34: TQRShape;
+    QRLabel117: TQRLabel;
+    QRLabel118: TQRLabel;
+    QRShape35: TQRShape;
+    QRShape36: TQRShape;
+    QRLabel119: TQRLabel;
+    QRShape37: TQRShape;
+    QRLabel120: TQRLabel;
+    QRLabel121: TQRLabel;
+    QRShape38: TQRShape;
+    QRLabel122: TQRLabel;
+    QRShape39: TQRShape;
+    QRLabel123: TQRLabel;
+    QRShape40: TQRShape;
+    QRShape41: TQRShape;
+    QRLabel124: TQRLabel;
+    QRLabel125: TQRLabel;
+    QRLabel130: TQRLabel;
+    QRLabel131: TQRLabel;
+    QRLabel132: TQRLabel;
+    QRLabel133: TQRLabel;
+    QRLabel134: TQRLabel;
+    QRLabel135: TQRLabel;
+    QRLabel136: TQRLabel;
+    QRLabel137: TQRLabel;
+    QRLabel138: TQRLabel;
+    QRDBText42: TQRDBText;
+    QRSysData15: TQRSysData;
+    Label48: TLabel;
+    DBEdit41: TDBEdit;
+    QRDBText76: TQRDBText;
+    QRLabel145: TQRLabel;
+    QRLabel146: TQRLabel;
+    Label77: TLabel;
+    RequisitionDetailbidopen: TDateTimeField;
+    qrcanvassbidopen: TDateTimeField;
+    Label83: TLabel;
+    DBEdit42: TDBEdit;
+    QRLabel157: TQRLabel;
+    NxHeaderPanel13: TNxHeaderPanel;
+    NxButton4: TNxButton;
+    NxEdit1: TNxEdit;
+    NxLabel8: TNxLabel;
+    NxButton5: TNxButton;
+    Label84: TLabel;
+    DBEdit44: TDBEdit;
+    RequisitionDetailbidyear: TDateTimeField;
+    QRLabel159: TQRLabel;
+    AcounterDPO: TLargeintField;
+    AcounterPPO: TLargeintField;
+    AcounterLPO: TLargeintField;
+    AcounterSPO: TLargeintField;
+    AcounterSDPO: TLargeintField;
+    AcounterSPPO: TLargeintField;
+    AcounterSLPO: TLargeintField;
+    AcounterSSPO: TLargeintField;
+    qrcanvassbidyear: TDateTimeField;
+    NxLinkLabel17: TNxLinkLabel;
+    NxLinkLabel15: TNxLinkLabel;
+    NxHeaderPanel14: TNxHeaderPanel;
+    Label85: TLabel;
+    Label88: TLabel;
+    Label89: TLabel;
+    Label90: TLabel;
+    Label93: TLabel;
+    NxLinkLabel30: TNxLinkLabel;
+    NxLinkLabel53: TNxLinkLabel;
+    DBEdit73: TDBEdit;
+    DBEdit77: TDBEdit;
+    DBEdit78: TDBEdit;
+    DBEdit79: TDBEdit;
+    DBMemo6: TDBMemo;
+    NxCheckBox4: TNxCheckBox;
+    DBEdit80: TDBEdit;
+    DBEdit82: TDBEdit;
+    GroupBox1: TGroupBox;
+    Label99: TLabel;
+    Label100: TLabel;
+    DBEdit88: TDBEdit;
+    DBEdit89: TDBEdit;
+    signatoriesRrecommended: TStringField;
+    signatoriesRrecompos: TStringField;
+    GroupBox3: TGroupBox;
+    Label37: TLabel;
+    Label94: TLabel;
+    DBEdit35: TDBEdit;
+    DBEdit83: TDBEdit;
+    NxLinkLabel54: TNxLinkLabel;
+    NxHeaderPanel15: TNxHeaderPanel;
+    GroupBox4: TGroupBox;
+    Label95: TLabel;
+    DBEdit84: TDBEdit;
+    Label96: TLabel;
+    DBEdit85: TDBEdit;
+    Label97: TLabel;
+    DBEdit86: TDBEdit;
+    Label98: TLabel;
+    DBEdit87: TDBEdit;
+    GroupBox5: TGroupBox;
+    Label101: TLabel;
+    Label102: TLabel;
+    Label103: TLabel;
+    Label104: TLabel;
+    DBEdit90: TDBEdit;
+    DBEdit91: TDBEdit;
+    DBEdit92: TDBEdit;
+    DBEdit93: TDBEdit;
+    NxLinkLabel55: TNxLinkLabel;
+    NxLinkLabel56: TNxLinkLabel;
+    NxLinkLabel57: TNxLinkLabel;
+    qrcanvassrpo: TStringField;
+    DataSource1: TDataSource;
+    QRDBText96: TQRDBText;
+    QRLabel12: TQRLabel;
+    QRDBText151: TQRDBText;
+    GroupBox7: TGroupBox;
+    Label1: TLabel;
+    Label11: TLabel;
+    NxCheckBox1: TNxCheckBox;
+    GroupBox8: TGroupBox;
+    VolgaDBEdit4: TVolgaDBEdit;
+    DBEdit76: TDBEdit;
+    Label87: TLabel;
+    Label86: TLabel;
+    qrRequisitionAllocation: TStringField;
+    Label12: TLabel;
+    Label14: TLabel;
+    DBEdit9: TDBEdit;
+    DBEdit10: TDBEdit;
+    Label15: TLabel;
+    AcounterSHP: TLargeintField;
+    AcounterSHS: TLargeintField;
+    AcounterSHL: TLargeintField;
+    AcounterSHPPO: TLargeintField;
+    AcounterSHSPO: TLargeintField;
+    AcounterSHLPO: TLargeintField;
+    AcounterSHDPO1: TLargeintField;
+    AcounterSHDPO2: TLargeintField;
+    Label17: TLabel;
+    DBEdit12: TDBEdit;
+    Label18: TLabel;
+    DBEdit13: TDBEdit;
+    Label19: TLabel;
+    DBEdit14: TDBEdit;
+    DBEdit11: TDBEdit;
+    DBEdit15: TDBEdit;
+    QRLabel21: TQRLabel;
+    QRDBText157: TQRDBText;
+    ChartLedgerrvName: TStringField;
+    DBEdit16: TDBEdit;
+    Label16: TLabel;
+    VolgaDBEdit2: TVolgaDBEdit;
+    MyUsersDepartment: TStringField;
+    signatoriesISDRecom: TStringField;
+    signatoriesOGMRECOM: TStringField;
+    signatoriesSHOPRecom: TStringField;
+    signatoriesESDRECOM: TStringField;
+    signatoriesCADRECOM: TStringField;
+    signatoriesFSDRECOM: TStringField;
+    signatoriesLAORECOM: TStringField;
+    signatoriesPAORECOM: TStringField;
+    signatoriesSAORECOM: TStringField;
+    signatoriesCOMDRECOM: TStringField;
+    Label20: TLabel;
+    Label21: TLabel;
+    DBEdit17: TDBEdit;
+    DBEdit18: TDBEdit;
+    Label22: TLabel;
+    Label23: TLabel;
+    DBEdit19: TDBEdit;
+    DBEdit20: TDBEdit;
+    signatoriesISDRecomPOs: TStringField;
+    signatoriesOGMrecompos: TStringField;
+    signatoriesSHOPrecompos: TStringField;
+    signatoriesESDrecompos: TStringField;
+    signatoriesFSDrecompos: TStringField;
+    signatoriesCADrecompos: TStringField;
+    signatoriesCOMDrecompos: TStringField;
+    signatoriesLAOrecompos: TStringField;
+    signatoriesSAOrecompos: TStringField;
+    signatoriesPAOrecompos: TStringField;
+    Label24: TLabel;
+    Label25: TLabel;
+    DBEdit22: TDBEdit;
+    DBEdit24: TDBEdit;
+    Label26: TLabel;
+    Label27: TLabel;
+    DBEdit25: TDBEdit;
+    DBEdit28: TDBEdit;
+    Label31: TLabel;
+    Label34: TLabel;
+    DBEdit30: TDBEdit;
+    DBEdit31: TDBEdit;
+    Label35: TLabel;
+    Label73: TLabel;
+    DBEdit40: TDBEdit;
+    DBEdit69: TDBEdit;
+    Label80: TLabel;
+    Label81: TLabel;
+    DBEdit70: TDBEdit;
+    DBEdit81: TDBEdit;
+    QRShape72: TQRShape;
+    QRShape73: TQRShape;
+    QRShape74: TQRShape;
+    QRShape75: TQRShape;
+    QRShape76: TQRShape;
+    QRShape77: TQRShape;
+    TabSheet6: TTabSheet;
+    QuickRep3: TQuickRep;
+    QRBand6: TQRBand;
+    QRLabel142: TQRLabel;
+    QRLabel141: TQRLabel;
+    QRLabel25: TQRLabel;
+    QRLabel19: TQRLabel;
+    QRDBText18: TQRDBText;
+    QRDBText19: TQRDBText;
+    QRDBText20: TQRDBText;
+    QRDBText21: TQRDBText;
+    QRDBText22: TQRDBText;
+    QRDBText29: TQRDBText;
+    QRDBText98: TQRDBText;
+    QRDBText100: TQRDBText;
+    QRDBImage2: TQRDBImage;
+    QRLabel61: TQRLabel;
+    BidOpenDate: TQRLabel;
+    BidOpenTime: TQRLabel;
+    BidOpenYear: TQRLabel;
+    QRGroup1: TQRGroup;
+    QRBand38: TQRBand;
+    QRLabel34: TQRLabel;
+    QRExpr6: TQRExpr;
+    QRExpr7: TQRExpr;
+    QRExpr8: TQRExpr;
+    QRExpr9: TQRExpr;
+    QRExpr10: TQRExpr;
+    QRExpr11: TQRExpr;
+    QRLabel143: TQRLabel;
+    QRLabel144: TQRLabel;
+    QRDBText162: TQRDBText;
+    QRDBText163: TQRDBText;
+    QRDBText164: TQRDBText;
+    QRDBText165: TQRDBText;
+    QRDBText166: TQRDBText;
+    QRDBText167: TQRDBText;
+    QRDBText168: TQRDBText;
+    QRDBText169: TQRDBText;
+    QRLabel190: TQRLabel;
+    QRLabel191: TQRLabel;
+    QRLabel192: TQRLabel;
+    QRLabel193: TQRLabel;
+    QRShape92: TQRShape;
+    QRShape93: TQRShape;
+    QRShape94: TQRShape;
+    QRShape95: TQRShape;
+    QRLabel194: TQRLabel;
+    QRLabel195: TQRLabel;
+    QRLabel196: TQRLabel;
+    QRLabel197: TQRLabel;
+    QRGroup2: TQRGroup;
+    QRBand39: TQRBand;
+    QRExpr13: TQRExpr;
+    QRLabel152: TQRLabel;
+    QRShape102: TQRShape;
+    QRLabel208: TQRLabel;
+    QRLabel209: TQRLabel;
+    QRLabel210: TQRLabel;
+    QRLabel211: TQRLabel;
+    QRShape103: TQRShape;
+    QRLabel212: TQRLabel;
+    QRBand40: TQRBand;
+    QRGroup3: TQRGroup;
+    QRBand44: TQRBand;
+    QRLabel213: TQRLabel;
+    QRDBText171: TQRDBText;
+    QRDBText172: TQRDBText;
+    QRDBText173: TQRDBText;
+    QRLabel214: TQRLabel;
+    QRLabel215: TQRLabel;
+    QRShape104: TQRShape;
+    QRShape105: TQRShape;
+    QRLabel216: TQRLabel;
+    QRShape106: TQRShape;
+    QRDBText174: TQRDBText;
+    QRShape107: TQRShape;
+    QRLabel217: TQRLabel;
+    QRLabel218: TQRLabel;
+    QRLabel219: TQRLabel;
+    QRLabel220: TQRLabel;
+    QRShape108: TQRShape;
+    QRLabel221: TQRLabel;
+    QRGroup4: TQRGroup;
+    QRBand45: TQRBand;
+    QRExpr16: TQRExpr;
+    QRLabel222: TQRLabel;
+    QRLabel75: TQRLabel;
+    QRLabel223: TQRLabel;
+    QRLabel224: TQRLabel;
+    QRShape109: TQRShape;
+    QRShape110: TQRShape;
+    QRLabel225: TQRLabel;
+    QRLabel226: TQRLabel;
+    QRShape111: TQRShape;
+    QRShape112: TQRShape;
+    QRLabel227: TQRLabel;
+    QRGroup5: TQRGroup;
+    TabJoborder: TTabSheet;
+    QuickRep14: TQuickRep;
+    QRBand48: TQRBand;
+    QRDBText185: TQRDBText;
+    QRDBText186: TQRDBText;
+    QRDBText187: TQRDBText;
+    QRDBText188: TQRDBText;
+    QRDBImage13: TQRDBImage;
+    QRDBText189: TQRDBText;
+    QRDBText190: TQRDBText;
+    QRDBText191: TQRDBText;
+    QRLabel255: TQRLabel;
+    QRLabel256: TQRLabel;
+    QRLabel257: TQRLabel;
+    QRShape137: TQRShape;
+    QRLabel258: TQRLabel;
+    QRShape138: TQRShape;
+    QRShape139: TQRShape;
+    QRLabel259: TQRLabel;
+    QRLabel260: TQRLabel;
+    QRLabel261: TQRLabel;
+    QRShape140: TQRShape;
+    QRShape141: TQRShape;
+    QRShape142: TQRShape;
+    QRLabel262: TQRLabel;
+    QRLabel263: TQRLabel;
+    QRLabel264: TQRLabel;
+    QRLabel265: TQRLabel;
+    QRLabel266: TQRLabel;
+    QRLabel267: TQRLabel;
+    QRLabel268: TQRLabel;
+    QRLabel269: TQRLabel;
+    QRLabel270: TQRLabel;
+    QRDBText192: TQRDBText;
+    QRLabel272: TQRLabel;
+    QRLabel273: TQRLabel;
+    QRLabel274: TQRLabel;
+    QRShape144: TQRShape;
+    QRBand49: TQRBand;
+    QRDBText193: TQRDBText;
+    QRDBText194: TQRDBText;
+    QRDBText195: TQRDBText;
+    QRDBText196: TQRDBText;
+    QRDBText197: TQRDBText;
+    QRSysData20: TQRSysData;
+    QRBand50: TQRBand;
+    QRDBText198: TQRDBText;
+    QRShape145: TQRShape;
+    QRLabel277: TQRLabel;
+    QRShape146: TQRShape;
+    QRShape147: TQRShape;
+    QRLabel278: TQRLabel;
+    QRLabel279: TQRLabel;
+    QRLabel280: TQRLabel;
+    QRShape148: TQRShape;
+    QRLabel281: TQRLabel;
+    QRShape149: TQRShape;
+    QRLabel282: TQRLabel;
+    QRLabel283: TQRLabel;
+    QRShape150: TQRShape;
+    QRLabel284: TQRLabel;
+    QRMemo3: TQRMemo;
+    QRBand51: TQRBand;
+    QRDBText199: TQRDBText;
+    QRLabel285: TQRLabel;
+    QRShape151: TQRShape;
+    QRLabel286: TQRLabel;
+    QRShape152: TQRShape;
+    QRShape153: TQRShape;
+    QRLabel287: TQRLabel;
+    QRLabel288: TQRLabel;
+    QRLabel289: TQRLabel;
+    QRShape154: TQRShape;
+    QRLabel290: TQRLabel;
+    QRShape155: TQRShape;
+    QRLabel291: TQRLabel;
+    QRLabel292: TQRLabel;
+    QRShape156: TQRShape;
+    QRLabel293: TQRLabel;
+    QRMemo4: TQRMemo;
+    QRGroup7: TQRGroup;
+    QRBand52: TQRBand;
+    QRExpr14: TQRExpr;
+    QRLabel294: TQRLabel;
+    QRLabel295: TQRLabel;
+    QRShape143: TQRShape;
+    QRLabel271: TQRLabel;
+    QRShape157: TQRShape;
+    QRShape158: TQRShape;
+    AcounterJDPO: TLargeintField;
+    AcounterJPPO: TLargeintField;
+    AcounterJSPO: TLargeintField;
+    AcounterJLPO: TLargeintField;
+    GroupBox6: TGroupBox;
+    Label62: TLabel;
+    Label63: TLabel;
+    Label64: TLabel;
+    Label65: TLabel;
+    Label66: TLabel;
+    Label69: TLabel;
+    Label70: TLabel;
+    Label91: TLabel;
+    Label92: TLabel;
+    DBEdit57: TDBEdit;
+    DBEdit58: TDBEdit;
+    DBEdit59: TDBEdit;
+    DBEdit60: TDBEdit;
+    DBEdit61: TDBEdit;
+    DBEdit66: TDBEdit;
+    DBEdit67: TDBEdit;
+    DBEdit94: TDBEdit;
+    DBEdit95: TDBEdit;
+    AcounterJSHDPO1: TLargeintField;
+    AcounterJSHDPO2: TLargeintField;
+    AcounterJSHPPO: TLargeintField;
+    AcounterJSHSPO: TLargeintField;
+    AcounterJSHLPO: TLargeintField;
+    NxLinkLabel2: TNxLinkLabel;
+    nhpJoborder: TNxHeaderPanel;
+    NxLabel3: TNxLabel;
+    NxButton1: TNxButton;
+    NxEdit2: TNxEdit;
+    NxButton2: TNxButton;
+    qrcanvassjobOrder: TStringField;
+    NxComboBox1: TNxComboBox;
+    signatoriesmember2: TStringField;
+    signatoriesmember2pos: TStringField;
+    QRDBText203: TQRDBText;
+    QRDBText205: TQRDBText;
+    QRDBText206: TQRDBText;
+    DBEdit96: TDBEdit;
+    CRDBGrid6: TCRDBGrid;
+    DBEdit34: TDBEdit;
+    PayeeCheck: TMyQuery;
+    PayeeCheckPCode: TStringField;
+    PayeeCheckName: TStringField;
+    QRPOrvdate: TDateField;
+    QRPOrvpcode: TStringField;
+    QRPOrvname: TStringField;
+    QRPOrvnumber: TStringField;
+    QRPOamount: TFloatField;
+    QRPOrequester: TStringField;
+    QRPOrvdescription: TMemoField;
+    QRPOsupplier2nd: TStringField;
+    QRPOsupplier3rd: TStringField;
+    QRPOidrequisitiondetail: TLargeintField;
+    QRPOidrequisition: TFloatField;
+    QRPOrdqty: TFloatField;
+    QRPOrddescription: TStringField;
+    QRPOrdcost: TFloatField;
+    QRPOrdamount: TFloatField;
+    QRPOrdunit: TStringField;
+    QRPOrdcost2: TFloatField;
+    QRPOrdamount2: TFloatField;
+    QRPOrdcost3: TFloatField;
+    QRPOrdamount3: TFloatField;
+    QRPOsupplier2: TStringField;
+    QRPOsupplier3: TStringField;
+    QRPOdocnumber: TStringField;
+    QRPObidopen: TDateTimeField;
+    QRPObidyear: TDateTimeField;
+    QRBand9: TQRBand;
+    QRGroup6: TQRGroup;
+    QRBand23: TQRBand;
+    QRBand32: TQRBand;
+    QRDBText25: TQRDBText;
+    QRDBText26: TQRDBText;
+    QRDBText27: TQRDBText;
+    QRDBText15: TQRDBText;
+    QRSysData16: TQRSysData;
+    QRDBText24: TQRDBText;
+    QRBand33: TQRBand;
+    QRShape86: TQRShape;
+    QRShape85: TQRShape;
+    QRShape78: TQRShape;
+    QRDBText80: TQRDBText;
+    QRDBText82: TQRDBText;
+    QRDBText158: TQRDBText;
+    QRLabel177: TQRLabel;
+    QRLabel178: TQRLabel;
+    QRLabel179: TQRLabel;
+    QRLabel180: TQRLabel;
+    QRShape79: TQRShape;
+    QRShape80: TQRShape;
+    QRDBText160: TQRDBText;
+    QRLabel182: TQRLabel;
+    QRShape81: TQRShape;
+    QRDBText161: TQRDBText;
+    QRShape82: TQRShape;
+    QRLabel184: TQRLabel;
+    QRLabel185: TQRLabel;
+    QRLabel186: TQRLabel;
+    QRShape83: TQRShape;
+    QRShape84: TQRShape;
+    QRDBText81: TQRDBText;
+    QRDBText181: TQRDBText;
+    QRDBText201: TQRDBText;
+    QRExpr15: TQRExpr;
+    QRLabel183: TQRLabel;
+    QRLabel147: TQRLabel;
+    QRLabel148: TQRLabel;
+    QRLabel149: TQRLabel;
+    QRLabel150: TQRLabel;
+    QRLabel151: TQRLabel;
+    qrRequisitiondateApproved: TDateField;
+    QRShape20: TQRShape;
+    QRBand30: TQRBand;
+    QRDBText170: TQRDBText;
+    QRLabel198: TQRLabel;
+    QRShape96: TQRShape;
+    QRLabel199: TQRLabel;
+    QRShape97: TQRShape;
+    QRShape98: TQRShape;
+    QRLabel200: TQRLabel;
+    QRLabel201: TQRLabel;
+    QRLabel202: TQRLabel;
+    QRShape99: TQRShape;
+    QRLabel204: TQRLabel;
+    QRShape100: TQRShape;
+    QRLabel205: TQRLabel;
+    QRLabel206: TQRLabel;
+    QRShape101: TQRShape;
+    QRLabel207: TQRLabel;
+    QRMemo2: TQRMemo;
+    QRBand15: TQRBand;
+    QRDBText91: TQRDBText;
+    QRLabel22: TQRLabel;
+    QRLabel50: TQRLabel;
+    QRShape1: TQRShape;
+    QRShape2: TQRShape;
+    QRLabel51: TQRLabel;
+    QRShape3: TQRShape;
+    QRLabel52: TQRLabel;
+    QRLabel53: TQRLabel;
+    QRShape4: TQRShape;
+    QRLabel54: TQRLabel;
+    QRShape5: TQRShape;
+    QRLabel55: TQRLabel;
+    QRShape6: TQRShape;
+    QRShape7: TQRShape;
+    QRLabel56: TQRLabel;
+    QRLabel57: TQRLabel;
+    QRLabel58: TQRLabel;
+    QRLabel59: TQRLabel;
+    QRLabel60: TQRLabel;
+    QRShape8: TQRShape;
+    QRShape9: TQRShape;
+    QRDBText159: TQRDBText;
+    QRLabel175: TQRLabel;
+    QRLabel176: TQRLabel;
+    QRShape71: TQRShape;
+    qrcanvassPODate: TDateField;
+    PopupMenu1: TPopupMenu;
+    NxLinkLabel3: TNxLinkLabel;
+    Exportitems: TMyQuery;
+    signatoriesAudName: TStringField;
+    signatoriesAudpos: TStringField;
+    Label105: TLabel;
+    Label106: TLabel;
+    DBEdit97: TDBEdit;
+    DBEdit98: TDBEdit;
+    Label107: TLabel;
+    DBEdit99: TDBEdit;
+    QRDBText16: TQRDBText;
+    qrRequisitionPos: TStringField;
+    Label108: TLabel;
+    DBEdit100: TDBEdit;
+    DBEdit101: TDBEdit;
+    Label109: TLabel;
+    Label110: TLabel;
+    DBEdit102: TDBEdit;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure Exit1Click(Sender: TObject);
+    procedure NxOutlookBar1Select(Sender: TObject);
+    procedure EditLinkClick(Sender: TObject);
+    procedure SaveLinkClick(Sender: TObject);
+    procedure CancelLinkClick(Sender: TObject);
+    procedure LoadLogoClick(Sender: TObject);
+    procedure SearchUserButtonClick(Sender: TObject);
+    procedure SearchUserEnter(Sender: TObject);
+    procedure SaveUserClick(Sender: TObject);
+    procedure CancelUserClick(Sender: TObject);
+    procedure NxLinkLabel1Click(Sender: TObject);
+    procedure AddLinkClick(Sender: TObject);
+    procedure EditButtonClick(Sender: TObject);
+    procedure DeleteLinkClick(Sender: TObject);
+    procedure JVSearchButtonClick(Sender: TObject);
+    procedure JVPeriodCoveredClick(Sender: TObject);
+    procedure JVEditClick(Sender: TObject);
+    procedure JVDeleteClick(Sender: TObject);
+    procedure NxLinkLabel20Click(Sender: TObject);
+    procedure NxLinkLabel65Click(Sender: TObject);
+    procedure NxLinkLabel21Click(Sender: TObject);
+    procedure MRTDeleteDetailClick(Sender: TObject);
+    procedure SMSearchButtonClick(Sender: TObject);
+    procedure smaddClick(Sender: TObject);
+    procedure smeditClick(Sender: TObject);
+    procedure smdeleteClick(Sender: TObject);
+    procedure NxLinkLabel78Click(Sender: TObject);
+    procedure NxLinkLabel79Click(Sender: TObject);
+    procedure NxLinkLabel75Click(Sender: TObject);
+    procedure NxButton12Click(Sender: TObject);
+    procedure NextDBGrid27DblClick(Sender: TObject);
+    procedure NextDBGrid27Exit(Sender: TObject);
+    procedure NxLinkLabel77Click(Sender: TObject);
+    procedure NxLinkLabel82Click(Sender: TObject);
+    procedure NxLinkLabel76Click(Sender: TObject);
+    procedure NxLinkLabel74Click(Sender: TObject);
+    procedure NxLinkLabel80Click(Sender: TObject);
+    procedure NxLinkLabel81Click(Sender: TObject);
+    procedure printscheduleCalcFields(DataSet: TDataSet);
+    procedure NxLinkLabel14Click(Sender: TObject);
+    procedure RefreshRecordClick(Sender: TObject);
+    procedure DBEdit21KeyPress(Sender: TObject; var Key: Char);
+    procedure NxLinkLabel17Click(Sender: TObject);
+    procedure NxLinkLabel19Click(Sender: TObject);
+    procedure NxButtonEdit1ButtonClick(Sender: TObject);
+    procedure NxLinkLabel16Click(Sender: TObject);
+    procedure NxLinkLabel33Click(Sender: TObject);
+    procedure NxLinkLabel34Click(Sender: TObject);
+    procedure NxLinkLabel36Click(Sender: TObject);
+    procedure NxLinkLabel38Click(Sender: TObject);
+    procedure DBEdit49KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit51KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit48KeyPress(Sender: TObject; var Key: Char);
+    procedure NxLinkLabel37Click(Sender: TObject);
+    procedure NxLinkLabel35Click(Sender: TObject);
+    procedure NxLinkLabel40Click(Sender: TObject);
+    procedure NxLinkLabel42Click(Sender: TObject);
+    procedure NxLinkLabel41Click(Sender: TObject);
+    procedure NxLinkLabel39Click(Sender: TObject);
+    procedure NxLinkLabel45Click(Sender: TObject);
+    procedure NxLinkLabel46Click(Sender: TObject);
+    procedure NxLinkLabel32Click(Sender: TObject);
+    procedure NxLinkLabel27Click(Sender: TObject);
+    procedure NxLinkLabel31Click(Sender: TObject);
+    procedure NxLinkLabel47Click(Sender: TObject);
+    procedure qrcanvassrvdescriptionGetText(Sender: TField;
+      var Text: String; DisplayText: Boolean);
+    procedure NxLinkLabel22Click(Sender: TObject);
+    procedure DBEdit47KeyPress(Sender: TObject; var Key: Char);
+    procedure NxLinkLabel48Click(Sender: TObject);
+    procedure NxLinkLabel49Click(Sender: TObject);
+    procedure DBEdit50KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit37KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit54KeyPress(Sender: TObject; var Key: Char);
+    procedure NxLinkLabel51Click(Sender: TObject);
+    procedure NxLinkLabel52Click(Sender: TObject);
+    procedure DBEdit32KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit36KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit29KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit33KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit33Enter(Sender: TObject);
+    procedure NxLinkLabel25Click(Sender: TObject);
+    procedure NxLinkLabel26Click(Sender: TObject);
+    procedure NxLinkLabel50Click(Sender: TObject);
+    procedure NxLinkLabel28Click(Sender: TObject);
+    procedure NxLinkLabel15Click(Sender: TObject);
+    procedure DBEdit41Exit(Sender: TObject);
+    procedure DBEdit23Exit(Sender: TObject);
+    procedure CanvassPanelEnter(Sender: TObject);
+    procedure NxButton4Click(Sender: TObject);
+    procedure NxButton5Click(Sender: TObject);
+    procedure DBEdit73Exit(Sender: TObject);
+    procedure DBEdit77KeyPress(Sender: TObject; var Key: Char);
+    procedure VolgaDBEdit4Change(Sender: TObject);
+    procedure NxLinkLabel30Click(Sender: TObject);
+    procedure NxLinkLabel53Click(Sender: TObject);
+    procedure DBEdit80KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit82KeyPress(Sender: TObject; var Key: Char);
+    procedure NxLinkLabel55Click(Sender: TObject);
+    procedure NxLinkLabel57Click(Sender: TObject);
+    procedure NxLinkLabel56Click(Sender: TObject);
+    procedure NxLinkLabel54Click(Sender: TObject);
+    procedure DBEdit41KeyPress(Sender: TObject; var Key: Char);
+    procedure NxCheckBox2Change(Sender: TObject);
+    procedure VolgaDBEdit4KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit48Exit(Sender: TObject);
+    procedure RequisitionDetailAfterPost(DataSet: TDataSet);
+    procedure NxHeaderPanel13MouseDown(Sender: TObject;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure NxHeaderPanel13MouseMove(Sender: TObject; Shift: TShiftState;
+      X, Y: Integer);
+    procedure NxHeaderPanel13MouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure NxEdit1Change(Sender: TObject);
+    procedure NxLinkLabel2Click(Sender: TObject);
+    procedure NxButton1Click(Sender: TObject);
+    procedure NxEdit2Change(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure NxComboBox1Change(Sender: TObject);
+    procedure NxButton2Click(Sender: TObject);
+    procedure DBEdit96Change(Sender: TObject);
+    procedure CRDBGrid6DblClick(Sender: TObject);
+    procedure CRDBGrid6KeyPress(Sender: TObject; var Key: Char);
+    procedure DBEdit96KeyPress(Sender: TObject; var Key: Char);
+    procedure CRDBGrid5Exit(Sender: TObject);
+    procedure QRBand18BeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
+    procedure NxLinkLabel3Click(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+   oldPos, deltaPos : TPoint;
+   Moving           : Boolean;
+   MovingPnl        : TNxHeaderPanel;
+   LogoFileName : String;
+   checker : string;
+   UserAdministration : integer;
+   procedure DocInc(counter : string; DocInit : string);
+  end;
+
+var
+  FlexAccountMainMenuForm: TFlexAccountMainMenuForm;
+
+implementation
+
+uses FlexAccountIntro, Data, DateUtils, ModTools, PayeeList, datatransfer,
+  InventoryReportsDownload, StrUtils, FitlerUsers;
+
+{$R *.dfm}
+
+procedure TFlexAccountMainMenuForm.DocInc(counter : string; DocInit : string);
+begin
+           if Length(counter) = 1 then
+            begin
+             acctdata.requisitionjoborder.Text := DocInit + '000' + Counter;
+            end;
+           if Length(AcounterJDPO.text) = 2 then
+            begin
+             acctdata.requisitionjoborder.Text := DocInit + '00'+ Counter;
+            end;
+           if Length(AcounterJDPO.text) = 3 then
+            begin
+             acctdata.requisitionjoborder.Text := DocInit + '0' + Counter;
+            end;
+           if Length(AcounterJDPO.text) = 4 then
+            begin
+             acctdata.requisitionjoborder.Text := DocInit + Counter;
+            end;
+end;
+procedure TFlexAccountMainMenuForm.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   With AcctData do
+     begin
+       Users.close;
+       Company.Close;
+       Chart.Close;
+       Journal.Close;
+       requisition.Close;
+       requisitiondetail.close;
+       ScheduleMaster.Close;
+       ScheduleDetail.Close;
+     end;
+   IntroForm.Close;
+   Action := caFree;
+   FlexAccountMainMenuForm := Nil;
+end;
+
+procedure TFlexAccountMainMenuForm.Timer1Timer(Sender: TObject);
+begin
+  DateStr.Caption := DateToStr(Now)+' '+TimeToStr(Now);
+end;
+
+procedure TFlexAccountMainMenuForm.FormShow(Sender: TObject);
+begin
+  FlexAccountMainMenuForm.WindowState := wsNormal;
+
+  With AcctData do
+    begin
+      UserAdministration := UsersIdUsers.asinteger;
+      Company.Open;
+      If not Company.IsEmpty then
+          ACRONYM.Caption := Companycompanyacro.Text
+        else
+          ACRONYM.Caption := 'Edit Company';
+    end;
+MyNoteBook.ActivePage := TabHome;
+
+try
+myquery2.SQL.clear;
+MyQuery2.SQL.Add('ALTER TABLE `zanecobudget`.`cvsign` ADD COLUMN `AGMPos` VARCHAR(45) AFTER `ApprovedPos`,');
+MyQuery2.SQL.Add('ADD COLUMN `AGMName` VARCHAR(45) AFTER `ApprovedPos`,');
+MyQuery2.SQL.Add('ADD COLUMN `COMDname` VARCHAR(45) AFTER `ApprovedPos`,');
+MyQuery2.SQL.Add('ADD COLUMN `COMDPos` VARCHAR(45) AFTER `ApprovedPos`,');
+MyQuery2.SQL.Add('ADD COLUMN `ChairmanName` VARCHAR(45) AFTER `ApprovedPos`,');
+MyQuery2.SQL.Add('ADD COLUMN `ChairmanPos` VARCHAR(45) AFTER `ApprovedPos`;');
+ myquery2.Execute;
+
+
+
+except
+end;
+end;
+
+
+
+procedure TFlexAccountMainMenuForm.Exit1Click(Sender: TObject);
+begin
+  Close;
+end;
+
+
+procedure TFlexAccountMainMenuForm.NxOutlookBar1Select(Sender: TObject);
+begin
+  TabHome.Visible            := True;
+  TabCompany.Visible         := True;
+  TabUsers.Visible           := True;
+  TabHome.Visible            := True;
+  TabJournalVoucher.Visible  := True;
+  TabSchedule.Visible        := True;
+
+  Case NxOutlookBar1.Selected.Index of
+   0 : MyNoteBook.ActivePage := TabHome;
+   1 : begin
+         With AcctData do
+         begin
+           Company.Open;
+           signatories.Open;
+           If not Company.IsEmpty then
+             begin
+               DBEdit1.ReadOnly := True;
+               DBEdit2.ReadOnly := True;
+               DBEdit3.ReadOnly := True;
+             end
+             else
+             begin
+               Company.AppendRecord([]);
+               DBEdit1.ReadOnly := True;
+               DBEdit2.ReadOnly := True;
+               DBEdit3.ReadOnly := True;
+             end;
+           MyNoteBook.ActivePage := TabCompany;
+         end;
+       end;
+   2 : begin
+    IF acctdata.UsersUserRestriction.Text <> 'ADMINISTRATOR' then begin
+    MessageDlg('User not allowed..', mtError, [mbOK], 0);
+    exit;
+    end;
+         MyUsers.Close;
+         MyUsers.ParamByName('username').Text := '%';
+         MyUsers.Open;
+         MyNoteBook.ActivePage         := TabUsers;
+         UserListPanel.Expanded        := True;
+         UserMaintenancePanel.Expanded := False;
+       end;
+
+   3 : begin
+
+        With AcctData do
+        begin
+      JVDateFrom.AsDateTime := StartOfTheMonth(now);
+      JVDateTo.AsDateTime   := EndOfTheMonth(now);
+      JVSearchButtonClick(sender);
+
+
+      MyNoteBook.ActivePage := TabJournalVoucher;
+
+      IF UsersUserRestriction.Text = 'ADMINISTRATOR' then
+       begin
+        JVEdit.Visible          := true;
+        jvdelete.Visible        := true;
+       end
+      else
+       begin
+        JVEdit.Visible          := true;
+        JVDelete.Visible        := true;
+      end;
+
+      crdbgrid2.Enabled       := true;
+      nxheaderpanel14.Visible := false;
+      end;
+       end;
+
+   4 : begin
+        With AcctData do
+          begin
+      NxDatePicker1.AsDateTime                     := StartOfTheMonth(now);
+      NxDatePicker2.AsDateTime                     := EndOfTheMonth(now);
+
+      CanvassData.Close;
+      CanvassData.ParamByName('Rv').Text          := '%';
+      CanvassData.ParamByName('datefrom').AsDate  := StartOfTheMonth(NxDatePicker1.AsDateTime);
+      CanvassData.ParamByName('dateto').AsDate    := EndOfTheMonth(NxDatePicker2.AsDateTime);
+      CanvassData.Open;
+      CanvassData.FilterSQL  := 'r.userid like' + QuotedStr('%' + IntToStr(UserAdministration) + '%');
+      CanvassData.Refresh;
+      MyNoteBook.ActivePage   := Tabcanvass;
+
+      crdbgrid3.Enabled       := true;
+      CanvassPanel.Visible    := false;
+      acctdata.CanvassData.Cancel;
+
+         end;
+
+       end;
+
+   5 : Close;
+  end;
+end;
+
+procedure TFlexAccountMainMenuForm.EditLinkClick(Sender: TObject);
+begin
+   DBEdit1.ReadOnly               := False;
+   DBEdit2.ReadOnly               := False;
+   DBEdit3.ReadOnly               := False;
+   DBEdit130.ReadOnly             := False;
+   DBEdit68.ReadOnly              := False;
+   DBEdit135.ReadOnly             := False;
+   DBEdit71.ReadOnly              := False;
+   DBEdit132.ReadOnly             := False;
+   DBEdit72.ReadOnly              := False;
+   DBEdit98.ReadOnly              := False;
+   DBEdit97.ReadOnly              := False;
+
+
+   DBEdit89.ReadOnly              := False;
+   DBEdit88.ReadOnly              := False;
+   DBEdit83.ReadOnly              := False;
+   DBEdit35.ReadOnly              := False;
+
+   DBEdit18.ReadOnly              := False;
+   DBEdit17.ReadOnly              := False;
+   DBEdit20.ReadOnly              := False;
+   DBEdit19.ReadOnly              := False;
+   DBEdit24.ReadOnly              := False;
+   DBEdit22.ReadOnly              := False;
+   DBEdit28.ReadOnly              := False;
+   DBEdit25.ReadOnly              := False;
+   DBEdit31.ReadOnly              := False;
+   DBEdit30.ReadOnly              := False;
+   DBEdit69.ReadOnly              := False;
+   DBEdit40.ReadOnly              := False;
+   DBEdit81.ReadOnly              := False;
+   DBEdit70.ReadOnly              := False;
+
+   DBEdit101.ReadOnly             := False;
+   DBEdit102.ReadOnly             := False;
+
+   DBEdit75.ReadOnly              := False;
+   DBEdit74.ReadOnly              := False;
+   DBEdit1.SetFocus;
+   EditLink.Visible               := False;
+   SaveLink.Visible               := True;
+   CancelLink.Visible             := True;
+   LoadLogo.Visible               := True;
+   AcctData.Company.Edit;
+   signatories.Edit;
+end;
+
+procedure TFlexAccountMainMenuForm.SaveLinkClick(Sender: TObject);
+begin
+  With AcctData do
+    begin
+      Company.Post;
+      signatories.post;
+      DBEdit1.ReadOnly               := True;
+      DBEdit2.ReadOnly               := True;
+      DBEdit3.ReadOnly               := True;
+      DBEdit130.ReadOnly             := TRUE;
+      DBEdit68.ReadOnly              := TRUE;
+      DBEdit135.ReadOnly             := TRUE;
+      DBEdit71.ReadOnly              := TRUE;
+      DBEdit132.ReadOnly             := TRUE;
+      DBEdit72.ReadOnly              := TRUE;
+      DBEdit89.ReadOnly              := TRUE;
+      DBEdit88.ReadOnly              := TRUE;
+      DBEdit83.ReadOnly              := TRUE;
+      DBEdit35.ReadOnly              := TRUE;
+
+   DBEdit18.ReadOnly              := true;
+   DBEdit17.ReadOnly              := true;
+   DBEdit20.ReadOnly              := true;
+   DBEdit19.ReadOnly              := true;
+   DBEdit24.ReadOnly              := true;
+   DBEdit22.ReadOnly              := true;
+   DBEdit28.ReadOnly              := true;
+   DBEdit25.ReadOnly              := true;
+   DBEdit31.ReadOnly              := true;
+   DBEdit30.ReadOnly              := true;
+   DBEdit69.ReadOnly              := true;
+   DBEdit40.ReadOnly              := true;
+   DBEdit81.ReadOnly              := true;
+   DBEdit70.readonly              := true;
+
+   DBEdit101.ReadOnly             := true;
+   DBEdit102.ReadOnly             := true;
+
+      DBEdit75.ReadOnly              := TRUE;
+      DBEdit74.ReadOnly              := TRUE;
+      EditLink.Visible   := True;
+      SaveLink.Visible   := False;
+      CancelLink.Visible := False;
+      LoadLogo.Visible   := False;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.CancelLinkClick(Sender: TObject);
+begin
+  AcctData.Company.Cancel;
+  signatories.cancel;
+  DBEdit1.ReadOnly   := True;
+  DBEdit2.ReadOnly   := True;
+  DBEdit3.ReadOnly   := True;
+  DBEdit130.ReadOnly             := TRUE;
+  DBEdit68.ReadOnly              := TRUE;
+  DBEdit135.ReadOnly             := TRUE;
+  DBEdit71.ReadOnly              := TRUE;
+  DBEdit132.ReadOnly             := TRUE;
+  DBEdit72.ReadOnly              := TRUE;
+
+  DBEdit75.ReadOnly              := TRUE;
+  DBEdit74.ReadOnly              := TRUE;
+  EditLink.Visible   := True;
+  SaveLink.Visible   := False;
+  CancelLink.Visible := False;
+  LoadLogo.Visible   := False;
+end;
+
+procedure TFlexAccountMainMenuForm.LoadLogoClick(Sender: TObject);
+begin
+   If OpenPictureDialog1.Execute then AcctData.Companylogo.LoadFromFile(OpenPictureDialog1.FileName);
+end;
+
+Procedure TFlexAccountMainMenuForm.SearchUserButtonClick(Sender: TObject);
+begin
+  MyUsers.Close;
+  MyUsers.ParamByName('username').Text := '%'+SearchUser.Text+'%';
+  MyUsers.Open;
+
+  If MyUsers.IsEmpty then
+    begin
+      MessageDlg('No users found....', mtInformation, [mbOK], 0);
+      MyUsers.Close;
+      MyUsers.ParamByName('username').Text := '%';
+      MyUsers.Open;
+      exit;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.SearchUserEnter(Sender: TObject);
+begin
+  SearchUser.Text := '';
+end;
+
+procedure TFlexAccountMainMenuForm.SaveUserClick(Sender: TObject);
+begin
+  If UpperCase(MyUsersUserPassWord.Text) <> UpperCase(EditConfirmPassword.Text) then
+    begin
+      MessageDlg('Password does not match...', mtError, [mbOK], 0);
+      DBEdit5.SetFocus;
+      exit;
+    end;
+
+  Try
+  MyUsers.Post;
+  MyUsers.RefreshRecord;
+
+  UserMaintenancePanel.Expanded := False;
+  UserMaintenancePanel.Visible  := False;
+  UserListPanel.Expanded        := True;
+
+  except
+  on E: Exception do
+  begin
+   MessageDlg('Error...'+E.Message, mtWarning, [mbOK], 0);
+   exit;
+  end;
+  end;
+end;
+
+procedure TFlexAccountMainMenuForm.CancelUserClick(Sender: TObject);
+begin
+  MyUsers.Cancel;
+  UserMaintenancePanel.Expanded := False;
+  UserMaintenancePanel.Visible  := False;
+  UserListPanel.Expanded        := True;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel1Click(Sender: TObject);
+begin
+  If OpenPictureDialog1.Execute then
+     MyUsersUserPic.LoadFromFile(OpenPictureDialog1.FileName);
+end;
+
+procedure TFlexAccountMainMenuForm.AddLinkClick(Sender: TObject);
+begin
+  userlistpanel.Expanded          := False;
+  UserMaintenancePanel.Visible    := True;
+  UserMaintenancePanel.Expanded   := True;
+  MyUsers.Append;
+  DBEdit4.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.EditButtonClick(Sender: TObject);
+begin
+  userlistpanel.Expanded          := False;
+  UserMaintenancePanel.Expanded   := True;
+  UserMaintenancePanel.Visible    := True;
+  MyUsers.Edit;
+  DBEdit4.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.DeleteLinkClick(Sender: TObject);
+begin
+  If MyUsers.IsEmpty then
+    begin
+      MessageDlg('No records to delete', mtError, [mbOK], 0);
+      exit;
+    end;
+
+  if (MessageDlg('Are you sure?', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+  MyUsers.Delete;
+end;
+
+procedure TFlexAccountMainMenuForm.JVSearchButtonClick(Sender: TObject);
+begin
+  NxComboBox1Change(sender);
+end;
+
+procedure TFlexAccountMainMenuForm.JVPeriodCoveredClick(Sender: TObject);
+begin
+  With AcctData do
+    begin
+      Requisition.Close;
+      Requisition.ParamByName('rv').Text := '%';
+      Requisition.ParamByName('datefrom').AsDate  := JVDateFrom.AsDateTime;
+      Requisition.ParamByName('dateto').AsDate    := JVDateTo.AsDateTime;
+      Requisition.Open;
+    end;
+
+end;
+
+procedure TFlexAccountMainMenuForm.JVEditClick(Sender: TObject);
+
+begin
+  if acctdata.requisitionstatus.Text = 'APPROVED' then
+    begin
+      MessageDlg('Requisition already approved!', mtWarning, [mbOK], 0);
+
+    end else
+    begin
+      nxcheckbox4.Enabled     := true;
+      nxheaderpanel14.Visible := true;
+      acctdata.Requisition.Edit;
+      acctdata.requisitionrvDate.EditMask   := '!99/99/00;1;';
+      crdbgrid2.Enabled                     := false;
+end;
+
+
+end;
+
+procedure TFlexAccountMainMenuForm.JVDeleteClick(Sender: TObject);
+begin
+
+
+    With AcctData do
+      If AcctData.Requisition.IsEmpty then
+        begin
+          MessageDlg('No records to delete....', mtError, [mbOK], 0);
+          exit;
+
+        end else
+
+      If requisitionstatus.Text = 'APPROVED' then
+        begin
+          MessageBox(0, 'Requisition cannot be deleted!', '', MB_ICONINFORMATION or MB_OK);
+        end else
+      if (MessageDlg('Confirm delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo)
+        then
+        begin
+        exit;
+        end else
+        begin
+            myquery2.SQL.Clear;
+            myquery2.SQL.Add('Delete from requisitiondetail where docnumber = :requisition');
+            myquery2.ParamByName('requisition').Text   := acctdata.requisitionrvNumber.text;
+            MyQuery2.Execute;
+            AcctData.Requisition.Delete;
+        end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel20Click(Sender: TObject);
+begin
+  If AcctData.Requisition.IsEmpty then
+    begin
+      MessageDlg('Requisition Voucher is Empty..', mtError, [mbOK], 0);
+      exit;
+    end;
+
+  if acctdata.requisitionstatus.Text = 'APPROVED' then begin
+
+  NxLinkLabel25.Visible := false;
+  NxLinkLabel26.Visible := false;
+  NxLinkLabel50.Visible := false;
+
+  end else begin
+
+  NxLinkLabel25.Visible := true;
+  NxLinkLabel26.Visible := true;
+  NxLinkLabel50.Visible := true;
+
+  end;
+  requisitiondetail.close;
+  requisitiondetail.ParamByName('DN').Text := acctdata.requisitionrvNumber.text;
+  RequisitionDetail.Open;
+
+  JVDetailPanel.Left    := 112;
+  JVDetailPanel.Top     := 104;
+  JVDetailPanel.Visible := True;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel65Click(Sender: TObject);
+begin
+   LedgerEntry.Close;
+   Jvdetailpanel.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel21Click(Sender: TObject);
+begin
+ RegisterJournal.Close;
+ RegisterJournal.MasterSource := AcctData.dsRequisition;
+ RegisterJournal.MasterFields := 'rvnumber';
+ RegisterJournal.DetailFields := 'documentnumber';
+ RegisterJournal.Open;
+
+ JVQrPeriod.Caption  := 'Period Covered :'+DatetoStr(StartOfTheMonth(JVDateFrom.AsDateTime)) + ' - ' + DatetoStr(EndOfTheMonth(JVDateTo.AsDateTime));
+
+ QuickRep7.PreviewHeight := Screen.Height;
+ QuickRep7.PreviewWidth  := Screen.Width;
+ QuickRep7.Preview;
+ RegisterJournal.Close;
+
+end;
+
+procedure TFlexAccountMainMenuForm.MRTDeleteDetailClick(Sender: TObject);
+begin
+  if (MessageDlg('Confirm Delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+  LedgerEntry.Delete;
+end;
+
+procedure TFlexAccountMainMenuForm.SMSearchButtonClick(Sender: TObject);
+begin
+  With AcctData do
+    begin
+      ScheduleMaster.Close;
+      ScheduleMaster.ParamByName('description').Text := '%'+SMSearch.text+'%';
+      ScheduleMaster.Open;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.smaddClick(Sender: TObject);
+begin
+  With AcctData do
+    begin
+      smpanel.Left     := 80;
+      smpanel.Top      := 104;
+      smpanel.Visible  := True;
+      smpanel.Caption  := 'Add a Schedule';
+
+      smadd.Visible    := False;
+      smedit.Visible   := False;
+      smdelete.Visible := False;
+
+      ScheduleMaster.Append;
+      DBEdit111.SetFocus;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.smeditClick(Sender: TObject);
+begin
+  With AcctData do
+    begin
+      smpanel.Left     := 80;
+      smpanel.Top      := 104;
+      smpanel.Visible  := True;
+      smpanel.Caption  := 'Edit a Schedule';
+
+      smadd.Visible    := False;
+      smedit.Visible   := False;
+      smdelete.Visible := False;
+
+      ScheduleMaster.Edit;
+      DBEdit111.SetFocus;
+    end;
+
+end;
+
+procedure TFlexAccountMainMenuForm.smdeleteClick(Sender: TObject);
+begin
+  If AcctData.ScheduleMaster.IsEmpty then
+    begin
+      MessageDlg('No records to delete....', mtError, [mbOK], 0);
+      exit;
+    end;
+
+  if (MessageDlg('Confirm delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+
+  MyQuery1.SQL.Clear;
+  MyQuery1.SQL.Add('Delete from scheduledetail where idschedulemaster = :idschedulemaster');
+  MyQuery1.ParamByName('idschedulemaster').Text := AcctData.ScheduleMasteridScheduleMaster.Text;
+  MyQuery1.Execute;
+
+  AcctData.ScheduleMaster.Delete;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel78Click(Sender: TObject);
+begin
+  AcctData.ScheduleMaster.Post;
+  smpanel.Visible  := False;
+  smadd.Visible    := True;
+  smedit.Visible   := True;
+  smdelete.Visible := True;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel79Click(Sender: TObject);
+begin
+  AcctData.ScheduleMaster.cancel;
+  smpanel.Visible  := False;
+  smadd.Visible    := True;
+  smedit.Visible   := True;
+  smdelete.Visible := True;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel75Click(Sender: TObject);
+begin
+  smdetaileditpanel.Left    := 32;
+  smdetaileditpanel.Top     := 83;
+  smdetaileditpanel.Visible := True;
+  acctdata.ScheduleDetail.Append;
+  DBEdit115.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NxButton12Click(Sender: TObject);
+begin
+  MyChart.Close;
+  MyChart.ParamByName('accountname').Text := '%'+DBEdit115.Text+'%';
+  MyChart.Open;
+  NextDBGrid27.Left    := 166;
+  NextDBGrid27.Top     := 132;
+  NextDBGrid27.Visible := True;
+  NextDBGrid27.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NextDBGrid27DblClick(Sender: TObject);
+begin
+  acctdata.ScheduleDetailaccountcode.Text := MyChartaccountcode.Text;
+  acctdata.ScheduleDetailaccountname.Text := MyChartaccountname.Text;
+  NextDBGrid27.Visible        := False;
+  MyChart.Close;
+  DBEdit112.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NextDBGrid27Exit(Sender: TObject);
+begin
+ NextDBGrid27.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel77Click(Sender: TObject);
+begin
+  acctdata.ScheduleDetail.Post;
+  smdetaileditpanel.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel82Click(Sender: TObject);
+begin
+  acctdata.ScheduleDetail.Post;
+  smdetaileditpanel.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel76Click(Sender: TObject);
+begin
+  if (MessageDlg('Confirm Delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+  AcctData.ScheduleDetail.Delete;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel74Click(Sender: TObject);
+begin
+ smdetailpanel.Visible := false;
+ AcctData.ScheduleDetail.Close;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel80Click(Sender: TObject);
+begin
+  acctdata.ScheduleDetail.Open;
+  smdetailpanel.Left    := 16;
+  smdetailpanel.top     := 32;
+  smdetailpanel.Visible := True;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel81Click(Sender: TObject);
+begin
+  printschedule.Close;
+  printschedule.ParamByName('idschedulemaster').Text := acctdata.ScheduleMasteridScheduleMaster.Text;
+  printschedule.Open;
+  ScheduleTitle.Caption := AcctData.ScheduleMasterDescription.Text;
+  QuickRep13.PreviewHeight := Screen.Height;
+  QuickRep13.PreviewWidth  := Screen.Width;
+  QuickRep13.Preview;
+  printschedule.close;
+end;
+
+procedure TFlexAccountMainMenuForm.printscheduleCalcFields(
+  DataSet: TDataSet);
+begin
+  printschedulebalance.AsCurrency := printscheduleallocamount.AsCurrency - printschedulebalasof.AsCurrency;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel14Click(Sender: TObject);
+Var string1 : string;
+begin
+ with acctdata do
+  begin
+   if acctdata.requisitionstatus.text  = 'APPROVED' then
+    begin
+     qrrequisition.close;
+     qrrequisition.ParamByName('rv').Text := acctdata.requisitionrvNumber.Text;
+     qrRequisition.Open;
+
+     if acctdata.UsersDepartment.text = 'ISD/SHOP' then
+      begin
+
+       qrdbtext80.datafield  := 'isdrecom';
+       qrdbtext81.datafield  := 'isdrecompos';
+
+      end
+     else if acctdata.UsersDepartment.text = 'OGM' then
+      begin
+
+       qrdbtext80.datafield  := 'OGMrecom';
+       qrdbtext81.datafield  := 'OGMrecompos';
+
+      end
+     else if acctdata.UsersDepartment.text = 'ESD' then
+      begin
+       qrdbtext80.datafield  := 'esdrecom';
+       qrdbtext81.datafield  := 'esdrecompos';
+      end
+     else if acctdata.UsersDepartment.text = 'CAD' then
+      begin
+
+       qrdbtext80.datafield  := 'CADrecom';
+       qrdbtext81.datafield  := 'CADrecompos';
+
+      end
+     else if acctdata.UsersDepartment.text = 'FSD' then
+      begin
+
+       qrdbtext80.datafield  := 'Fsdrecom';
+       qrdbtext81.datafield  := 'Fsdrecompos';
+
+      end
+     else if acctdata.UsersDepartment.text = 'LAO' then
+      begin
+
+
+       qrdbtext80.datafield  := 'LAOrecom';
+       qrdbtext81.datafield  := 'LAOrecompos';
+
+      end
+     else if acctdata.UsersDepartment.text = 'PAO' then
+      begin
+
+       qrdbtext80.datafield  := 'PAOrecom';
+       qrdbtext81.datafield  := 'PAOrecompos';
+
+      end
+     else if acctdata.UsersDepartment.text = 'SAO' then
+      begin
+
+       qrdbtext80.datafield  := 'SAOrecom';
+       qrdbtext81.datafield  := 'SAOrecompos';
+
+       end
+      else if acctdata.UsersDepartment.text = 'COMD' then
+       begin
+        string1 := signatoriesCOMDrecompos.text;
+        qrdbtext80.datafield  := 'COMDname';
+        qrdbtext81.datafield  := 'COMDRECOM';
+       end
+      else if acctdata.UsersDepartment.text = 'IAD' then
+       begin
+        string1 := signatoriesCOMDrecompos.text;
+        qrdbtext80.datafield  := 'Audname';
+        qrdbtext81.datafield  := 'Audpos';
+       end;
+
+ 
+     signatories.Open;
+     quickrep3.PREVIEWWidth        :=Screen.width;
+     QuickRep3.previewheight       := Screen.Height;
+     QuickRep3.PreviewInitialState := wsMaximized;
+     quickrep3.Preview;
+
+    end
+   else
+    begin
+     MessageBox(0, 'Requisition is not yet approved!', '', MB_ICONINFORMATION or MB_OK);
+    end;
+   end;
+end;
+
+
+
+procedure TFlexAccountMainMenuForm.RefreshRecordClick(Sender: TObject);
+begin
+acctdata.requisition.Refresh;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit21KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then begin
+dbedit29.SetFocus;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel17Click(Sender: TObject);
+begin
+
+qrcanvass.ParamByName('DN').Text     := acctdata.CanvassDatarvnumber.Text;
+qrcanvass.Open;
+signatories.Open;
+
+
+ QuickRep4.PreviewWidth   := screen.Width;
+ QuickRep4.Previewheight  := screen.Height;
+ quickrep4.Preview;
+ signatories.close;
+ qrcanvass.close;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel19Click(Sender: TObject);
+begin
+ With AcctData do
+    begin
+      CanvassPanel.Left     := 24;
+      CanvassPanel.Top      := 440;
+      CanvassPanel.Visible  := True;
+      CanvassPanel.Caption  := 'Add Canvass';
+
+      CanvassData.Append;
+      CanvassDatarvDate.AsDateTime := Now;
+      CanvassDatarvDate.EditMask   := '!99/99/00;1;';
+      dbedit39.Text                 := dbedit43.Text;
+      DBEdit23.SetFocus;
+
+      groupbox7.Visible             := false;
+      nxcheckbox1.enabled           := false;
+
+      acounter.Close;
+      acounter.open;
+
+      crdbgrid3.Enabled             := false;
+
+      NxCheckBox2.Checked := false;
+      nxcheckbox2.Enabled := true;
+    end;
+
+    acounter.Close;
+end;
+
+procedure TFlexAccountMainMenuForm.NxButtonEdit1ButtonClick(
+  Sender: TObject);
+begin
+  With AcctData do
+    begin
+      CanvassData.Close;
+      CanvassData.ParamByName('Rv').Text := '%'+NxButtonEdit1.text+'%';
+      CanvassData.ParamByName('datefrom').AsDate  := NxDatePicker1.Date;
+      CanvassData.ParamByName('dateto').AsDate    := NxDatePicker2.date;
+      CanvassData.Open;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel16Click(Sender: TObject);
+begin
+  nxheaderpanel7.Visible := true;
+  nxheaderpanel7.Left := 80;
+  nxheaderpanel7.Top := 120;
+  requisitiondetail.close;
+  requisitiondetail.ParamByName('DN').Text :=  dbedit46.Text;
+  RequisitionDetail.Open;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel33Click(Sender: TObject);
+begin
+  nxheaderpanel8.Caption := 'Add Items';
+  nxheaderPanel8.Left    := 32;
+  nxheaderPanel8.Top     := 160;
+  nxheaderPanel8.Visible := True;
+
+  requisitiondetail.Append;
+  DBEdit49.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel34Click(Sender: TObject);
+begin
+   if (MessageDlg('Confirm delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+    requisitiondetail.Delete;
+
+    RequisitionTotal.Close;
+    RequisitionTotal.ParamByName('RV').text := acctdata.CanvassDatarvNumber.Text;
+    RequisitionTotal.open;
+
+    acctdata.CanvassData.Edit;
+    acctdata.CanvassDataamount.AsCurrency   := RequisitionTotaltotal.AsCurrency;
+    acctdata.CanvassData.Post;
+
+    myquery1.SQL.Clear;
+    myquery1.sql.Add('update requisition set amount = (select sum(ifnull(amount,0)) from requisitiondetail where docnumber = ' + quotedstr(acctdata.canvassdatarvnumber.text) + ' ) where rvnumber = ' + quotedstr(acctdata.canvassdatarvnumber.text));
+    myquery1.Execute;
+    requisitiondetail.Refresh;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel36Click(Sender: TObject);
+begin
+
+if dsrequisitionDetail.State in [dsedit] then begin
+
+       if dbedit50.Text = '' then begin
+       MessageDlg('The following entry contains invalid data. Please check the following:'+#13+#10+'   1.  Number of items'+#13+#10+'   2.  Cost of item', mtInformation, [mbOK], 0);
+       exit;
+       end;
+
+       requisitiondetail.Post;
+       nxheaderpanel8.Visible           := False;
+
+       end else begin
+
+       if dbedit50.Text = '' then begin
+       MessageDlg('Amount is empty!', mtInformation, [mbOK], 0);
+       exit;
+       end;
+
+       RequisitionDetailidrequisition.Text    := acctdata.CanvassDataidrequisition.text;
+       RequisitionDetaildocnumber.text        := acctdata.CanvassDatarvNumber.text;
+       requisitiondetail.Post;
+
+       nxheaderpanel8.Visible           := False;
+
+
+
+
+    requisitiondetail.close;
+    requisitiondetail.ParamByName('DN').Text :=  acctdata.CanvassDatarvNumber.Text;
+    RequisitionDetail.Open;
+
+    if (MessageBox(0, 'Do you want to add new record?', '', MB_ICONQUESTION or MB_YESNO) = idYes) then
+     begin
+
+       NxLinkLabel33Click(sender);
+
+     end;
+end;
+
+    myquery1.SQL.Clear;
+    myquery1.sql.Add('update requisition set amount = (select sum(ifnull(rdamount,0)) from requisitiondetail where docnumber = ' + quotedstr(acctdata.canvassdatarvnumber.text) + ' ) where rvnumber = ' + quotedstr(acctdata.canvassdatarvnumber.text));
+    myquery1.Execute;
+    acctdata.CanvassData.Refresh;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel38Click(Sender: TObject);
+begin
+  if acctdata.requisition.IsEmpty then
+   begin
+      MessageDlg('No record to print Purchase Order.', mtInformation, [mbOK], 0);
+      exit;
+   end;
+
+  if acctdata.requisitionstatus.text <> 'APPROVED' then
+   begin
+      MessageDlg('Requisition is not approved!', mtWarning, [mbOK], 0);
+      exit;
+   end;
+
+  with myquery1 do
+   begin
+    sql.clear;
+    sql.Add('select rpo from requisition where rvnumber = ' + QuotedStr(acctdata.requisitionrvName.text) + ' and rpo is not null');
+    Execute;
+
+   if IsEmpty then
+    begin
+      checker := acctdata.requisitionrvNumber.Text;
+      nxheaderpanel13.Visible := true;
+      acctdata.requisition.Edit;
+
+      nxedit1.SetFocus;
+    end
+   else
+    begin
+     checker := acctdata.requisitionrvNumber.Text;
+     NxButton4Click(sender);
+    end;
+   end;
+
+
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit49KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then begin
+dbedit51.SetFocus;
+end;
+end;
+procedure TFlexAccountMainMenuForm.DBEdit51KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then begin
+dbedit47.SetFocus;
+end;
+end;
+procedure TFlexAccountMainMenuForm.DBEdit48KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if key = #13 then dbedit50.setfocus;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel37Click(Sender: TObject);
+begin
+  requisitiondetail.Cancel;
+  nxheaderpanel8.Visible           := False;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel35Click(Sender: TObject);
+begin
+   LedgerEntry.Close;
+   nxheaderpanel7.Visible := False;
+   crdbgrid3.Enabled := true;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel40Click(Sender: TObject);
+begin
+ { nxheaderPanel9.Left    := 8;
+  nxheaderPanel9.Top     := 403;
+  nxheaderPanel9.Visible := True;}
+  requisitiondetail.edit;
+  //DBEdit58.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel42Click(Sender: TObject);
+begin
+   LedgerEntry.Close;
+   nxheaderpanel6.Visible := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel41Click(Sender: TObject);
+begin
+  nxheaderPanel10.Left    := 8;
+  nxheaderPanel10.Top     := 403;
+  nxheaderPanel10.Visible := True;
+  requisitiondetail.edit;
+  acctdata.requisition.Edit;
+  dbedit11.SetFocus;
+  RequisitionDetailbidopen.AsDateTime := Now;
+  RequisitionDetailbidyear.AsDateTime := Now;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel39Click(Sender: TObject);
+begin
+  if acctdata.requisition.IsEmpty then begin
+      MessageDlg('No record to print Purchase Order.', mtInformation, [mbOK], 0);
+      exit;
+  end;
+
+  if acctdata.requisitionstatus.Text <> 'APPROVED' then begin
+
+      MessageDlg('Requisition Not Yet Approved!', mtInformation, [mbOK], 0);
+
+  end else if acctdata.requisitionamount.AsFloat < 5000 then begin
+
+      MessageDlg('Requisition is below the minimum amount to produce abstract report.', mtInformation, [mbOK], 0);
+
+  end else begin
+
+      nxheaderpanel6.Visible                                 := true;
+      nxheaderpanel6.left                                    := 0;
+      nxheaderpanel6.Top                                     := 0;
+      requisitiondetail.close;
+      requisitiondetail.ParamByName('DN').Text               := acctdata.requisitionrvNumber.Text;
+      requisitiondetail.Open;
+      nxheaderpanel6.BringToFront;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel45Click(Sender: TObject);
+begin
+  requisitiondetail.post;
+  acctdata.requisition.Post;
+  requisitiondetail.Refresh;
+  nxheaderpanel10.Visible           := False;
+  MessageDlg('Suppliers Saved!', mtWarning, [mbOK], 0);
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel46Click(Sender: TObject);
+begin
+  requisitiondetail.Cancel;
+  nxheaderpanel10.Visible           := False;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel32Click(Sender: TObject);
+begin
+  AcctData.CanvassData.Cancel;
+  CanvassPanel.Visible := False;
+  crdbgrid3.Enabled    := true;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel27Click(Sender: TObject);
+begin
+  if acctdata.CanvassDatastatus.Text = 'Approved' then
+    begin
+      MessageDlg('Requisition already approved!', mtWarning, [mbOK], 0);
+  end else
+    begin
+
+      CanvassPanel.Left     := 24;
+      CanvassPanel.Top      := 440;
+      canvasspanel.Visible  := True;
+      canvasspanel.Caption  := 'Edit Canvass';
+
+
+      acctdata.CanvassData.Edit;
+      acctdata.CanvassDatarvDate.EditMask   := '!99/99/00;1;';
+      DBEdit23.SetFocus;
+      nxcheckbox1.enabled                    := true;
+      nxcheckbox1.Checked                    := true;
+      groupbox7.visible                      := true;
+      crdbgrid3.Enabled                      := false;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel31Click(Sender: TObject);
+begin
+
+if acctdata.dsCanvassData.State = dsInsert then
+ begin
+  try
+   if nxcheckbox2.Checked = true then
+    begin
+       acctdata.CanvassDatastatus.Text         := 'Canvass';
+       AcctData.CanvassDatarvNumber.Text := 'SA-';
+       AcctData.CanvassData.Post;
+       acctdata.canvassdata.edit;
+       acctdata.CanvassDatarvNumber.text := 'SA-' + AcctData.CanvassDataidrequisition.Text;
+       acctdata.CanvassData.Post;
+       acctdata.CanvassData.Refresh;
+
+
+       nxheaderpanel7.Visible                   := true;
+       nxheaderpanel7.Left                      := 24;
+       nxheaderpanel7.Top                       := 96;
+       requisitiondetail.close;
+       requisitiondetail.ParamByName('DN').Text := '%' + acctdata.CanvassDatarvNumber.text + '%';
+       RequisitionDetail.Open;
+       crdbgrid3.Enabled                        := true;
+       CanvassPanel.Visible                     := False;
+       exit;
+
+    end
+   else
+    begin
+     if dbedit41.Text = '' then
+      begin
+       acctdata.CanvassDatastatus.Text         := 'Canvass';
+       AcctData.CanvassData.Post;
+       acctdata.canvassdata.edit;
+        if acctdata.UsersArea.Text = 'DMO' then
+         begin
+          AcctData.CanvassDatarvNumber.Text := 'DRIV-'+ FormatDateTime('YYYYMM',AcctData.CanvassDatarvDate.AsDateTime) + ' #' + acctdata.CanvassDataidrequisition.Text;
+         end
+        else if acctdata.UsersArea.Text = 'PAO' then
+         begin
+          AcctData.CanvassDatarvNumber.Text := 'PRIV-'+ FormatDateTime('YYYYMM',AcctData.CanvassDatarvDate.AsDateTime) + ' #' + acctdata.CanvassDataidrequisition.Text;
+         end
+        else if  acctdata.UsersArea.Text = 'SAO' then
+         begin
+          AcctData.CanvassDatarvNumber.Text := 'SRIV-'+ FormatDateTime('YYYYMM',AcctData.CanvassDatarvDate.AsDateTime) + ' #' + acctdata.CanvassDataidrequisition.Text;
+         end
+        else if  acctdata.UsersArea.Text = 'LAO' then
+         begin
+          AcctData.CanvassDatarvNumber.Text := 'LRIV-'+ FormatDateTime('YYYYMM',AcctData.CanvassDatarvDate.AsDateTime) + ' #' + acctdata.CanvassDataidrequisition.Text;
+         end
+        else if acctdata.UsersArea.Text = 'SHOP1' then
+         begin
+          AcctData.CanvassDatarvNumber.Text := 'SDRIV-' + FormatDateTime('YYYYMM',AcctData.CanvassDatarvDate.AsDateTime) + ' #' + acctdata.CanvassDataidrequisition.Text;
+         end
+        else if acctdata.UsersArea.Text = 'SHOP2' then
+         begin
+          AcctData.CanvassDatarvNumber.Text := 'S2DRIV-' + FormatDateTime('YYYYMM',AcctData.CanvassDatarvDate.AsDateTime) + ' #' + acctdata.CanvassDataidrequisition.Text;
+         end
+        else if acctdata.UsersArea.Text = 'PAOSHOP' then
+         begin
+          AcctData.CanvassDatarvNumber.Text := 'SPRIV-' + FormatDateTime('YYYYMM',AcctData.CanvassDatarvDate.AsDateTime) + ' #' + acctdata.CanvassDataidrequisition.Text;
+         end
+        else if acctdata.UsersArea.Text = 'SAOSHOP' then
+         begin
+          AcctData.CanvassDatarvNumber.Text := 'SSRIV-' + FormatDateTime('YYYYMM',AcctData.CanvassDatarvDate.AsDateTime) + ' #' + acctdata.CanvassDataidrequisition.Text;
+         end
+        else if acctdata.UsersArea.Text = 'LAOSHOP' then
+         begin
+          AcctData.CanvassDatarvNumber.Text := 'SLRIV-' + FormatDateTime('YYYYMM',AcctData.CanvassDatarvDate.AsDateTime) + ' #' +AcounterSHL.Text;
+         end;
+       acctdata.CanvassDatastatus.Text         := 'Canvass';
+       acctdata.CanvassData.post;
+       acctdata.CanvassData.Refresh;
+
+
+       nxheaderpanel7.Visible                   := true;
+       nxheaderpanel7.Left                      := 24;
+       nxheaderpanel7.Top                       := 96;
+       requisitiondetail.close;
+       requisitiondetail.ParamByName('DN').Text := '%' + acctdata.CanvassDatarvNumber.text + '%';
+       RequisitionDetail.Open;
+       crdbgrid3.Enabled                        := true;
+       CanvassPanel.Visible                     := False;
+       exit;
+    end;
+end;
+   except
+   MessageDlg('Requisition with document number ' + acctdata.CanvassDatarvNumber.Text + ' exist.. Please change your requisition number.', mtWarning, [mbOK], 0);
+   acctdata.CanvassData.Cancel;
+   end;
+
+   end
+  else if acctdata.dsCanvassData.State = dsedit then
+    begin
+     if NxCheckBox1.Checked  = true then
+      begin
+       if dbedit96.text = '' then
+         begin
+          MessageDlg('Please select Payee from the list.', mtInformation, [mbOK], 0);
+          exit;
+         end
+       else
+        begin
+         If acctdata.CanvassDatarvnumber.Text <> '' then
+          begin
+           myquery2.SQL.clear;
+           myquery2.sql.Add('update requisition set status = null where rvnumber = :id');
+           myquery2.ParamByName('id').text   :=  acctdata.CanvassDatarvnumber.Text;
+           myquery2.execute;
+          end;
+
+         AcctData.CanvassData.Post;
+         acctdata.CanvassData.Refresh;
+         CanvassPanel.Visible := False;
+         crdbgrid3.Enabled    := true;
+
+
+         crdbgrid3.Enabled                        := true;
+         CanvassPanel.Visible                     := False;
+        end;
+     end
+    else
+     begin
+      if acctdata.CanvassDatarvnumber.Text <> '' then
+       begin
+         myquery2.SQL.clear;
+         myquery2.sql.Add('update requisition set status = null where rvnumber = :id');
+         myquery2.ParamByName('id').text   :=  acctdata.CanvassDatarvnumber.Text;
+         myquery2.execute;
+       end;
+
+       AcctData.CanvassData.Post;
+       acctdata.CanvassData.Refresh;
+       CanvassPanel.Visible := False;
+       crdbgrid3.Enabled    := true;
+
+       nxheaderpanel7.Visible                   := true;
+       nxheaderpanel7.Left                      := 24;
+       nxheaderpanel7.Top                       := 96;
+
+       crdbgrid3.Enabled                        := true;
+       CanvassPanel.Visible                     := False;
+    end;
+ end;
+
+
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel47Click(Sender: TObject);
+begin
+
+qrpo.ParamByName('rv').Text    := acctdata.requisitionrvNumber.Text;
+qrpo.open;
+Signatories.Open;
+BidOpenDate.Caption := FormatDateTime('MM/DD/YYYY',RequisitionDetailbidopen.AsDateTime);
+BidOpenTime.Caption := FormatDateTime('hh:mm',RequisitionDetailbidopen.AsDateTime);
+BidOpenYear.Caption := FormatDateTime('MM/DD/YYYY',RequisitionDetailbidyear.AsDateTime);
+
+
+
+QuickRep9.PreviewWidth   := screen.Width;
+quickrep9.PreviewHeight  := screen.Height;
+quickrep9.Preview;
+signatories.close;
+qrpo.Close;
+end;
+
+procedure TFlexAccountMainMenuForm.qrcanvassrvdescriptionGetText(
+  Sender: TField; var Text: String; DisplayText: Boolean);
+begin
+Text := Copy(qrcanvassrvdescription.AsString, 1, 100);
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel22Click(Sender: TObject);
+begin
+  nxheaderpanel8.Caption := 'Edit Items';
+  nxheaderPanel8.Left    := 32;
+  nxheaderPanel8.Top     := 160;
+  nxheaderPanel8.Visible := True;
+  requisitiondetail.edit;
+  DBEdit49.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit47KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key =#13 then begin
+dbedit48.SetFocus;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel48Click(Sender: TObject);
+begin
+ If not Assigned(DataTransferForm) then
+      DataTransferForm := DataTransferForm.Create(Application);
+      DataTransferForm.Show;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel49Click(Sender: TObject);
+begin
+ If not Assigned(InvReportsDown) then
+      InvReportsDown := InvReportsDown.Create(Application);
+      InvReportsDown.Show;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit50KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then begin
+NxLinkLabel36Click(sender);
+end;
+end;
+procedure TFlexAccountMainMenuForm.DBEdit37KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then
+dbedit54.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit54KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then
+dbedit41.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel51Click(Sender: TObject);
+begin
+ if dsrequisitionDetail.state in [dsedit] then
+  begin
+   requisitiondetail.Post;
+   nxheaderpanel12.Visible                 := False;
+  end
+ else
+  begin
+   RequisitionDetailidrequisition.Text     := acctdata.requisitionidrequisition.text;
+   RequisitionDetaildocnumber.text         := acctdata.requisitionrvNumber.text;
+   requisitiondetail.Post;
+
+   nxheaderpanel12.Visible                 := False;
+
+   if (MessageBox(0, 'Do you want to add new record?', '', MB_ICONQUESTION or MB_YESNO) = idYes) then
+    begin
+
+     nxheaderpanel12.Left    := 32;
+     nxheaderpanel12.Top     := 160;
+     dbedit29.text           := '0';
+     dbedit33.text           := '0';
+     nxheaderpanel12.Visible := True;
+     requisitiondetail.Append;
+     DBEdit32.SetFocus;
+    end;
+
+end;
+
+    myquery1.SQL.Clear;
+    myquery1.sql.Add('update requisition set amount = (select sum(ifnull(rdamount,0)) from requisitiondetail where docnumber = ' + quotedstr(acctdata.requisitionrvnumber.text) + ' ) where rvnumber = ' + quotedstr(acctdata.requisitionrvnumber.text));
+    myquery1.Execute;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel52Click(Sender: TObject);
+begin
+  requisitiondetail.Cancel;
+  nxheaderpanel12.Visible           := False;
+end;
+
+procedure tflexaccountMainMenuForm.DBEdit32KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then begin
+dbedit36.SetFocus;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit36KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then begin
+dbedit21.SetFocus;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit29KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key =#13 then begin
+dbedit33.SetFocus;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit33KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then begin
+NxLinkLabel51Click(sender);
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit33Enter(Sender: TObject);
+var qty,cost,total :double;
+begin
+qty := StrToFloat(dbedit21.text);
+cost := strtofloat(dbedit29.text);
+total := qty * cost;
+dbedit33.Text := FloatToStr(total);
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel25Click(Sender: TObject);
+begin
+  nxheaderpanel12.Caption := 'Add Items';
+  nxheaderPanel12.Left    := 32;
+  nxheaderPanel12.Top     := 160;
+  nxheaderPanel12.Visible := True;
+  requisitiondetail.Append;
+  dbedit21.Text          := '0';
+  dbedit29.text          := '0';
+  DBEdit32.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel26Click(Sender: TObject);
+begin
+  nxheaderpanel12.Caption := 'Edit Items';
+  nxheaderPanel12.Left    := 32;
+  nxheaderPanel12.Top     := 160;
+  nxheaderPanel12.Visible := True;
+  requisitiondetail.edit;
+  DBEdit32.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel50Click(Sender: TObject);
+begin
+
+ if (MessageDlg('Confirm delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+  requisitiondetail.Delete;
+
+    myquery1.SQL.Clear;
+    myquery1.sql.Add('update requisition set amount = (select sum(ifnull(amount,0)) from requisitiondetail where docnumber = ' + quotedstr(acctdata.requisitionrvnumber.text) + ' ) where rvnumber = ' + quotedstr(acctdata.requisitionrvnumber.text));
+    myquery1.Execute;
+    requisitiondetail.Refresh;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel28Click(Sender: TObject);
+begin
+
+    With AcctData do
+      If AcctData.CanvassData.IsEmpty then
+        begin
+          MessageDlg('No records to delete....', mtError, [mbOK], 0);
+          exit;
+
+        end;
+
+       if (MessageDlg('Confirm delete', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+
+            myquery2.SQL.Clear;
+            myquery2.SQL.Add('Delete from requisitiondetail where docnumber = :requisition');
+            myquery2.ParamByName('requisition').Text   := acctdata.CanvassDatarvnumber.text;
+            MyQuery2.Execute;
+            AcctData.CanvassData.Delete;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel15Click(Sender: TObject);
+begin
+
+qrcanvass.close;
+qrcanvass.ParamByName('DN').Text     := acctdata.CanvassDatarvnumber.Text;
+qrcanvass.Open;
+signatories.Open;
+
+
+QuickRep6.PreviewWidth   := screen.Width;
+QuickRep6.Previewheight  := screen.Height;
+quickrep6.Preview;
+
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit41Exit(Sender: TObject);
+begin
+if dbedit41.text <> '' then begin
+nxcheckbox1.checked := false;
+nxcheckbox2.Checked := false;
+nxcheckbox1.Enabled := true;
+nxcheckbox2.Enabled := false;
+end else begin
+nxcheckbox2.Enabled := true;
+nxcheckbox1.Enabled := false;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit23Exit(Sender: TObject);
+begin
+if  CanvassPanel.caption = 'Edit Canvass' then begin
+      NxCheckBox1.Checked := true;
+      nxcheckbox1.Enabled := true;
+end else begin
+
+      NxCheckBox1.Checked := false;
+      nxcheckbox1.Enabled := false;
+end;
+
+end;
+
+procedure TFlexAccountMainMenuForm.CanvassPanelEnter(Sender: TObject);
+begin
+acctdata.payee.close;
+acctdata.payee.ParamByName('name').Text := '%';
+acctdata.Payee.open;
+end;
+
+procedure TFlexAccountMainMenuForm.NxButton4Click(Sender: TObject);
+begin
+
+  Acounter.Open;
+
+     if (acctdata.requisitionrpo.IsNull) or (acctdata.requisitionrpo.Text = '') then
+     begin
+       acctdata.requisition.Edit;
+       if acctdata.UsersArea.Text = 'DMO' then
+        begin
+           acctdata.requisitionrpo.Text := 'DPO#-' + AcounterDPO.text;
+           acctdata.requisitionPODate.AsDateTime := now;
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set DPO = DPO + 1');
+           acounterupdate.execute;
+        end;
+      if acctdata.UsersArea.Text = 'PAO' then
+        begin
+           acctdata.requisitionrpo.Text :='PPO#-' + AcounterPPO.text;
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set PPO = PPO + 1');
+           acounterupdate.execute;
+        end;
+      if acctdata.UsersArea.Text = 'SAO' then
+       begin
+           acctdata.requisitionrpo.Text := 'SPO#-' + AcounterSPO.text;
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set SPO = SPO + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'LAO' then
+       begin
+           acctdata.requisitionrpo.Text := 'LPO#-' + AcounterLPO.text;
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set LPO = LPO + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'SHOP1' then
+       begin
+           acctdata.requisitionrpo.Text := 'SDPO#-' + AcounterShDPO1.text;
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set SDPO = SHDPO1 + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'SHOP2' then
+       begin
+           acctdata.requisitionrpo.Text := 'S2DPO#-' + AcounterSHDPO2.text;
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set SPPO = SHDPO2 + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'PAOSHOP' then
+       begin
+           acctdata.requisitionrpo.Text := 'SHPPO#-' + AcounterSHPPO.text;
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set SHPPO = SHPPO + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'SAOSHOP' then
+       begin
+           acctdata.requisitionrpo.Text := 'SHSPO#-' + AcounterSHSPO.text;
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set SHSPO = SHSPO + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'LAOSHOP' then
+       begin
+           acctdata.requisitionrpo.Text := 'SHLPO#-' + AcounterSHLPO.text;
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set SHLPO = SHLPO + 1');
+           acounterupdate.execute;
+       end;
+    end;
+
+  nxheaderpanel13.Visible              := false;
+
+  if acctdata.requisitionamount.AsFloat > 5000 then
+   begin
+    qrcanvass.close;
+    qrcanvass.ParamByName('DN').Text     := checker;
+    qrcanvass.Open;
+    signatories.Open;
+
+   { if qrcanvass.RecordCount > 10 then
+     begin
+      qrband30.Enabled := true;
+      qrband20.enabled := false;
+     end
+    else
+     begin
+      qrband30.Enabled := false;
+      qrband20.enabled := true;
+     end;     }
+       qrlabel157.Caption := nxedit1.Text;
+       quickrep8.Preview;
+     end
+     else
+     begin
+
+       qrcanvass.close;
+       qrcanvass.ParamByName('DN').Text     := checker;
+       qrcanvass.Open;
+       signatories.Open;
+
+
+       quickrep10.Preview;
+     end;
+  signatories.close;
+  Acounter.Close;
+end;
+
+procedure TFlexAccountMainMenuForm.NxButton5Click(Sender: TObject);
+begin
+nxheaderpanel13.Visible := false;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit73Exit(Sender: TObject);
+begin
+if  nxheaderPanel14.caption = 'Edit Canvass' then begin
+      NxCheckBox4.Checked := true;
+      nxcheckbox4.Enabled := true;
+end else begin
+
+      NxCheckBox4.Checked := false;
+      nxcheckbox4.Enabled := false;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit77KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then
+dbedit80.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.VolgaDBEdit4Change(Sender: TObject);
+begin
+
+  acctdata.payee.close;
+  acctdata.payee.ParamByName('name').Text := '%' + VolgaDBEdit4.Text + '%';
+  acctdata.Payee.open;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel30Click(Sender: TObject);
+begin
+
+
+   if NxCheckBox4.Checked  = true then begin
+
+   if volgadbedit4.text = '' then begin
+
+      MessageDlg('Please select Payee from the list.', mtInformation, [mbOK], 0);
+      exit;
+
+  end else begin
+
+       AcctData.requisition.Post;
+       if acctdata.Requisitionrvnumber.Text <> '' then
+       begin
+         myquery2.SQL.clear;
+         myquery2.sql.Add('update requisition set status = ' + QuotedStr('') + ' where rvnumber like ' + QuotedStr('%' + acctdata.Requisitionrvnumber.Text + '%'));
+         myquery2.execute;
+       end;
+       acctdata.requisition.Refresh;
+
+     end;
+    end;
+      nxheaderPanel14.Visible := False;
+      crdbgrid2.Enabled       := true;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel53Click(Sender: TObject);
+begin
+
+       nxheaderpanel14.Visible := False;
+       crdbgrid2.Enabled       := true;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit80KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if key = #13 then
+       dbedit82.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit82KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if key = #13 then
+       dbmemo6.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel55Click(Sender: TObject);
+begin
+       acounter.Edit;
+       nxlinklabel55.Visible := false;
+       nxlinklabel56.Visible := true;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel57Click(Sender: TObject);
+begin
+       nxheaderpanel15.Visible := false;
+       acounter.Cancel;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel56Click(Sender: TObject);
+begin
+       acounter.Post;
+       nxlinklabel55.Visible := true;
+       nxlinklabel56.Visible := false;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel54Click(Sender: TObject);
+begin
+  if acctdata.UsersUserRestriction.text = 'ADMINISTRATOR' then begin
+       nxheaderpanel15.BringToFront;
+       nxheaderpanel15.Visible := true;
+       acounter.Close;
+       acounter.Open;
+       nxlinklabel55.BringToFront;
+       nxlinklabel55.Visible := true;
+       nxlinklabel56.Visible := false;
+       
+  end else begin
+       MessageDlg('You do not have enough rights to view this.', mtInformation, [mbOK], 0);
+       exit;
+  end;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit41KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if key = #13 then begin
+dbmemo3.SetFocus;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxCheckBox2Change(Sender: TObject);
+begin
+  if NxCheckBox2.Checked = true then
+    begin
+
+      acounter.open;
+      acctdata.CanvassDatarvNumber.text       :=   'SA-' +  AcounterSA.text;
+      acounter.close;
+
+    end else
+    begin
+
+      acounter.Open;
+
+   if  acctdata.UsersArea.Text = 'DMO' then
+    begin
+
+       AcctData.CanvassDatarvNumber.Text := 'DRV-'+ AcounterDMO.Text;
+
+   end else if acctdata.UsersArea.Text = 'PAO' then
+    begin
+
+       AcctData.CanvassDatarvNumber.Text := 'PRV-'+AcounterPAO.Text;
+
+   end else if  acctdata.UsersArea.Text = 'SAO' then
+    begin
+
+       AcctData.CanvassDatarvNumber.Text := 'SRV-'+AcounterSAO.Text;
+
+   end else if  acctdata.UsersArea.Text = 'LAO' then begin
+
+       AcctData.CanvassDatarvNumber.Text := 'LRV-'+AcounterLAO.Text;
+
+   end;
+
+       acounter.Close;
+end;
+end;
+
+procedure TFlexAccountMainMenuForm.VolgaDBEdit4KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if key = #13 then
+    begin
+      acctdata.requisitionrvname.Text         := acctdata.PayeeName.Text;
+      dbedit76.SetFocus;
+    end;
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit48Exit(Sender: TObject);
+begin
+  try
+  RequisitionDetailrdamount.Asfloat := RequisitionDetailrdcost.AsFloat * RequisitionDetailrdqty.AsFloat;
+  except
+      MessageDlg('Invalid item cost or number of items.. please check your entry.', mtError, [mbOK], 0);
+  end;
+
+end;
+
+procedure TFlexAccountMainMenuForm.RequisitionDetailAfterPost(
+  DataSet: TDataSet);
+begin
+  with myquery1 do
+   begin
+    sql.Clear;
+    sql.Add('Update requisitiondetail set rdamount2 = rdcost2 * rdqty, rdamount3 = rdcost3 * rdqty');
+    execute;
+   end;
+    requisitiondetail.Refresh;
+end;
+
+procedure TFlexAccountMainMenuForm.NxHeaderPanel13MouseDown(
+  Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  if (Button=mbLeft) And (Sender is TNxHeaderPanel) then
+   begin
+     Moving    := True;
+     MovingPnl := TNxHeaderPanel(Sender);
+     OldPos.X  := X;
+     OldPos.Y  := Y;
+   end
+  else
+   begin
+     Moving    := False;
+     MovingPnl := nil;
+   end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxHeaderPanel13MouseMove(
+  Sender: TObject; Shift: TShiftState; X, Y: Integer);
+var MyX,MyY : Integer;
+begin
+  if (Moving) and (MovingPnl<>Nil) then
+   begin
+     DeltaPos.X := X -OldPos.X;
+     DeltaPos.Y := Y -OldPos.Y;
+     MyX := MovingPnl.Left + deltaPos.X;
+     MyY := MovingPnl.Top + deltaPos.Y;
+     if MyX <= 0 then MyX := 0;
+     if MyY <= 0 then MyY := 0;
+     MovingPnl.Left := MyX;
+     MovingPnl.Top := MyY;
+   end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxHeaderPanel13MouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  if (Button = mbLeft) then
+   begin
+     Moving := False;
+     MovingPnl := Nil;
+   end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxEdit1Change(Sender: TObject);
+begin
+  if length(nxedit1.text) > 3 then
+   begin
+    nxbutton4.Enabled := true;
+   end
+  else
+   begin
+    nxbutton4.Enabled := false;
+   end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel2Click(Sender: TObject);
+begin
+  if acctdata.requisition.IsEmpty then
+   begin
+      MessageDlg('No record to print Purchase Order.', mtInformation, [mbOK], 0);
+      exit;
+   end;
+
+  if acctdata.requisitionstatus.text <> 'APPROVED' then
+   begin
+      MessageDlg('Requisition is not approved!', mtWarning, [mbOK], 0);
+      exit;
+   end;
+
+  with myquery1 do
+   begin
+    sql.clear;
+    sql.Add('select joborder from requisition where rvnumber = ' + QuotedStr(acctdata.requisitionrvName.text) + ' and joborder is not null');
+    Execute;
+
+   if IsEmpty then
+    begin
+      checker := acctdata.requisitionrvNumber.Text;
+      nhpJoborder.Visible := true;
+      acctdata.requisition.Edit;
+
+      nxedit2.SetFocus;
+    end
+   else
+    begin
+     checker := acctdata.requisitionrvNumber.Text;
+     NxButton1Click(sender);
+    end;
+   end;
+
+end;
+
+procedure TFlexAccountMainMenuForm.NxButton1Click(Sender: TObject);
+begin
+
+  Acounter.Open;
+
+     if (acctdata.requisitionjoborder.IsNull) or (acctdata.requisitionjoborder.Text = '') then
+     begin
+       acctdata.requisition.Edit;
+       if acctdata.UsersArea.Text = 'DMO' then
+        begin
+           DocInc(AcounterJDPO.text,'DJO#-');
+           acctdata.requisition.Post;
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set JDPO = JDPO + 1');
+           acounterupdate.execute;
+        end;
+      if acctdata.UsersArea.Text = 'PAO' then
+        begin
+           DocInc(AcounterJPPO.text,'PJO#-');
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set JPPO = JPPO + 1');
+           acounterupdate.execute;
+        end;
+      if acctdata.UsersArea.Text = 'SAO' then
+       begin
+           DocInc(AcounterJSPO.text,'SJO#-');
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set JSPO = JSPO + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'LAO' then
+       begin
+           DocInc(AcounterJLPO.text,'LJO#-');
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set JLPO = JLPO + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'SHOP1' then
+       begin
+           DocInc(AcounterJSHDPO1.text,'SDJO#-');
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set JSHDPO1 = JSHDPO1 + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'SHOP2' then
+       begin
+           DocInc(AcounterJSHDPO2.text,'S2DJO#-');
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set JSHDPO2 = JSHDPO2 + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'PAOSHOP' then
+       begin
+           DocInc(AcounterJSHPPO.text,'SHPJO#-');
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set JSHPPO = JSHPPO + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'SAOSHOP' then
+       begin
+           DocInc(AcounterJSHSPO.text,'SHSJO#-');
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set JSHSPO = JSHSPO + 1');
+           acounterupdate.execute;
+       end;
+      if acctdata.UsersArea.Text = 'LAOSHOP' then
+       begin
+           DocInc(AcounterJSHLPO.text,'SHLJO#-');
+           acctdata.requisition.Post;
+
+           acounterupdate.SQL.Clear;
+           acounterupdate.SQL.Add('update acounter set JSHLPO = JSHLPO + 1');
+           acounterupdate.execute;
+       end;
+    end;
+
+    nhpJoborder.Visible              := false;
+
+    qrcanvass.close;
+    qrcanvass.ParamByName('DN').Text     := checker;
+    qrcanvass.Open;
+    signatories.Open;
+
+    if qrcanvass.RecordCount > 10 then
+     begin
+      qrband51.Enabled := true;
+      qrband51.Height  := 350;
+      qrband50.Height  := 1;
+      qrband50.enabled := false;
+     end
+    else
+     begin
+      qrband51.Enabled := false;
+      qrband51.Height  := 10;
+      qrband50.Height  := 350;
+      qrband50.enabled := true;
+     end;
+       qrlabel269.Caption := nxedit1.Text;
+       quickrep14.Preview;
+
+       signatories.close;
+       Acounter.Close;
+end;
+
+procedure TFlexAccountMainMenuForm.NxEdit2Change(Sender: TObject);
+begin
+  if length(nxedit2.text) > 3 then
+   begin
+    nxbutton1.Enabled := true;
+   end
+  else
+   begin
+    nxbutton1.Enabled := false;
+   end;
+end;
+
+procedure TFlexAccountMainMenuForm.FormKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if key = VK_F1 then
+   begin
+     if NOT((acctdata.UsersUserRestriction.Text = 'ADMINISTRATOR')) THEN
+      begin
+        MessageDlg('Sorry you have no priviledge to use this procedure!', mtWarning, [mbOK], 0);
+        exit;
+      end;
+     if not Assigned(FrmFilterUser) then FrmFilterUser := TFrmFilterUser.Create(Application);
+     with FrmFilterUser do
+      begin
+        if not FilterUser.Active then FilterUser.Open;
+      end;
+     FrmFilterUser.Show;
+   end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxComboBox1Change(Sender: TObject);
+begin
+  With AcctData do
+    begin
+     case nxcombobox1.ItemIndex of
+      0 : begin
+           Requisition.Close;
+           Requisition.ParamByName('Rv').Text          := '%'+JVSearch.text+'%';
+           Requisition.ParamByName('datefrom').AsDate  := StartOfTheMonth(JVdatefrom.AsDateTime);
+           Requisition.ParamByName('dateto').AsDate    := EndOfTheYear(jvdateto.AsDateTime);
+           Requisition.ParamByName('APP').Text         := 'APPROVED';
+           Requisition.ParamByName('ID').AsInteger     := UserAdministration;
+           requisition.FilterSQL  := '(allocation is not null or allowprint = 1)';
+           Requisition.Open;
+          end;
+      1: begin
+           Requisition.Close;
+           Requisition.ParamByName('Rv').Text          := '%'+JVSearch.text+'%';
+           Requisition.ParamByName('datefrom').AsDate  := StartOfTheMonth(JVdatefrom.AsDateTime);
+           Requisition.ParamByName('dateto').AsDate    := EndOfTheYear(jvdateto.AsDateTime);
+           Requisition.ParamByName('APP').Text         := 'DISAPPROVED';
+           Requisition.ParamByName('ID').AsInteger     := UserAdministration;
+           Requisition.Open;
+           requisition.FilterSQL  := '(allocation is null)';
+         end;
+      end;
+  end;
+end;
+
+procedure TFlexAccountMainMenuForm.NxButton2Click(Sender: TObject);
+begin
+nhpJoborder.Visible := false;
+
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit96Change(Sender: TObject);
+begin
+
+
+  if Length(dbedit96.text) > 3 then
+   begin
+    acctdata.payee.close;
+    acctdata.payee.ParamByName('name').Text := '%' + dbedit96.Text + '%';
+    acctdata.Payee.open;
+    CRDBGrid6.Visible := true;
+    crdbgrid6.Left    := 444;
+    crdbgrid6.Top     := 519;
+   end
+  else
+   begin
+    CRDBGrid6.Visible := false;
+   end;
+end;
+
+procedure TFlexAccountMainMenuForm.CRDBGrid6DblClick(Sender: TObject);
+begin
+  PayeeCheck.Close;
+  payeecheck.ParamByName('Name').text     := acctdata.PayeeName.text;
+  PayeeCheck.Open;
+
+
+
+  acctdata.CanvassDatarvName.text         := PayeeCheckName.text;
+  acctdata.CanvassDatarvPCode.text        := PayeeCheckPCode.text;
+  crdbgrid6.Visible                       := false;
+  dbedit96.SetFocus;
+end;
+
+procedure TFlexAccountMainMenuForm.CRDBGrid6KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if key = #13 then CRDBGrid6DblClick(sender);
+end;
+
+procedure TFlexAccountMainMenuForm.DBEdit96KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if key = #13 then
+   begin
+    if acctdata.Payee.RecordCount = 1 then
+     begin
+      CRDBGrid6DblClick(sender);
+     end
+    else
+     begin
+      crdbgrid6.SetFocus;
+     end;
+   end;
+end;
+
+procedure TFlexAccountMainMenuForm.CRDBGrid5Exit(Sender: TObject);
+begin
+  requisitiondetail.close;
+  requisitiondetail.ParamByName('DN').Text := acctdata.requisitionrvNumber.text;
+  RequisitionDetail.Open;
+end;
+
+procedure TFlexAccountMainMenuForm.QRBand18BeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
+begin
+ quickrep8.ResetPageFooterSize;
+end;
+
+procedure TFlexAccountMainMenuForm.NxLinkLabel3Click(Sender: TObject);
+begin
+ exportitems.Execute;
+end;
+
+end.
+

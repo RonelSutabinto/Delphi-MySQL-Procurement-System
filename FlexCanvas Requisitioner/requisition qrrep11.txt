@@ -1,0 +1,63 @@
+           If acctdata.requisitionamount.AsFloat < 5000 then begin
+
+
+            qrrequisition.close;
+            qrrequisition.ParamByName('rv').Text := acctdata.requisitionrvNumber.Text;
+            qrRequisition.Open;
+
+            signatories.Open;
+
+            if acctdata.UsersDepartment.text = 'ISD/SHOP' then begin
+
+            QRDBText141.DataField := 'isdrecom';
+            qrdbtext142.datafield := 'isdrecompos';
+
+            end else if acctdata.UsersDepartment.text = 'OGM' then begin
+
+            QRDBText141.datafield := 'OGMrecom';
+            qrdbtext142.datafield := 'OGMrecompos';
+
+            end else if acctdata.UsersDepartment.text = 'ESD' then begin
+
+            QRDBText141.datafield := 'esdrecom';
+            qrdbtext142.datafield := 'esdrecompos';
+
+            end else if acctdata.UsersDepartment.text = 'CAD' then begin
+
+            QRDBText141.datafield := 'CADrecom';
+            qrdbtext142.datafield := 'CADrecompos';
+
+            end else if acctdata.UsersDepartment.text = 'FSD' then begin
+
+            QRDBText141.datafield := 'Fsdrecom';
+            qrdbtext142.datafield := 'Fsdrecompos';
+
+            end else if acctdata.UsersDepartment.text = 'LAO' then begin
+
+            QRDBText141.datafield := 'LAOrecom';
+            qrdbtext142.datafield := 'LAOrecompos';
+
+            end else if acctdata.UsersDepartment.text = 'PAO' then begin
+
+            QRDBText141.datafield := 'PAOrecom';
+            qrdbtext142.datafield := 'PAOrecompos';
+
+            end else if acctdata.UsersDepartment.text = 'SAO' then begin
+
+            QRDBText141.datafield := 'SAOrecom';
+            qrdbtext142.datafield := 'SAOrecompos';
+
+            end else if acctdata.UsersDepartment.text = 'COMD' then begin
+
+            QRDBText141.datafield := 'COMDName';
+            qrdbtext142.datafield := 'COMDrecompos';
+
+            end;
+
+
+
+            quickrep11.PREVIEWWidth :=Screen.width;
+            QuickRep11.previewheight := Screen.Height;
+            QuickRep11.PreviewInitialState := wsMaximized;
+            quickrep11.Preview;
+
